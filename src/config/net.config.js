@@ -3,7 +3,10 @@
  **/
 const network = {
   // 默认的接口地址 如果是开发环境和生产环境走vab-mock-server，当然你也可以选择自己配置成需要的接口地址
-  baseURL: process.env.NODE_ENV === 'https://yunm.an-lock.com/',
+  baseURL:
+    process.env.NODE_ENV === 'development'
+      ? '/api'
+      : 'https://yunm.an-lock.com/',
   //配后端数据的接收方式application/json;charset=UTF-8或者application/x-www-form-urlencoded;charset=UTF-8
   contentType: 'application/json;charset=UTF-8',
   //消息框消失时间

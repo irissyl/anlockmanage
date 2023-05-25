@@ -52,17 +52,14 @@ module.exports = {
     port: devPort,
     open: true,
     noInfo: false,
+    //开启代理服务器(方法二)
     proxy: {
-      //配置跨域
+      //  '/api'为请求前缀，用于控制是不是走代理，想走代理时就在请求前缀前边加上这个请求前缀
       '/api': {
-        // target: 'http://10.88.155.43/takweb-legal-platform/lumen/public/rest/', //真实数据：这里后台的地址模拟的;应该填写你们真实的后台接口1
-        target: 'https://yunm.an-lock.com/iotwebapi/', //真实数据：这里后台的地址模拟的;应该填写你们真实的后台接口1
-        // target: 'http://localhost:3000/rest/', //node模拟数据：这里后台的地址模拟的;应该填写你们真实的后台接口
-        ws: true,
-        changOrigin: true, //允许跨域
-        pathRewrite: {
-          '^/api': '', //请求的时候使用这个api就可以
-        },
+        target: 'https://yunm.an-lock.com/',
+        pathRewrite: { '^/api': '' }, //重写路径  匹配以/api为开头的路径都变为空字符串,/api 仅仅是一个请求转发标志，真正的接口中没有/api，所以在转发时重写请求路径，把/api删掉。
+        ws: true, //用于支持websocket
+        changeOrigin: true, //用于控制请求头中的host值
       },
     },
     overlay: {

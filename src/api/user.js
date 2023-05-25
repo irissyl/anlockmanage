@@ -4,7 +4,7 @@ import { loginRSA, tokenName } from '@/config'
 
 export async function login(data) {
   return request({
-    url: '/iotwebapi/api/oauth/token',
+    url: '/oauth/token',
     method: 'post',
     data,
   })
