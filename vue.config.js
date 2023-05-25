@@ -56,7 +56,7 @@ module.exports = {
     proxy: {
       //  '/api'为请求前缀，用于控制是不是走代理，想走代理时就在请求前缀前边加上这个请求前缀
       '/api': {
-        target: 'https://yunm.an-lock.com/',
+        target: 'https://yunm.an-lock.com/iotwebapi',
         pathRewrite: { '^/api': '' }, //重写路径  匹配以/api为开头的路径都变为空字符串,/api 仅仅是一个请求转发标志，真正的接口中没有/api，所以在转发时重写请求路径，把/api删掉。
         ws: true, //用于支持websocket
         changeOrigin: true, //用于控制请求头中的host值
