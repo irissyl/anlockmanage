@@ -175,7 +175,8 @@
                 this.loading = false
                 console.log(routerPath, 'routerPath')
               })
-              .catch(() => {
+              .catch((error) => {
+                console.log(error, 'error')
                 this.loading = false
               })
           } else {
