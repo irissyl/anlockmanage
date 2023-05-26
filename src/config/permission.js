@@ -32,37 +32,7 @@ router.beforeResolve(async (to, from, next) => {
       next({ path: '/' })
       if (progressBar) VabProgress.done()
     } else {
-      const hasPermissions =
-        store.getters['user/permissions'] &&
-        store.getters['user/permissions'].length > 0
-      if (hasPermissions) {
-        next()
-      } else {
-        try {
-          let permissions
-          if (!loginInterception) {
-            //settings.js loginInterception为false时，创建虚拟权限
-            await store.dispatch('user/setPermissions', ['admin'])
-            permissions = ['admin']
-          } else {
-            permissions = await store.dispatch('user/getUserInfo')
-          }
-
-          let accessRoutes = []
-          if (authentication === 'intelligence') {
-            accessRoutes = await store.dispatch('routes/setRoutes', permissions)
-          } else if (authentication === 'all') {
-            accessRoutes = await store.dispatch('routes/setAllRoutes')
-          }
-          accessRoutes.forEach((item) => {
-            router.addRoute(item)
-          })
-          next({ ...to, replace: true })
-        } catch {
-          await store.dispatch('user/resetAccessToken')
-          if (progressBar) VabProgress.done()
-        }
-      }
+      next()
     }
   } else {
     if (routesWhiteList.indexOf(to.path) !== -1) {
