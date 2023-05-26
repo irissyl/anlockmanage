@@ -25,6 +25,7 @@ let loadingInstance
  * @param {*} msg
  */
 const handleCode = (code, msg) => {
+  console.log(code, 'code')
   switch (code) {
     case invalidCode:
       Vue.prototype.$baseMessage(msg || `后端接口${code}异常`, 'error')
@@ -79,21 +80,24 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response) => {
     if (loadingInstance) loadingInstance.close()
-
     const { data, config } = response
-    const { code, msg } = data
+    console.log(data, config, 'response')
+
+    const { resultCode, message } = data
+    console.log(resultCode, message, 'data')
+
     // 操作正常Code数组
     const codeVerificationArray = isArray(successCode)
       ? [...successCode]
       : [...[successCode]]
     // 是否操作正常
-    if (codeVerificationArray.includes(code)) {
+    if (codeVerificationArray.includes(resultCode)) {
       return data
     } else {
-      handleCode(code, msg)
+      handleCode(resultCode)
       return Promise.reject(
-        'vue-admin-beautiful请求异常拦截:' +
-          JSON.stringify({ url: config.url, code, msg }) || 'Error'
+        '请求异常拦截:' +
+          JSON.stringify({ url: config.url, resultCode, message }) || 'Error'
       )
     }
   },

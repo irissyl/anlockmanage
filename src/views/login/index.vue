@@ -4,7 +4,7 @@
       <el-col :xs="24" :sm="24" :md="12" :lg="16" :xl="16">
         <div style="color: transparent">占位符</div>
       </el-col>
-      <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8" >
+      <el-col :xs="24" :sm="24" :md="12" :lg="8" :xl="8">
         <el-form
           ref="form"
           :model="form"
@@ -154,16 +154,16 @@
       handleLogin() {
         this.$refs.form.validate((valid) => {
           if (valid) {
-            console.log(valid, this.form,'valid')
+            // console.log(valid, this.form,'valid')
             this.loading = true
-            let port={
+            let port = {
               username: this.form.username,
               password: this.form.password,
-              grant_type: "password",
-              client_id: "anlock_restful_client",
-              client_secret: "anlock_secret_2018",
-           }
-           
+              grant_type: 'password',
+              client_id: 'anlock_restful_client',
+              client_secret: 'anlock_secret_2018',
+            }
+
             this.$store
               .dispatch('user/login', port)
               .then(() => {
@@ -173,6 +173,7 @@
                     : this.redirect
                 this.$router.push(routerPath).catch(() => {})
                 this.loading = false
+                console.log(routerPath, 'routerPath')
               })
               .catch(() => {
                 this.loading = false

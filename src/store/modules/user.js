@@ -47,6 +47,8 @@ const actions = {
   async login({ commit }, userInfo) {
     const { data } = await login(userInfo)
     const accessToken = data[tokenName]
+    console.log(data[tokenName], accessToken, 'data2222')
+
     if (accessToken) {
       commit('setAccessToken', accessToken)
       const hour = new Date().getHours()
