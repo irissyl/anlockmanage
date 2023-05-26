@@ -32,7 +32,11 @@ router.beforeResolve(async (to, from, next) => {
       next({ path: '/' })
       if (progressBar) VabProgress.done()
     } else {
-      next()
+      if (store.getters['user/accessToken']) {
+        next()
+      } else {
+        next({ path: '/login' })
+      }
     }
   } else {
     if (routesWhiteList.indexOf(to.path) !== -1) {
