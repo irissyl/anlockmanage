@@ -33,6 +33,16 @@ router.beforeResolve(async (to, from, next) => {
       if (progressBar) VabProgress.done()
     } else {
       if (store.getters['user/accessToken']) {
+        let accessRoutes = []
+        if (authentication === 'intelligence') {
+          accessRoutes = await store.dispatch('routes/setRoutes', [])
+        } else if (authentication === 'all') {
+          accessRoutes = await store.dispatch('routes/setAllRoutes')
+        }
+        console.log(accessRoutes)
+        accessRoutes.forEach((item) => {
+          router.addRoute(item)
+        })
         next()
       } else {
         next({ path: '/login' })
