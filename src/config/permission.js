@@ -39,7 +39,7 @@ router.beforeResolve(async (to, from, next) => {
         } else if (authentication === 'all') {
           accessRoutes = await store.dispatch('routes/setAllRoutes')
         }
-        console.log(accessRoutes)
+        // console.log(accessRoutes)
         accessRoutes.forEach((item) => {
           router.addRoute(item)
         })

@@ -83,10 +83,10 @@ instance.interceptors.response.use(
   (response) => {
     if (loadingInstance) loadingInstance.close()
     const { data, config } = response
-    console.log(data, config, 'response')
+    // console.log(data, config, 'response')
 
     const { resultCode, message } = data
-    console.log(resultCode, message, 'data')
+    // console.log(resultCode, message, 'data')
 
     // 操作正常Code数组
     const codeVerificationArray = isArray(successCode)
