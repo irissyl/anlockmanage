@@ -65,11 +65,15 @@
           '您确定要退出' + this.$baseTitle + '吗?',
           null,
           async () => {
-            await this.$store.dispatch('user/logout')
-            if (recordRoute) {
-              const fullPath = this.$route.fullPath
-              this.$router.push(`/login?redirect=${fullPath}`)
-            } else {
+            try {
+              await this.$store.dispatch('user/logout')
+              if (recordRoute) {
+                const fullPath = this.$route.fullPath
+                this.$router.push(`/login?redirect=${fullPath}`)
+              } else {
+                this.$router.push('/login')
+              }
+            } catch (error) {
               this.$router.push('/login')
             }
           }

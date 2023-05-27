@@ -88,7 +88,11 @@ const actions = {
     }
   },
   async logout({ dispatch }) {
-    await logout(state.accessToken)
+    try {
+      await logout(state.accessToken)
+    } catch (error) {
+      console.log(error)
+    }
     await dispatch('resetAccessToken')
     await resetRouter()
   },
