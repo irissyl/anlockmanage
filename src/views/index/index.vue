@@ -3,49 +3,56 @@
     <el-row :gutter="20">
       <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
         <el-card class="all1" shadow="never">
-             <p class="p1">总人数</p>
-            <div class="p2">300</div>
-            <span class="p3">男：30</span><span class="p3">女：270</span>
-          </el-card>
+          <p class="p1">总人数</p>
+          <div class="p2">300</div>
+          <!-- <span class="p3">男：30</span><span class="p3">女：270</span> -->
+        </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
         <el-card class="all2" shadow="never">
-            
-             <p class="p1">办公室人员</p>
-            <div class="p2">300</div>
-            <span class="p3">男：30</span><span class="p3">女：270</span>
-          </el-card>
+          <p class="p1">设备数量</p>
+          <div class="p2">30</div>
+        </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
         <el-card class="all3" shadow="never">
-            <p class="p1">宿舍人员</p>
-            <div class="p2">300</div>
-            <span class="p3">男：30</span><span class="p3">女：270</span>
-          </el-card>
+          <p class="p1">宿舍总数</p>
+          <div class="p2">300</div>
+        </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
         <el-card class="all4" shadow="never">
-            
-             <p class="p1">操作人员</p>
-            <div class="p2">300</div>
-            <span class="p3">男：30</span><span class="p3">女：270</span>
-          </el-card>
-      </el-col>
-      <!-- <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
-        <el-card shadow="never">
-          <div slot="header">
-            <span>访问量</span>
-          </div>
-          <vab-chart autoresize :options="fwl" />
-          <div class="bottom">
-            <span>
-              日均访问量:
-
-              {{ config1.endVal }}
-            </span>
-          </div>
+          <p class="p1">操作人员</p>
+          <div class="p2">300</div>
+          <!-- <span class="p3">男：30</span><span class="p3">女：270</span> -->
         </el-card>
-      </el-col> -->
+      </el-col>
+      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+        <el-card shadow="never" style="height: 490px">
+          <div slot="header">
+            <span>住宿人员统计</span>
+          </div>
+          <BareChart ref="chart_line_one"></BareChart>
+        </el-card>
+      </el-col>
+      <el-col :xs="24" :sm="24" :md="13" :lg="12" :xl="12">
+        <el-card class="card" shadow="never" style="height: 490px">
+          <div slot="header">
+            <span>房间开门记录</span>
+          </div>
+          <el-timeline :reverse="reverse">
+            <el-timeline-item
+              v-for="(activity, index) in activities"
+              :key="index"
+              :timestamp="activity.timestamp"
+              :color="activity.color"
+            >
+              {{ activity.content }}
+            </el-timeline-item>
+          </el-timeline>
+        </el-card>
+      </el-col>
+
       <!-- <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
         <el-card shadow="never">
           <div slot="header">
@@ -101,18 +108,19 @@
 </template>
 
 <script>
-  import VabChart from '@/plugins/echarts'
+  // import VabChart from '@/plugins/echarts'
   import { dependencies, devDependencies } from '../../../package.json'
   import { getList } from '@/api/changeLog'
   import { getNoticeList } from '@/api/notice'
   import { getRepos, getStargazers } from '@/api/github'
-  // import Plan from './components/Plan'
+  import BareChart from './components/barechart.vue'
   // import VersionInformation from './components/VersionInformation'
 
   export default {
     name: 'Index',
     components: {
-      VabChart,
+      // VabChart,
+      BareChart,
       // Plan,
       // VersionInformation,
     },
@@ -373,21 +381,37 @@
 
         //更新日志
         reverse: true,
-        activities: [],
+        activities: [
+          {
+            content: '源码精简至800k',
+            timestamp: '2020-04-19',
+            color: '#209cff',
+          },
+          {
+            content: '添加视频播放器组件',
+            timestamp: '2020-04-20',
+            color: '#209cff',
+          },
+          {
+            content: '修复路由懒加载 完善主题配色',
+            timestamp: '2020-04-22',
+            color: '#209cff',
+          },
+        ],
         noticeList: [],
         //其他信息
         userAgent: navigator.userAgent,
         //卡片图标
-        
       }
     },
     created() {
-      this.fetchData()
+      // this.fetchData()
     },
     beforeDestroy() {
       clearInterval(this.timer)
     },
     mounted() {
+      this.$refs.chart_line_one.initChart()
       let base = +new Date(2020, 1, 1)
       let oneDay = 24 * 3600 * 1000
       let date = []
@@ -421,6 +445,49 @@
       }, 3000)
     },
     methods: {
+      initChart(name, xData, yData) {
+        let getchart = echarts.init(document.getElementById('echart-line'))
+        var option = {
+          tooltip: {
+            trigger: 'axis',
+          },
+          legend: {
+            data: [name],
+            bottom: '0%',
+          },
+          grid: {
+            //调整图表上下左右位置
+            top: '10%',
+            left: '3%',
+            right: '8%',
+            bottom: '11%',
+            containLabel: true,
+          },
+
+          xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: xData,
+          },
+          yAxis: {
+            type: 'value',
+          },
+          series: [
+            {
+              name: name,
+              type: 'line',
+              stack: '总量',
+              data: yData,
+            },
+          ],
+        }
+
+        getchart.setOption(option)
+        //随着屏幕大小调节图表
+        window.addEventListener('resize', () => {
+          getchart.resize()
+        })
+      },
       handleClick(e) {
         this.$baseMessage(`点击了${e.name},这里可以写跳转`)
       },
@@ -456,7 +523,7 @@
   }
 </script>
 <style lang="scss" scoped>
-@import './css';
+  @import './css';
   .index-container {
     padding: 0 !important;
     margin: 0 !important;

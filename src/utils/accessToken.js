@@ -7,7 +7,6 @@ import { storage, tokenTableName } from '@/config'
  */
 export function getAccessToken() {
   if (storage) {
-    console.log(storage, 'storage')
     if ('localStorage' === storage) {
       return localStorage.getItem(tokenTableName)
     } else if ('sessionStorage' === storage) {

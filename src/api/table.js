@@ -23,3 +23,11 @@ export function doDelete(data) {
     data,
   })
 }
+
+export function getCampusList(data) {
+  return request({
+    url: '/api/build/listAllArea',
+    method: 'get',
+    data,
+  })
+}

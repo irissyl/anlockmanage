@@ -35,7 +35,7 @@ const setting = {
   //加载时显示文字
   loadingText: '正在加载中...',
   //token名称
-  tokenName: 'access_token',
+  tokenName: 'Authorization',
   //token在localStorage、sessionStorage存储的key的名称
   tokenTableName: 'vue-admin-beautiful-2021',
   //token存储位置localStorage sessionStorage
