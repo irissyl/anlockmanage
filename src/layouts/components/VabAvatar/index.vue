@@ -2,7 +2,7 @@
   <el-dropdown @command="handleCommand">
     <span class="avatar-dropdown">
       <!--<el-avatar class="user-avatar" :src="avatar"></el-avatar>-->
-      <img class="user-avatar" :src="avatar" alt="" />
+      <img class="user-avatar" :src="defaultUserPng" alt="" />
       <div class="user-name">
         {{ username }}
         <i class="el-icon-arrow-down el-icon--right"></i>
@@ -22,6 +22,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import { recordRoute } from '@/config'
+  import UserPng from '@/assets/user.png'
 
   export default {
     name: 'VabAvatar',
@@ -30,6 +31,11 @@
         avatar: 'user/avatar',
         username: 'user/username',
       }),
+    },
+    data() {
+      return {
+        defaultUserPng: UserPng,
+      }
     },
     methods: {
       handleCommand(command) {
