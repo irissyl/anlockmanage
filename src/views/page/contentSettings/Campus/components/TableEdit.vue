@@ -59,7 +59,7 @@
         form: {
           areaName: '',
           areaAddress: '',
-          build: '',
+          builds: '',
         },
         buildObjs: [],
         Builddata: '',
@@ -96,6 +96,9 @@
         } else {
           this.title = '编辑园区'
           this.form = Object.assign({}, row)
+          this.form.builds = row.builds.split(',').map((item) => {
+            return Number(item)
+          })
           console.log(this.form, row, 'row2')
         }
         this.dialogFormVisible = true

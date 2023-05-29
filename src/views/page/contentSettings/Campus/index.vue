@@ -28,11 +28,13 @@
         prop="areaAddress"
         label="园区地址"
       ></el-table-column>
-      <!-- <el-table-column
-        show-overflow-tooltip
-        prop="buildObjs"
-        label="所在楼栋"
-      ></el-table-column> -->
+      <el-table-column show-overflow-tooltip label="所在楼栋">
+        <template #default="{ row }">
+          <el-tag v-for="item in row.buildObjs" :key="item.buildId">
+            {{ item.buildName }}
+          </el-tag>
+        </template>
+      </el-table-column>
       <el-table-column show-overflow-tooltip label="操作" width="180px">
         <template #default="{ row }">
           <el-button type="text" @click="handleEdit(row)">编辑</el-button>
