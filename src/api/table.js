@@ -58,3 +58,32 @@ export function getBuildList(data) {
     data,
   })
 }
+
+// 添加楼栋
+export function addBuild(data) {
+  return request({
+    url: '/api/build/addBuild',
+    method: 'post',
+    data,
+  })
+}
+// 删除楼栋
+export function deleteBuild(data) {
+  return request({
+    url: '/api/build/delBuild',
+    method: 'post',
+    data,
+  })
+}
+// 修改楼栋
+export function updateBuild(data) {
+  return request({
+    url: '/api/build/updateBuild',
+    method: 'post',
+    data,
+  })
+}
+// 部门列表
+// 添加部门
+// 删除部门
+// 修改部门

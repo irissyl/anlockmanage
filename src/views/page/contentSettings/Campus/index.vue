@@ -12,14 +12,12 @@
       :data="list"
       :element-loading-text="elementLoadingText"
       :height="height"
+      :header-cell-style="{ 'text-align': 'center' }"
+      :cell-style="{ 'text-align': 'center' }"
+      style="width: 100%"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
     >
-      <el-table-column
-        show-overflow-tooltip
-        type="selection"
-        width="55"
-      ></el-table-column>
       <el-table-column
         show-overflow-tooltip
         prop="areaName"
