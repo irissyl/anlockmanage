@@ -42,6 +42,14 @@ export function doAddCampus(data) {
   })
 }
 
+// 更新小区
+export function updateArea(data) {
+  return request({
+    url: '/api/build/updateArea',
+    method: 'post',
+    data,
+  })
+}
 // 删除小区
 export function deleteCampus(data) {
   return request({
@@ -84,6 +92,34 @@ export function updateBuild(data) {
   })
 }
 // 部门列表
+export function listSection(data) {
+  return request({
+    url: '/api/office/listSection',
+    method: 'post',
+    data,
+  })
+}
 // 添加部门
+export function addSection(data) {
+  return request({
+    url: '/api/office/addSection',
+    method: 'post',
+    data,
+  })
+}
 // 删除部门
+export function delSection(data) {
+  return request({
+    url: '/api/office/delSection',
+    method: 'post',
+    data,
+  })
+}
 // 修改部门
+// export function delSection (data) {
+//   return request({
+//     url: '/api/office/delSection',
+//     method: 'post',
+//     data,
+//   })
+// }

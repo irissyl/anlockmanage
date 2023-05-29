@@ -12,7 +12,7 @@
       :data="list"
       :element-loading-text="elementLoadingText"
       :height="height"
-      :header-cell-style="{ 'text-align': 'center' }"
+      :header-cell-style="{ 'text-align': 'center', background: '#f5f7fa' }"
       :cell-style="{ 'text-align': 'center' }"
       style="width: 100%"
       @selection-change="setSelectRows"
@@ -85,7 +85,6 @@
         this.list = datalist.data
         datalist.data.forEach((item) => {
           this.buildObjs = item.buildObjs
-          console.log(this.buildObjs, 'this.buildObjs')
         })
         console.log(datalist.data, 'datalist')
         setTimeout(() => {

@@ -40,17 +40,18 @@
         },
         title: '',
         dialogFormVisible: false,
+        Edit: false,
       }
     },
-    mounted() {
-      this.getBuildList()
-    },
+    mounted() {},
     methods: {
       showEdit(row, Builddata) {
         if (!row) {
           this.title = '添加楼栋'
+          this.Edit = false
         } else {
           this.title = '编辑楼栋'
+          this.Edit = true
           this.form = Object.assign({}, row)
           console.log(this.form, row, 'row2')
         }
@@ -66,11 +67,26 @@
         this.$refs['form'].validate(async (valid) => {
           if (valid) {
             console.log(this.form, 'valid')
-            let formdata = {
-              name: this.form.buildName,
+            if (this.Edit == false) {
+              let formdata = {
+                name: this.form.buildName,
+              }
+              let data = await addBuild(formdata)
+              console.log(data, 'success')
+              if (data.resultCode == 0) {
+                this.$message('添加成功')
+              }
+            } else {
+              let formdata = {
+                name: this.form.buildName,
+                buildid: this.form.buildId,
+              }
+              let data = await updateBuild(formdata)
+              console.log(data, 'success')
+              if (data.resultCode == 0) {
+                this.$message('修改成功')
+              }
             }
-            let data = await addBuild(formdata)
-            console.log(data, builds, 'success')
 
             this.$refs['form'].resetFields()
             this.form = this.$options.data().form

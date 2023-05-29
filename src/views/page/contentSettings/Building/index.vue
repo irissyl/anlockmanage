@@ -12,7 +12,7 @@
       :data="list"
       :element-loading-text="elementLoadingText"
       :height="height"
-      :header-cell-style="{ 'text-align': 'center' }"
+      :header-cell-style="{ 'text-align': 'center', background: '#f5f7fa' }"
       :cell-style="{ 'text-align': 'center' }"
       style="width: 100%"
       @selection-change="setSelectRows"
@@ -79,7 +79,6 @@
         this.list = datalist.data
         datalist.data.forEach((item) => {
           this.buildObjs = item.buildObjs
-          console.log(this.buildObjs, 'this.buildObjs')
         })
         console.log(datalist.data, 'datalist')
         setTimeout(() => {
@@ -106,8 +105,8 @@
       },
       async handleDelete(row) {
         console.log(row, 'rowd')
-        let areaId = { areaid: row.areaId }
-        let res = await deleteBuild(areaId)
+        let buildid = { buildid: row.buildId }
+        let res = await deleteBuild(buildid)
         if (res.resultCode == 0) {
           this.$message('删除成功')
         }

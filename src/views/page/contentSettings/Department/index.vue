@@ -12,7 +12,7 @@
       :data="list"
       :element-loading-text="elementLoadingText"
       :height="height"
-      :header-cell-style="{ 'text-align': 'center' }"
+      :header-cell-style="{ 'text-align': 'center', background: '#f5f7fa' }"
       :cell-style="{ 'text-align': 'center' }"
       style="width: 100%"
       @selection-change="setSelectRows"
@@ -20,13 +20,12 @@
     >
       <el-table-column
         show-overflow-tooltip
-        prop="areaName"
-        label="楼栋部门"
+        prop="sectionName"
+        label="部门名称"
       ></el-table-column>
 
       <el-table-column show-overflow-tooltip label="操作" width="180px">
         <template #default="{ row }">
-          <el-button type="text" @click="handleEdit(row)">编辑</el-button>
           <el-button type="text" @click="handleDelete(row)">删除</el-button>
         </template>
       </el-table-column>
@@ -36,7 +35,7 @@
 </template>
 
 <script>
-  import { getCampusList, deleteCampus } from '@/api/table'
+  import { listSection, delSection } from '@/api/table'
   import TableEdit from './components/TableEdit'
   export default {
     name: 'VueAdminBetterIndex',
@@ -70,11 +69,10 @@
     methods: {
       async fetchData() {
         this.listLoading = true
-        const datalist = await getCampusList({})
+        const datalist = await listSection({})
         this.list = datalist.data
         datalist.data.forEach((item) => {
           this.buildObjs = item.buildObjs
-          console.log(this.buildObjs, 'this.buildObjs')
         })
         console.log(datalist.data, 'datalist')
         setTimeout(() => {
@@ -101,8 +99,8 @@
       },
       async handleDelete(row) {
         console.log(row, 'rowd')
-        let areaId = { areaid: row.areaId }
-        let res = await deleteCampus(areaId)
+        let sectionId = { sectionId: row.sectionId }
+        let res = await delSection(areaId)
         if (res.resultCode == 0) {
           this.$message('删除成功')
         }

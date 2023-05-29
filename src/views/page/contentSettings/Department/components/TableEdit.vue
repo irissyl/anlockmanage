@@ -6,11 +6,11 @@
     @close="close"
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-      <el-form-item label="楼栋名称" prop="name">
+      <el-form-item label="部门名称" prop="name">
         <el-input
-          v-model.trim="form.areaName"
+          v-model.trim="form.sectionName"
           autocomplete="off"
-          placeholder="请输入园区名称"
+          placeholder="请输入部门名称"
         ></el-input>
       </el-form-item>
     </el-form>
@@ -22,51 +22,32 @@
 </template>
 
 <script>
-  import { doEdit, getBuildList, doAddCampus } from '@/api/table'
+  import { addSection, getBuildList } from '@/api/table'
 
   export default {
     name: 'TableEdit',
     data() {
       return {
         form: {
-          areaName: '',
-          areaAddress: '',
-          build: '',
+          sectionName: '',
         },
         buildObjs: [],
         Builddata: '',
         rules: {
-          areaName: [
-            { required: true, trigger: 'blur', message: '请输入园区名称' },
-          ],
-          areaAddress: [
-            { required: true, trigger: 'blur', message: '请输入园区地址' },
-          ],
-          buildName: [
-            { required: true, trigger: 'blur', message: '请选择楼栋' },
+          sectionName: [
+            { required: true, trigger: 'blur', message: '请输入部门名称' },
           ],
         },
         title: '',
         dialogFormVisible: false,
       }
     },
-    mounted() {
-      this.getBuildList()
-    },
     methods: {
-      async getBuildList() {
-        let Builddata = await getBuildList({})
-        this.Builddata = Builddata.data
-        console.log(Builddata.data, 'Builddata.data')
-      },
-      changes(e) {
-        console.log(e)
-      },
       showEdit(row, Builddata) {
         if (!row) {
-          this.title = '添加园区'
+          this.title = '添加部门'
         } else {
-          this.title = '编辑园区'
+          this.title = '编辑部门'
           this.form = Object.assign({}, row)
           console.log(this.form, row, 'row2')
         }
@@ -81,14 +62,12 @@
       save() {
         this.$refs['form'].validate(async (valid) => {
           if (valid) {
-            console.log(this.form, 'valid')
-            let builds = this.form.builds.join(', ')
             let formdata = {
-              name: this.form.areaName,
-              address: this.form.areaAddress,
-              builds: builds,
+              name: this.form.sectionName,
             }
-            let data = await doAddCampus(formdata)
+            console.log(formdata, 'valid')
+
+            let data = await addSection(formdata)
             console.log(data, builds, 'success')
 
             this.$refs['form'].resetFields()

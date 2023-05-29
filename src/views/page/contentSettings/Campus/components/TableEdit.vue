@@ -27,12 +27,7 @@
              <span>{{item.buildName}}</span>
           </div>
         </div> -->
-        <el-select
-          v-model.trim="form.builds"
-          multiple
-          placeholder="请选择"
-          @change="changes"
-        >
+        <el-select v-model.trim="form.builds" multiple placeholder="请选择">
           <el-option
             v-for="item in Builddata"
             :key="item.value"
@@ -50,7 +45,7 @@
 </template>
 
 <script>
-  import { doEdit, getBuildList, doAddCampus } from '@/api/table'
+  import { updateArea, getBuildList, doAddCampus } from '@/api/table'
 
   export default {
     name: 'TableEdit',
@@ -76,6 +71,7 @@
         },
         title: '',
         dialogFormVisible: false,
+        Edit: false,
       }
     },
     mounted() {
@@ -87,14 +83,14 @@
         this.Builddata = Builddata.data
         console.log(Builddata.data, 'Builddata.data')
       },
-      changes(e) {
-        console.log(e)
-      },
       showEdit(row, Builddata) {
         if (!row) {
           this.title = '添加园区'
+          this.Edit = false
         } else {
           this.title = '编辑园区'
+          this.Edit = true
+
           this.form = Object.assign({}, row)
           this.form.builds = row.builds.split(',').map((item) => {
             return Number(item)
@@ -112,15 +108,36 @@
       save() {
         this.$refs['form'].validate(async (valid) => {
           if (valid) {
-            console.log(this.form, 'valid')
-            let builds = this.form.builds.join(', ')
-            let formdata = {
-              name: this.form.areaName,
-              address: this.form.areaAddress,
-              builds: builds,
+            if (this.Edit == true) {
+              let builds = this.form.builds.join(',')
+              let formdata = {
+                name: this.form.areaName,
+                address: this.form.areaAddress,
+                builds: builds,
+                areaid: this.form.areaId,
+              }
+              console.log(formdata, this.Edit, 'valid')
+
+              let data = await updateArea(formdata)
+              console.log(data, builds, 'success')
+              if (data.resultCode == 0) {
+                this.$message('修改成功')
+              }
+            } else {
+              let builds = this.form.builds.join(',')
+              let formdata = {
+                name: this.form.areaName,
+                address: this.form.areaAddress,
+                builds: builds,
+              }
+              console.log(formdata, this.Edit, 'valid')
+
+              let data = await doAddCampus(formdata)
+              console.log(data, builds, 'success')
+              if (data.resultCode == 0) {
+                this.$message('添加成功')
+              }
             }
-            let data = await doAddCampus(formdata)
-            console.log(data, builds, 'success')
 
             this.$refs['form'].resetFields()
             this.form = this.$options.data().form

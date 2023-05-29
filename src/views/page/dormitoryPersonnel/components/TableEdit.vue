@@ -37,6 +37,7 @@
         },
         title: '',
         dialogFormVisible: false,
+        Edit: false,
       }
     },
     created() {},
@@ -44,8 +45,10 @@
       showEdit(row) {
         if (!row) {
           this.title = '添加'
+          this.Edit = false
         } else {
           this.title = '编辑'
+          this.Edit = true
           this.form = Object.assign({}, row)
         }
         this.dialogFormVisible = true
