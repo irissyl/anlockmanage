@@ -25,11 +25,10 @@ export function doDelete(data) {
 }
 
 // 园区列表
-export function getCampusList(data) {
+export function getCampusList() {
   return request({
     url: '/api/build/listAllArea',
     method: 'get',
-    data,
   })
 }
 
@@ -123,3 +122,12 @@ export function delSection(data) {
 //     data,
 //   })
 // }
+
+// 取所有办公室名单
+export function listRentCustomerPage(param) {
+  return request({
+    url: '/api/office/listRentCustomerPage',
+    method: 'get',
+    params: param,
+  })
+}
