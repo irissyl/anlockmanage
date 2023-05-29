@@ -8,14 +8,14 @@
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
       <el-form-item label="园区名称" prop="name">
         <el-input
-          v-model.trim="form.name"
+          v-model.trim="form.areaName"
           autocomplete="off"
           placeholder="请输入园区名称"
         ></el-input>
       </el-form-item>
       <el-form-item label="园区地址" prop="address">
         <el-input
-          v-model.trim="form.address"
+          v-model.trim="form.areaAddress"
           autocomplete="off"
           placeholder="请输入园区地址"
         ></el-input>
@@ -27,7 +27,12 @@
              <span>{{item.buildName}}</span>
           </div>
         </div> -->
-        <el-select v-model.trim="form.builds" multiple placeholder="请选择">
+        <el-select
+          v-model.trim="form.builds"
+          multiple
+          placeholder="请选择"
+          @change="changes"
+        >
           <el-option
             v-for="item in Builddata"
             :key="item.value"
@@ -52,16 +57,17 @@
     data() {
       return {
         form: {
-          name: '',
-          address: '',
-          builds: '',
+          areaName: '',
+          areaAddress: '',
+          build: '',
         },
+        buildObjs: [],
         Builddata: '',
         rules: {
-          name: [
+          areaName: [
             { required: true, trigger: 'blur', message: '请输入园区名称' },
           ],
-          address: [
+          areaAddress: [
             { required: true, trigger: 'blur', message: '请输入园区地址' },
           ],
           buildName: [
@@ -79,7 +85,10 @@
       async getBuildList() {
         let Builddata = await getBuildList({})
         this.Builddata = Builddata.data
-        console.log(Builddata.data, 'builddata')
+        console.log(Builddata.data, 'Builddata.data')
+      },
+      changes(e) {
+        console.log(e)
       },
       showEdit(row, Builddata) {
         if (!row) {
@@ -87,6 +96,7 @@
         } else {
           this.title = '编辑园区'
           this.form = Object.assign({}, row)
+          console.log(this.form, row, 'row2')
         }
         this.dialogFormVisible = true
       },
@@ -102,8 +112,8 @@
             console.log(this.form, 'valid')
             let builds = this.form.builds.join(', ')
             let formdata = {
-              name: this.form.name,
-              address: this.form.address,
+              name: this.form.areaName,
+              address: this.form.areaAddress,
               builds: builds,
             }
             let data = await doAddCampus(formdata)

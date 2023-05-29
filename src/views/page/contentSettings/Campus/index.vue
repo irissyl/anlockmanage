@@ -32,7 +32,7 @@
       ></el-table-column>
       <!-- <el-table-column
         show-overflow-tooltip
-        prop="areaName"
+        prop="buildObjs"
         label="所在楼栋"
       ></el-table-column> -->
       <el-table-column show-overflow-tooltip label="操作" width="180px">
@@ -65,6 +65,7 @@
         selectRows: '',
         elementLoadingText: '正在加载...',
         Builddata: [],
+        buildObjs: [],
       }
     },
     computed: {
@@ -82,6 +83,10 @@
         this.listLoading = true
         const datalist = await getCampusList({})
         this.list = datalist.data
+        datalist.data.forEach((item) => {
+          this.buildObjs = item.buildObjs
+          console.log(this.buildObjs, 'this.buildObjs')
+        })
         console.log(datalist.data, 'datalist')
         setTimeout(() => {
           this.listLoading = false
@@ -102,6 +107,7 @@
         this.$refs['edit'].showEdit()
       },
       handleEdit(row) {
+        console.log(row, 'row')
         this.$refs['edit'].showEdit(row)
       },
       async handleDelete(row) {
