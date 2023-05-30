@@ -3,7 +3,7 @@
     <el-tree
       class="left"
       :data="data"
-      node-key="id"
+      node-key="sectionId"
       :default-expanded-keys="[1]"
       :props="defaultProps"
       @node-click="handleNodeClick"
@@ -11,8 +11,55 @@
     <div class="right">
       <div class="btntotal">
         <el-button icon="el-icon-plus" type="primary" @click="handleAdd">
-          添加楼栋
+          导入名单
         </el-button>
+        <el-button icon="el-icon-plus" type="primary" @click="handleAdd">
+          导出名单
+        </el-button>
+        <el-button icon="el-icon-plus" type="primary" @click="handleAdd">
+          添加名单
+        </el-button>
+      </div>
+
+      <div class="inputtotal">
+        <el-form
+          ref="form"
+          :model="queryForm"
+          :inline="true"
+          @submit.native.prevent
+        >
+          <el-form-item>
+            <label class="lb">姓名:</label>
+            <el-input v-model="queryForm.title" class="ei" placeholder="姓名" />
+          </el-form-item>
+          <el-form-item>
+            <label class="lb">手机号码:</label>
+
+            <el-input
+              v-model="queryForm.title"
+              class="ei"
+              placeholder="手机号码"
+            />
+          </el-form-item>
+          <el-form-item>
+            <label class="lb">证件号码:</label>
+            <el-input
+              v-model="queryForm.title"
+              class="ei"
+              placeholder="证件号码"
+            />
+          </el-form-item>
+          <el-form-item>
+            <el-button
+              icon="el-icon-search"
+              type="primary"
+              native-type="submit"
+              @click="handleQuery"
+            >
+              查询
+            </el-button>
+          </el-form-item>
+        </el-form>
       </div>
       <el-table
         ref="tableSort"
@@ -246,10 +293,25 @@
     float: right;
     margin-bottom: 20px;
   }
+  .inputtotal {
+    width: 70%;
+    float: left;
+    // border: 1px solid saddlebrown;
+
+    .ei {
+      float: right;
+      width: 200px;
+    }
+    .lb {
+      // border: 1px solid saddlebrown;
+      float: left;
+      margin-right: 10px;
+    }
+  }
 
   .left {
     width: 10%;
-    height: 605px;
+    height: 560px;
     float: left;
     margin-top: 50px;
     border: 1px solid rgb(231, 231, 231);
