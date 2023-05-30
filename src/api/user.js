@@ -5,6 +5,9 @@ import { loginRSA, tokenName } from '@/config'
 export async function login(data) {
   return request({
     url: '/oauth/token',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
     method: 'post',
     data,
   })
