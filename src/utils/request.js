@@ -26,7 +26,7 @@ let loadingInstance
  * @param {*} msg
  */
 const handleCode = (code, msg) => {
-  console.log(code, 'code')
+  console.log(code, msg, 'code')
   switch (code) {
     case invalidCode:
       Vue.prototype.$baseMessage(msg || `后端接口${code}异常`, 'error')
@@ -36,7 +36,7 @@ const handleCode = (code, msg) => {
       }
       break
     case noPermissionCode:
-      router.push({ path: '/401' }).catch(() => {})
+      router.push({ path: '/login' }).catch(() => {})
       break
     default:
       Vue.prototype.$baseMessage(msg || `后端接口${code}异常`, 'error')

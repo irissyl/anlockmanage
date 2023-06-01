@@ -4,7 +4,7 @@
       <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
         <el-card class="all1" shadow="never">
           <p class="p1">总人数</p>
-          <div class="p2">300</div>
+          <div class="p3">300</div>
           <!-- <span class="p3">男：30</span><span class="p3">女：270</span> -->
         </el-card>
       </el-col>
@@ -30,7 +30,7 @@
       <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
         <el-card shadow="never" style="height: 490px">
           <div slot="header">
-            <span>住宿人员统计</span>
+            <span>人员数量统计图</span>
           </div>
           <BareChart ref="chart_line_one"></BareChart>
         </el-card>
@@ -38,7 +38,7 @@
       <el-col :xs="24" :sm="24" :md="13" :lg="12" :xl="12">
         <el-card class="card" shadow="never" style="height: 490px">
           <div slot="header">
-            <span>房间开门记录</span>
+            <span>设备报警记录</span>
           </div>
           <el-timeline :reverse="reverse">
             <el-timeline-item
@@ -131,270 +131,37 @@
         nodeEnv: process.env.NODE_ENV,
         dependencies: dependencies,
         devDependencies: devDependencies,
-        config1: {
-          startVal: 0,
-          endVal: this.$baseLodash.random(20000, 60000),
-          decimals: 0,
-          prefix: '',
-          suffix: '',
-          separator: ',',
-          duration: 8000,
-        },
-        config2: {
-          startVal: 0,
-          endVal: this.$baseLodash.random(1000, 20000),
-          decimals: 0,
-          prefix: '',
-          suffix: '',
-          separator: ',',
-          duration: 8000,
-        },
-        config3: {
-          startVal: 0,
-          endVal: this.$baseLodash.random(1000, 20000),
-          decimals: 0,
-          prefix: '',
-          suffix: '',
-          separator: ',',
-          duration: 8000,
-        },
-
-        //访问量
-        fwl: {
-          color: [
-            '#1890FF',
-            '#36CBCB',
-            '#4ECB73',
-            '#FBD437',
-            '#F2637B',
-            '#975FE5',
-          ],
-          backgroundColor: 'rgba(252,252,252,0)',
-          grid: {
-            top: '4%',
-            left: '2%',
-            right: '4%',
-            bottom: '0%',
-            containLabel: true,
-          },
-          xAxis: [
-            {
-              type: 'category',
-              boundaryGap: false,
-              data: [],
-              axisTick: {
-                alignWithLabel: true,
-              },
-            },
-          ],
-          yAxis: [
-            {
-              type: 'value',
-            },
-          ],
-          series: [
-            {
-              name: '访问量',
-              type: 'line',
-              data: [],
-              smooth: true,
-              areaStyle: {},
-            },
-          ],
-        },
-        //授权数
-        sqs: {
-          color: [
-            '#1890FF',
-            '#36CBCB',
-            '#4ECB73',
-            '#FBD437',
-            '#F2637B',
-            '#975FE5',
-          ],
-          backgroundColor: 'rgba(252,252,252,0)',
-          grid: {
-            top: '4%',
-            left: '2%',
-            right: '4%',
-            bottom: '0%',
-            containLabel: true,
-          },
-          xAxis: [
-            {
-              type: 'category',
-              /*boundaryGap: false,*/
-              data: ['0时', '4时', '8时', '12时', '16时', '20时', '24时'],
-              axisTick: {
-                alignWithLabel: true,
-              },
-            },
-          ],
-          yAxis: [
-            {
-              type: 'value',
-            },
-          ],
-          series: [
-            {
-              name: '授权数',
-              type: 'bar',
-              barWidth: '60%',
-              data: [10, 52, 20, 33, 39, 33, 22],
-            },
-          ],
-        },
-        //词云
-        cy: {
-          grid: {
-            top: '4%',
-            left: '2%',
-            right: '4%',
-            bottom: '0%',
-          },
-          series: [
-            {
-              type: 'wordCloud',
-              gridSize: 15,
-              sizeRange: [12, 40],
-              rotationRange: [0, 0],
-              width: '100%',
-              height: '100%',
-              textStyle: {
-                normal: {
-                  color() {
-                    const arr = [
-                      '#5470c6',
-                      '#91cc75',
-                      '#fac858',
-                      '#ee6666',
-                      '#73c0de',
-                      '#975FE5',
-                    ]
-                    let index = Math.floor(Math.random() * arr.length)
-                    return arr[index]
-                  },
-                },
-              },
-              data: [
-                {
-                  name: '',
-                  value: 15000,
-                },
-                {
-                  name: 'element',
-                  value: 10081,
-                },
-                {
-                  name: 'beautiful',
-                  value: 9386,
-                },
-
-                {
-                  name: 'vue',
-                  value: 6500,
-                },
-                {
-                  name: 'chuzhixin',
-                  value: 6000,
-                },
-                {
-                  name: 'good',
-                  value: 4500,
-                },
-                {
-                  name: 'success',
-                  value: 3800,
-                },
-                {
-                  name: 'never',
-                  value: 3000,
-                },
-                {
-                  name: 'boy',
-                  value: 2500,
-                },
-                {
-                  name: 'girl',
-                  value: 2300,
-                },
-                {
-                  name: 'github',
-                  value: 2000,
-                },
-                {
-                  name: 'hbuilder',
-                  value: 1900,
-                },
-                {
-                  name: 'dcloud',
-                  value: 1800,
-                },
-                {
-                  name: 'china',
-                  value: 1700,
-                },
-                {
-                  name: '1204505056',
-                  value: 1600,
-                },
-                {
-                  name: '972435319',
-                  value: 1500,
-                },
-                {
-                  name: 'young',
-                  value: 1200,
-                },
-                {
-                  name: 'old',
-                  value: 1100,
-                },
-                {
-                  name: 'vuex',
-                  value: 900,
-                },
-                {
-                  name: 'router',
-                  value: 800,
-                },
-                {
-                  name: 'money',
-                  value: 700,
-                },
-                {
-                  name: 'qingdao',
-                  value: 800,
-                },
-                {
-                  name: 'yantai',
-                  value: 9000,
-                },
-                {
-                  name: 'author is very cool',
-                  value: 9200,
-                },
-              ],
-            },
-          ],
-        },
-
         //更新日志
         reverse: true,
         activities: [
           {
-            content: '源码精简至800k',
+            content: '电池电压:0.00V',
+            timestamp: '2020-04-18',
+            color: '#209cff',
+          },
+          {
+            content: '测试房1002: 设备在5个心跳周期内未上线',
             timestamp: '2020-04-19',
             color: '#209cff',
           },
           {
-            content: '添加视频播放器组件',
+            content: '测试房1003: 电池电压:0.00V',
             timestamp: '2020-04-20',
             color: '#209cff',
           },
           {
-            content: '修复路由懒加载 完善主题配色',
-            timestamp: '2020-04-22',
+            content: '测试房10054: 设备5个心跳周期未上线',
+            timestamp: '2020-04-25',
+            color: '#209cff',
+          },
+          {
+            content: '测试房1005: 设备5个心跳周期未上线',
+            timestamp: '2020-04-26',
+            color: '#209cff',
+          },
+          {
+            content: '测试房1005: 设备5个心跳周期未上线',
+            timestamp: '2020-04-27',
             color: '#209cff',
           },
         ],
@@ -412,76 +179,11 @@
     },
     mounted() {
       this.$refs.chart_line_one.initChart()
-      let base = +new Date(2020, 1, 1)
-      let oneDay = 24 * 3600 * 1000
-      let date = []
-
-      let data = [Math.random() * 1500]
-      let now = new Date(base)
-
-      const addData = (shift) => {
-        now = [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/')
-        date.push(now)
-        data.push(this.$baseLodash.random(20000, 60000))
-
-        if (shift) {
-          date.shift()
-          data.shift()
-        }
-
-        now = new Date(+new Date(now) + oneDay)
-      }
-
-      for (let i = 1; i < 6; i++) {
-        addData()
-      }
-      addData(true)
-      this.fwl.xAxis[0].data = date
-      this.fwl.series[0].data = data
-      this.timer = setInterval(() => {
-        addData(true)
-        this.fwl.xAxis[0].data = date
-        this.fwl.series[0].data = data
-      }, 3000)
     },
     methods: {
       initChart(name, xData, yData) {
         let getchart = echarts.init(document.getElementById('echart-line'))
-        var option = {
-          tooltip: {
-            trigger: 'axis',
-          },
-          legend: {
-            data: [name],
-            bottom: '0%',
-          },
-          grid: {
-            //调整图表上下左右位置
-            top: '10%',
-            left: '3%',
-            right: '8%',
-            bottom: '11%',
-            containLabel: true,
-          },
-
-          xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: xData,
-          },
-          yAxis: {
-            type: 'value',
-          },
-          series: [
-            {
-              name: name,
-              type: 'line',
-              stack: '总量',
-              data: yData,
-            },
-          ],
-        }
-
+        var option = {}
         getchart.setOption(option)
         //随着屏幕大小调节图表
         window.addEventListener('resize', () => {
@@ -505,19 +207,6 @@
         this.activities = data
         const res = await getNoticeList()
         this.noticeList = res.data
-        /* getRepos({
-        token: "1061286824f978ea3cf98b7b8ea26fe27ba7cea1",
-      }).then((res) => {
-        const per_page = Math.ceil(res.data.stargazers_count / 100);
-        alert(per_page);
-        getStargazers({
-          token: "1061286824f978ea3cf98b7b8ea26fe27ba7cea1",
-          page: 1,
-          per_page: res.per_page,
-        }).then((res) => {
-          alert(JSON.stringify(res));
-        });
-      }); */
       },
     },
   }

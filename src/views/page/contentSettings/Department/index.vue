@@ -100,7 +100,7 @@
       async handleDelete(row) {
         console.log(row, 'rowd')
         let sectionId = { sectionId: row.sectionId }
-        let res = await delSection(areaId)
+        let res = await delSection(sectionId)
         if (res.resultCode == 0) {
           this.$message('删除成功')
         }

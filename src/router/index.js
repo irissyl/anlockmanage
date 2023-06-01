@@ -37,6 +37,7 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/index',
+    meta: { title: '首页', icon: 'home' },
     children: [
       {
         path: 'index',
@@ -44,7 +45,7 @@ export const constantRoutes = [
         component: () => import('@/views/index/index'),
         meta: {
           title: '首页',
-          icon: 'home',
+          // icon: 'home',
           affix: true,
         },
       },
@@ -95,7 +96,45 @@ export const constantRoutes = [
       },
     ],
   },
-
+  {
+    path: '/deviceManagement',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'deviceManagement',
+    meta: { title: '智能设备管理', icon: 'unlock-alt' },
+    children: [
+      {
+        path: 'DeviceStatistics',
+        name: 'DeviceStatistics',
+        component: () =>
+          import('@/views/page/deviceManagement/DeviceStatistics/index.vue'),
+        meta: { title: '设备统计' },
+      },
+      {
+        path: 'lockDevice',
+        name: 'lockDevice',
+        component: () =>
+          import('@/views/page/deviceManagement/lockDevice/index.vue'),
+        meta: { title: '门锁设备' },
+      },
+      {
+        path: 'GatewayDevice',
+        name: 'GatewayDevice',
+        component: () =>
+          import('@/views/page/deviceManagement/GatewayDevice/index.vue'),
+        meta: { title: '网关设备' },
+      },
+      {
+        path: 'Water',
+        name: 'Water',
+        component: () =>
+          import(
+            '@/views/page/deviceManagement/Water_meter_equipment/index.vue'
+          ),
+        meta: { title: '水电表设备' },
+      },
+    ],
+  },
   {
     path: '/operatorManagement',
     component: Layout,
@@ -157,46 +196,6 @@ export const constantRoutes = [
       },
     ],
   },
-  {
-    path: '/deviceManagement',
-    component: Layout,
-    redirect: 'noRedirect',
-    name: 'deviceManagement',
-    meta: { title: '智能设备管理', icon: 'unlock-alt' },
-    children: [
-      {
-        path: 'DeviceStatistics',
-        name: 'DeviceStatistics',
-        component: () =>
-          import('@/views/page/deviceManagement/DeviceStatistics/index.vue'),
-        meta: { title: '设备统计' },
-      },
-      {
-        path: 'lockDevice',
-        name: 'lockDevice',
-        component: () =>
-          import('@/views/page/deviceManagement/lockDevice/index.vue'),
-        meta: { title: '门锁设备' },
-      },
-      {
-        path: 'GatewayDevice',
-        name: 'GatewayDevice',
-        component: () =>
-          import('@/views/page/deviceManagement/GatewayDevice/index.vue'),
-        meta: { title: '网关设备' },
-      },
-      {
-        path: 'Water',
-        name: 'Water',
-        component: () =>
-          import(
-            '@/views/page/deviceManagement/Water_meter_equipment/index.vue'
-          ),
-        meta: { title: '水电表设备' },
-      },
-    ],
-  },
-
   {
     path: '/roomListManagement',
     name: 'roomListManagement',

@@ -10,11 +10,11 @@
     ></el-tree>
     <div class="right">
       <div class="btntotal">
-        <el-button icon="el-icon-plus" type="primary" @click="handleAdd">
-          导入名单
-        </el-button>
-        <el-button icon="el-icon-plus" type="primary" @click="handleAdd">
+        <el-button icon="el-icon-plus" type="primary" @click="handleExport">
           导出名单
+        </el-button>
+        <el-button icon="el-icon-plus" type="primary" @click="handleImport">
+          导入名单
         </el-button>
         <el-button icon="el-icon-plus" type="primary" @click="handleAdd">
           添加名单
@@ -34,7 +34,6 @@
           </el-form-item>
           <el-form-item>
             <label class="lb">手机号码:</label>
-
             <el-input
               v-model="queryForm.title"
               class="ei"
@@ -111,7 +110,7 @@
         ></el-table-column>
         <el-table-column
           show-overflow-tooltip
-          prop="rentCardno"
+          prop="rentCardnoHex"
           label="持卡卡号"
         ></el-table-column>
 
@@ -160,7 +159,12 @@
 </template>
 
 <script>
-  import { listRentCustomerPage, deleteBuild, listSection } from '@/api/table'
+  import {
+    listRentCustomerPage,
+    deleteBuild,
+    listSection,
+    delOfficeRent,
+  } from '@/api/table'
   import TableEdit from './components/TableEdit'
   export default {
     name: 'VueAdminBetterIndex',
@@ -195,6 +199,7 @@
           children: 'children',
           label: 'sectionName',
         },
+        section: '',
       }
     },
     computed: {
@@ -210,6 +215,8 @@
 
     methods: {
       handleNodeClick(data) {
+        this.section = data.sectionName
+        this.fetchData()
         console.log(data)
       },
       async getdepartmemtData() {
@@ -221,7 +228,7 @@
           }
           return item
         })
-        console.log(this.data, 'this.data')
+        console.log(this.data, departdatalist.data, 'this.data')
       },
       async fetchData() {
         // this.listLoading = true
@@ -230,6 +237,7 @@
           pageSize: this.queryForm.pageSize,
           pagenumber: 1,
           pagesize: 10,
+          section: this.section == '办公室' ? '' : this.section,
         }
         console.log(formdata, 'formdata')
         const datalist = await listRentCustomerPage(formdata, {})
@@ -271,14 +279,23 @@
       handleAdd() {
         this.$refs['edit'].showEdit()
       },
-      handleEdit(row) {
+      handleImport(row) {
         console.log(row, 'row')
+
+        // this.$refs['edit'].showEdit()
+      },
+      handleExport(row) {
+        console.log(row, 'row')
+        // this.$refs['edit'].showEdit()
+      },
+      handleEdit(row) {
+        console.log(row, 'editrow')
         this.$refs['edit'].showEdit(row)
       },
       async handleDelete(row) {
         console.log(row, 'rowd')
-        let buildid = { buildid: row.buildId }
-        let res = await deleteBuild(buildid)
+        let rentId = { rentId: row.rentId }
+        let res = await delOfficeRent(rentId)
         if (res.resultCode == 0) {
           this.$message('删除成功')
         }

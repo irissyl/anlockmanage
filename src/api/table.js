@@ -28,6 +28,9 @@ export function doDelete(data) {
 export function getCampusList() {
   return request({
     url: '/api/build/listAllArea',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
     method: 'get',
   })
 }
@@ -36,6 +39,9 @@ export function getCampusList() {
 export function doAddCampus(data) {
   return request({
     url: '/api/build/addArea',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
     method: 'post',
     data,
   })
@@ -45,6 +51,9 @@ export function doAddCampus(data) {
 export function updateArea(data) {
   return request({
     url: '/api/build/updateArea',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
     method: 'post',
     data,
   })
@@ -53,6 +62,9 @@ export function updateArea(data) {
 export function deleteCampus(data) {
   return request({
     url: '/api/build/delArea',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
     method: 'post',
     data,
   })
@@ -61,6 +73,9 @@ export function deleteCampus(data) {
 export function getBuildList(data) {
   return request({
     url: '/api/build/listAllBuild',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
     method: 'get',
     data,
   })
@@ -70,6 +85,9 @@ export function getBuildList(data) {
 export function addBuild(data) {
   return request({
     url: '/api/build/addBuild',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
     method: 'post',
     data,
   })
@@ -78,7 +96,11 @@ export function addBuild(data) {
 export function deleteBuild(data) {
   return request({
     url: '/api/build/delBuild',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
     method: 'post',
+
     data,
   })
 }
@@ -86,6 +108,9 @@ export function deleteBuild(data) {
 export function updateBuild(data) {
   return request({
     url: '/api/build/updateBuild',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
     method: 'post',
     data,
   })
@@ -127,7 +152,92 @@ export function delSection(data) {
 export function listRentCustomerPage(param) {
   return request({
     url: '/api/office/listRentCustomerPage',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
     method: 'get',
     params: param,
+  })
+}
+// 查询办公室名单
+export function listRentCustomerSearch(param) {
+  return request({
+    url: '/api/office/listRentCustomerSearch',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    method: 'get',
+    params: param,
+  })
+}
+// 添加办公室名单
+export function addOfficeRent(data) {
+  return request({
+    url: '/api/office/addOfficeRent',
+    method: 'post',
+    data,
+  })
+}
+
+// 删除办公室人员(并删除门锁钥匙)
+export function delOfficeRent(data) {
+  return request({
+    url: '/api/office/delOfficeRent',
+    method: 'post',
+    data,
+  })
+}
+
+// 添加钥匙指纹
+export function addKeyFinger(data) {
+  return request({
+    url: '/api/netlock/addKeyFinger',
+    method: 'post',
+    data,
+  })
+}
+
+// 取宿舍人员名单
+export function listHostelRentPage(data) {
+  return request({
+    url: '/api/hostel/listHostelRentPage',
+    method: 'post',
+    data,
+  })
+}
+
+// 添加宿舍名单
+export function addHostelRent(data) {
+  return request({
+    url: '/api/hostel/addHostelRent',
+    method: 'post',
+    data,
+  })
+}
+
+// 修改宿舍名单
+export function updateHostelRent(data) {
+  return request({
+    url: '/api/hostel/updateHostelRent',
+    method: 'post',
+    data,
+  })
+}
+
+// 设置宿舍名单关联门锁
+export function setChangeIottag(data) {
+  return request({
+    url: '/api/hostel/setChangeIottag',
+    method: 'post',
+    data,
+  })
+}
+
+//查找宿舍人员名单
+export function listHostelRentSearch(data) {
+  return request({
+    url: '/api/hostel/listHostelRentSearch',
+    method: 'post',
+    data,
   })
 }

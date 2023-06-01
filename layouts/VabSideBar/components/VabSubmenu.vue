@@ -15,7 +15,7 @@
         :icon-class="item.meta.remixIcon"
         class="vab-remix-icon"
       />
-      <span>{{ item.meta.title }}</span>
+      <span>{{ item.meta?.title }}</span>
     </template>
     <slot />
   </el-submenu>

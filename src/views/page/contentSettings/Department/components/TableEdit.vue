@@ -63,13 +63,15 @@
         this.$refs['form'].validate(async (valid) => {
           if (valid) {
             let formdata = {
-              name: this.form.sectionName,
+              sectionName: this.form.sectionName,
             }
             console.log(formdata, 'valid')
 
             let data = await addSection(formdata)
-            console.log(data, builds, 'success')
-
+            console.log(data, 'success')
+            if (data.resultCode == 0) {
+              this.$message('添加成功')
+            }
             this.$refs['form'].resetFields()
             this.form = this.$options.data().form
             this.dialogFormVisible = false

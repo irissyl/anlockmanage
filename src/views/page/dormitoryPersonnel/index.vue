@@ -1,19 +1,27 @@
 <template>
   <div class="table-container">
-    <vab-query-form>
-      <vab-query-form-left-panel>
+    <el-tree
+      class="left"
+      :data="data"
+      node-key="sectionId"
+      :default-expanded-keys="[1]"
+      :props="defaultProps"
+      @node-click="handleNodeClick"
+    ></el-tree>
+    <div class="right">
+      <div class="btntotal">
+        <el-button icon="el-icon-plus" type="primary" @click="handleExport">
+          导出名单
+        </el-button>
+        <el-button icon="el-icon-plus" type="primary" @click="handleImport">
+          导入名单
+        </el-button>
         <el-button icon="el-icon-plus" type="primary" @click="handleAdd">
-          添加
+          添加名单
         </el-button>
-        <el-button icon="el-icon-delete" type="danger" @click="handleDelete">
-          删除
-        </el-button>
-        <el-button type="primary" @click="testMessage">baseMessage</el-button>
-        <el-button type="primary" @click="testALert">baseAlert</el-button>
-        <el-button type="primary" @click="testConfirm">baseConfirm</el-button>
-        <el-button type="primary" @click="testNotify">baseNotify</el-button>
-      </vab-query-form-left-panel>
-      <vab-query-form-right-panel>
+      </div>
+
+      <div class="inputtotal">
         <el-form
           ref="form"
           :model="queryForm"
@@ -21,7 +29,24 @@
           @submit.native.prevent
         >
           <el-form-item>
-            <el-input v-model="queryForm.title" placeholder="标题" />
+            <label class="lb">姓名:</label>
+            <el-input v-model="queryForm.title" class="ei" placeholder="姓名" />
+          </el-form-item>
+          <el-form-item>
+            <label class="lb">手机号码:</label>
+            <el-input
+              v-model="queryForm.title"
+              class="ei"
+              placeholder="手机号码"
+            />
+          </el-form-item>
+          <el-form-item>
+            <label class="lb">证件号码:</label>
+            <el-input
+              v-model="queryForm.title"
+              class="ei"
+              placeholder="证件号码"
+            />
           </el-form-item>
           <el-form-item>
             <el-button
@@ -34,114 +59,160 @@
             </el-button>
           </el-form-item>
         </el-form>
-      </vab-query-form-right-panel>
-    </vab-query-form>
-
-    <el-table
-      ref="tableSort"
-      v-loading="listLoading"
-      :data="list"
-      :element-loading-text="elementLoadingText"
-      :height="height"
-      @selection-change="setSelectRows"
-      @sort-change="tableSortChange"
-    >
-      <el-table-column
-        show-overflow-tooltip
-        type="selection"
-        width="55"
-      ></el-table-column>
-      <el-table-column show-overflow-tooltip label="序号" width="95">
-        <template #default="scope">
-          {{ scope.$index + 1 }}
-        </template>
-      </el-table-column>
-      <el-table-column
-        show-overflow-tooltip
-        prop="title"
-        label="标题"
-      ></el-table-column>
-      <el-table-column
-        show-overflow-tooltip
-        label="作者"
-        prop="author"
-      ></el-table-column>
-      <el-table-column show-overflow-tooltip label="头像">
-        <template #default="{ row }">
-          <el-image
-            v-if="imgShow"
-            :preview-src-list="imageList"
-            :src="row.img"
-          ></el-image>
-        </template>
-      </el-table-column>
-      <el-table-column
-        show-overflow-tooltip
-        label="点击量"
-        prop="pageViews"
-        sortable
-      ></el-table-column>
-      <el-table-column show-overflow-tooltip label="状态">
-        <template #default="{ row }">
-          <el-tooltip
-            :content="row.status"
-            class="item"
-            effect="dark"
-            placement="top-start"
-          >
-            <el-tag :type="row.status | statusFilter">
-              {{ row.status }}
+      </div>
+      <el-table
+        ref="tableSort"
+        v-loading="listLoading"
+        border
+        :data="list"
+        :element-loading-text="elementLoadingText"
+        :height="height"
+        :header-cell-style="{ 'text-align': 'left', background: '#f5f7fa' }"
+        :cell-style="{ 'text-align': 'left' }"
+        style="width: 100%"
+        @selection-change="setSelectRows"
+        @sort-change="tableSortChange"
+      >
+        <el-table-column show-overflow-tooltip label="序号" width="95">
+          <template #default="scope">
+            {{ scope.$index + 1 }}
+          </template>
+        </el-table-column>
+        <el-table-column
+          show-overflow-tooltip
+          prop="customerName"
+          label="姓名"
+        ></el-table-column>
+        <el-table-column show-overflow-tooltip label="性别">
+          <template #default="{ row }">
+            <el-tag>
+              <!-- {{ item.sex=='M'}}?{{'男'}}:{{'女'}} -->
+              {{ row.sex == 'M' ? '男' : '女' }}
             </el-tag>
-          </el-tooltip>
-        </template>
-      </el-table-column>
-      <el-table-column
-        show-overflow-tooltip
-        label="时间"
-        prop="datetime"
-        width="200"
-      ></el-table-column>
-      <el-table-column show-overflow-tooltip label="操作" width="180px">
-        <template #default="{ row }">
-          <el-button type="text" @click="handleEdit(row)">编辑</el-button>
-          <el-button type="text" @click="handleDelete(row)">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <el-pagination
-      :background="background"
-      :current-page="queryForm.pageNo"
-      :layout="layout"
-      :page-size="queryForm.pageSize"
-      :total="total"
-      @current-change="handleCurrentChange"
-      @size-change="handleSizeChange"
-    ></el-pagination>
-    <table-edit ref="edit"></table-edit>
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          show-overflow-tooltip
+          prop="idCard"
+          label="证件号码"
+        ></el-table-column>
+        <el-table-column
+          show-overflow-tooltip
+          prop="mobile"
+          label="手机"
+        ></el-table-column>
+        <el-table-column
+          show-overflow-tooltip
+          prop="rentContent"
+          label="所属部门"
+        ></el-table-column>
+        <el-table-column
+          show-overflow-tooltip
+          prop="rentDoorPass"
+          label="开门密码"
+        ></el-table-column>
+        <el-table-column
+          show-overflow-tooltip
+          prop="rentCardnoHex"
+          label="持卡卡号"
+        ></el-table-column>
+
+        <el-table-column
+          show-overflow-tooltip
+          prop="fingerCount"
+          label="指纹"
+        ></el-table-column>
+        <el-table-column
+          show-overflow-tooltip
+          prop=""
+          label="楼栋"
+        ></el-table-column>
+        <el-table-column
+          show-overflow-tooltip
+          prop=""
+          label="房间名称"
+        ></el-table-column>
+        <el-table-column
+          show-overflow-tooltip
+          prop=""
+          label="房型"
+        ></el-table-column>
+        <el-table-column
+          show-overflow-tooltip
+          prop=""
+          label="床位"
+        ></el-table-column>
+
+        <el-table-column
+          show-overflow-tooltip
+          prop="rentCach"
+          label="租金"
+        ></el-table-column>
+        <el-table-column
+          show-overflow-tooltip
+          prop="rentDeposit"
+          label="押金"
+        ></el-table-column>
+        <el-table-column
+          show-overflow-tooltip
+          prop="startTime"
+          label="起始时间"
+        ></el-table-column>
+        <el-table-column
+          show-overflow-tooltip
+          prop="endTime"
+          label="结束时间"
+        ></el-table-column>
+        <el-table-column
+          show-overflow-tooltip
+          prop="endTime"
+          label="同步"
+        ></el-table-column>
+        <el-table-column
+          show-overflow-tooltip
+          prop="rentInputUser"
+          label="操作员"
+        ></el-table-column>
+
+        <el-table-column
+          show-overflow-tooltip
+          label="操作"
+          width="150px"
+          fixed="right"
+        >
+          <template #default="{ row }">
+            <el-button type="text" @click="handleEdit(row)">编辑</el-button>
+            <el-button type="text" @click="handleDelete(row)">删除</el-button>
+            <el-button type="text">开门记录</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        :background="background"
+        :current-page="queryForm.pageNo"
+        :layout="layout"
+        :page-size="queryForm.pageSize"
+        :total="total"
+        @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
+      ></el-pagination>
+    </div>
+
+    <table-edit ref="edit" @fetchData="fetchData"></table-edit>
   </div>
 </template>
 
 <script>
-  import { getList, doDelete } from '@/api/table'
+  import { listHostelRentPage, deleteBuild, listSection } from '@/api/table'
   import TableEdit from './components/TableEdit'
   export default {
-    name: 'ComprehensiveTable',
+    name: 'VueAdminBetterIndex',
     components: {
       TableEdit,
     },
-    filters: {
-      statusFilter(status) {
-        const statusMap = {
-          published: 'success',
-          draft: 'gray',
-          deleted: 'danger',
-        }
-        return statusMap[status]
-      },
-    },
     data() {
       return {
-        imgShow: true,
         list: [],
         imageList: [],
         listLoading: true,
@@ -152,9 +223,23 @@
         elementLoadingText: '正在加载...',
         queryForm: {
           pageNo: 1,
-          pageSize: 20,
+          pageSize: 10,
           title: '',
         },
+        Builddata: [],
+        buildObjs: [],
+        data: [
+          {
+            sectionId: 1,
+            sectionName: '宿舍',
+            children: [],
+          },
+        ],
+        defaultProps: {
+          children: 'children',
+          label: 'sectionName',
+        },
+        section: '',
       }
     },
     computed: {
@@ -162,12 +247,61 @@
         return this.$baseTableHeight()
       },
     },
+
     created() {
       this.fetchData()
+      this.getdepartmemtData()
     },
-    beforeDestroy() {},
-    mounted() {},
+
     methods: {
+      handleNodeClick(data) {
+        this.section = data.sectionName
+        this.fetchData()
+        console.log(data)
+      },
+      async getdepartmemtData() {
+        const departdatalist = await listSection({})
+        this.data.map((item) => {
+          if (item.sectionId === 1) {
+            // 找到要合并的元素
+            item.children = item.children.concat(departdatalist.data) // 将s数组合并到该元素的children属性中
+          }
+          return item
+        })
+      },
+      async fetchData() {
+        // this.listLoading = true
+        let formdata = {
+          pageNumber: this.queryForm.pageNo,
+          pageSize: this.queryForm.pageSize,
+          // section: this.section=='宿舍'?'':this.section
+        }
+        const datalist = await listHostelRentPage(formdata, {})
+        this.list = datalist.data.datas
+        this.total = datalist.data.dataCount
+        // datalist.data.datas.forEach((item) => {
+        //   this.buildObjs = item.buildObjs
+        // })
+        console.log(datalist, this.section, 'fetchData')
+        setTimeout(() => {
+          this.listLoading = false
+        }, 500)
+      },
+      handleSizeChange(val) {
+        this.queryForm.pageSize = val
+        console.log(this.queryForm.pageSize, 'pageSize')
+        this.fetchData()
+      },
+      handleCurrentChange(val) {
+        this.queryForm.pageNo = val
+        console.log(this.queryForm.pageNo, 'pageNo')
+
+        this.fetchData()
+      },
+      handleQuery() {
+        this.queryForm.pageNo = 1
+        this.fetchData()
+      },
       tableSortChange() {
         const imageList = []
         this.$refs.tableSort.tableData.forEach((item, index) => {
@@ -181,83 +315,62 @@
       handleAdd() {
         this.$refs['edit'].showEdit()
       },
+      handleImport(row) {
+        console.log(row, 'row')
+        // this.$refs['edit'].showEdit()
+      },
+      handleExport(row) {
+        console.log(row, 'row')
+        // this.$refs['edit'].showEdit()
+      },
       handleEdit(row) {
+        console.log(row, 'editrow')
         this.$refs['edit'].showEdit(row)
       },
-      handleDelete(row) {
-        if (row.id) {
-          this.$baseConfirm('你确定要删除当前项吗', null, async () => {
-            const { msg } = await doDelete({ ids: row.id })
-            this.$baseMessage(msg, 'success')
-            this.fetchData()
-          })
-        } else {
-          if (this.selectRows.length > 0) {
-            const ids = this.selectRows.map((item) => item.id).join()
-            this.$baseConfirm('你确定要删除选中项吗', null, async () => {
-              const { msg } = await doDelete({ ids: ids })
-              this.$baseMessage(msg, 'success')
-              this.fetchData()
-            })
-          } else {
-            this.$baseMessage('未选中任何行', 'error')
-            return false
-          }
+      async handleDelete(row) {
+        console.log(row, 'rowd')
+        let buildid = { buildid: row.buildId }
+        let res = await deleteBuild(buildid)
+        if (res.resultCode == 0) {
+          this.$message('删除成功')
         }
-      },
-      handleSizeChange(val) {
-        this.queryForm.pageSize = val
         this.fetchData()
-      },
-      handleCurrentChange(val) {
-        this.queryForm.pageNo = val
-        this.fetchData()
-      },
-      handleQuery() {
-        this.queryForm.pageNo = 1
-        this.fetchData()
-      },
-      async fetchData() {
-        this.listLoading = true
-        const { data, totalCount } = await getList(this.queryForm)
-        this.list = data
-        const imageList = []
-        data.forEach((item, index) => {
-          imageList.push(item.img)
-        })
-        this.imageList = imageList
-        this.total = totalCount
-        setTimeout(() => {
-          this.listLoading = false
-        }, 500)
-      },
-      testMessage() {
-        this.$baseMessage('test1', 'success')
-      },
-      testALert() {
-        this.$baseAlert('11')
-        this.$baseAlert('11', '自定义标题', () => {
-          /* 可以写回调; */
-        })
-        this.$baseAlert('11', null, () => {
-          /* 可以写回调; */
-        })
-      },
-      testConfirm() {
-        this.$baseConfirm(
-          '你确定要执行该操作?',
-          null,
-          () => {
-            /* 可以写回调; */
-          },
-          () => {
-            /* 可以写回调; */
-          }
-        )
-      },
-      testNotify() {
-        this.$baseNotify('测试消息提示', 'test', 'success', 'bottom-right')
       },
     },
   }
 </script>
+
+<style lang="scss" scoped>
+  .btntotal {
+    float: right;
+    margin-bottom: 20px;
+  }
+  .inputtotal {
+    width: 70%;
+    float: left;
+    // border: 1px solid saddlebrown;
+
+    .ei {
+      float: right;
+      width: 200px;
+    }
+    .lb {
+      // border: 1px solid saddlebrown;
+      float: left;
+      margin-right: 10px;
+    }
+  }
+
+  .left {
+    width: 10%;
+    height: 560px;
+    float: left;
+    margin-top: 50px;
+    border: 1px solid rgb(231, 231, 231);
+  }
+
+  .right {
+    width: 88%;
+    float: right;
+  }
+</style>
