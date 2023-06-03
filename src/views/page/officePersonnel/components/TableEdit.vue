@@ -56,7 +56,7 @@
       </el-form-item>
       <el-form-item label="所属部门" prop="content">
         <el-select
-          v-model.trim="form.content"
+          v-model="form.content"
           multiple
           placeholder="请选择部门"
           style="width: 450px"
@@ -65,7 +65,7 @@
             v-for="item in Builddata"
             :key="item.sectionId"
             :label="item.sectionName"
-            :value="item.sectionName"
+            :value="item.sectionId"
           ></el-option>
         </el-select>
       </el-form-item>
@@ -134,7 +134,7 @@
         form: {
           customerName: '',
           rentCardnoHex: '',
-          content: '',
+          content: [],
           idCard: '',
           mobile: '',
           rentDoorPass: '',
@@ -315,6 +315,11 @@
           this.Edit = true
           this.form = Object.assign({}, row)
           this.form.content = row.rentContent.split(',').map((item) => {
+            this.Builddata.forEach((item2) => {
+              if (item2.sectionName == item) {
+                item = item2.sectionId
+              }
+            })
             return Number(item)
           })
           console.log(this.form, row, 'row2')
