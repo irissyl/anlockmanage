@@ -11,11 +11,93 @@
       </el-col>
 
       <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-        <el-card class="card" shadow="never">
-          <div slot="header">
-            <span>更新日志</span>
-          </div>
-        </el-card>
+        <el-descriptions
+          class="margin-top"
+          :column="1"
+          size="medium"
+          label-style="width:200px;"
+          border
+        >
+          <!-- <template slot="extra">
+            <el-button type="primary" size="small">操作</el-button>
+          </template> -->
+          <el-descriptions-item>
+            <template slot="label">
+              <i class="el-icon-user"></i>
+              最近联网门锁
+            </template>
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template slot="label">
+              <i class="el-icon-mobile-phone"></i>
+              最近联网网关
+            </template>
+            <!-- 18100000000 -->
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template slot="label">
+              <i class="el-icon-user"></i>
+              最近联网电表
+            </template>
+            <!-- kooriookami -->
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template slot="label">
+              <i class="el-icon-user"></i>
+              最近联网水表
+            </template>
+            <!-- kooriookami -->
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template slot="label">
+              <i class="el-icon-user"></i>
+              断闸水电表
+            </template>
+            <!-- kooriookami -->
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template slot="label">
+              <i class="el-icon-user"></i>
+              低电压门锁数量
+            </template>
+            <!-- kooriookami -->
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template slot="label">
+              <i class="el-icon-user"></i>
+              设备报警事件数
+            </template>
+            <!-- kooriookami -->
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template slot="label">
+              <i class="el-icon-user"></i>
+              数据统计时间
+            </template>
+            <el-button style="float: right" round>刷新统计数据</el-button>
+            <!-- kooriookami -->
+          </el-descriptions-item>
+        </el-descriptions>
+      </el-col>
+
+      <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+        <el-table :data="tableData" style="width: 100%">
+          <el-table-column
+            prop="name"
+            label="楼栋"
+            width="180"
+          ></el-table-column>
+          <el-table-column prop="address" label="设备名称"></el-table-column>
+          <el-table-column prop="address" label="设备标识"></el-table-column>
+          <el-table-column prop="address" label="设备类型"></el-table-column>
+          <el-table-column prop="address" label="报警项目"></el-table-column>
+          <el-table-column prop="address" label="报警内容"></el-table-column>
+          <el-table-column
+            prop="date"
+            label="联网时间"
+            width="180"
+          ></el-table-column>
+        </el-table>
       </el-col>
     </el-row>
   </div>
@@ -41,48 +123,85 @@
           {
             icon: 'video',
             title: '门锁总数量',
-            count: '23',
+            count: '21',
+          },
+          {
+            icon: 'video',
+            title: '网关数量',
+            count: '1',
           },
           {
             icon: 'table',
-            count: '23',
-            title: '表格',
+            count: '11',
+            title: '电表总数量',
+          },
+          {
+            icon: 'table',
+            count: '1',
+            title: '水表总数量',
+          },
+          {
+            icon: 'table',
+            count: '0',
+            title: '门锁在线数量',
           },
           {
             icon: 'laptop-code',
-            count: '23',
-            title: '源码',
+            count: '0',
+            title: '网关在线数量',
           },
           {
             icon: 'table',
-            count: '23',
-            title: '表格',
+            count: '0',
+            title: '电表在线数量',
           },
           {
             icon: 'book',
-            count: '23',
-            title: '书籍',
+            count: '0',
+            title: '水表在线数量',
           },
           {
             icon: 'bullhorn',
-            count: '23',
-            title: '公告',
+            count: '30%',
+            title: '门锁在线率',
           },
           {
             icon: 'gift',
-            count: '23',
-            title: '礼物',
+            count: '2%',
+            title: '电表在线率',
           },
 
           {
             icon: 'balance-scale-left',
-            count: '23',
-            title: '公平的世界',
+            count: '0%',
+            title: '水表在线率',
           },
           {
             icon: 'coffee',
-            count: '23',
-            title: '休息一下',
+            count: '23%',
+            title: '网关在线率',
+          },
+        ],
+        tableData: [
+          {
+            date: '2016-05-02',
+            name: '王小虎',
+            address: '1518 弄',
+          },
+          {
+            date: '2016-05-04',
+            name: '王小虎',
+            address: '1517 弄',
+          },
+          {
+            date: '2016-05-01',
+            name: '王小虎',
+            address: '1519 弄',
+          },
+          {
+            date: '2016-05-03',
+            name: '王小虎',
+            address: '1516 弄',
           },
         ],
       }
@@ -111,18 +230,18 @@
         const res = await getNoticeList()
         this.noticeList = res.data
         /* getRepos({
+      token: "1061286824f978ea3cf98b7b8ea26fe27ba7cea1",
+    }).then((res) => {
+      const per_page = Math.ceil(res.data.stargazers_count / 100);
+      alert(per_page);
+      getStargazers({
         token: "1061286824f978ea3cf98b7b8ea26fe27ba7cea1",
+        page: 1,
+        per_page: res.per_page,
       }).then((res) => {
-        const per_page = Math.ceil(res.data.stargazers_count / 100);
-        alert(per_page);
-        getStargazers({
-          token: "1061286824f978ea3cf98b7b8ea26fe27ba7cea1",
-          page: 1,
-          per_page: res.per_page,
-        }).then((res) => {
-          alert(JSON.stringify(res));
-        });
-      }); */
+        alert(JSON.stringify(res));
+      });
+    }); */
       },
     },
   }
@@ -134,18 +253,22 @@
     background: #f5f7f8 !important;
 
     .icon-panel {
-      // height: 117px;
-      width: 15%;
+      height: 105px;
+      width: 24%;
       float: left;
       text-align: center;
+
       // cursor: pointer;
-      margin-right: 15px;
+      margin-right: 5px;
       // border: 1px solid firebrick;
 
       h1 {
         float: left;
-        font-size: 40px;
+        font-size: 30px;
         width: 100%;
+        padding: 0 !important;
+        margin: 0 !important;
+        color: #16b7fb;
         // border: 1px solid firebrick;
       }
 
@@ -153,12 +276,6 @@
         float: left;
         width: 100%;
         // border: 1px solid firebrick;
-      }
-    }
-
-    .bottom-btn {
-      button {
-        // margin: 5px 10px 15px 0;
       }
     }
   }

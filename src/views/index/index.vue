@@ -28,7 +28,7 @@
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-        <el-card shadow="never" style="height: 490px">
+        <el-card shadow="never" style="height: 590px">
           <div slot="header">
             <span>人员数量统计图</span>
           </div>
@@ -36,7 +36,7 @@
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="13" :lg="12" :xl="12">
-        <el-card class="card" shadow="never" style="height: 490px">
+        <el-card class="card" shadow="never" style="height: 590px">
           <div slot="header">
             <span>设备报警记录</span>
           </div>
