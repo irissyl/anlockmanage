@@ -167,31 +167,22 @@ export const constantRoutes = [
     component: Layout,
     redirect: 'noRedirect',
     name: 'officePersonnel',
-    meta: { title: '办公室人员管理', icon: 'chalkboard-teacher' },
+    meta: { title: '人员管理', icon: 'chalkboard-teacher' },
     children: [
       {
         path: 'office',
         name: 'office',
         component: () => import('@/views/page/officePersonnel/index'),
         meta: {
-          title: '办公室人员列表',
+          title: '办公室人员管理',
         },
       },
-    ],
-  },
-  {
-    path: '/dormitoryPersonnel',
-    component: Layout,
-    redirect: 'noRedirect',
-    name: 'dormitoryPersonnel',
-    meta: { title: '宿舍人员管理', icon: 'home' },
-    children: [
       {
         path: 'dormitory',
         name: 'dormitory',
         component: () => import('@/views/page/dormitoryPersonnel/index'),
         meta: {
-          title: '宿舍人员列表',
+          title: '宿舍人员管理',
         },
       },
     ],

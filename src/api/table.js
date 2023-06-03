@@ -233,10 +233,55 @@ export function setChangeIottag(data) {
   })
 }
 
+// 删除宿舍名单(并删除门锁钥匙)
+export function delHostelRent(data) {
+  return request({
+    url: '/api/hostel/delHostelRent',
+    method: 'post',
+    data,
+  })
+}
+
 //查找宿舍人员名单
 export function listHostelRentSearch(data) {
   return request({
     url: '/api/hostel/listHostelRentSearch',
+    method: 'post',
+    data,
+  })
+}
+
+//取房间设备列表
+export function listOfficeDevice() {
+  return request({
+    url: '/api/office/listOfficeDevice',
+    method: 'post',
+    data,
+  })
+}
+
+//取房间设备列表(分页)
+export function listOfficeDevicePage() {
+  return request({
+    url: '/api/office/listOfficeDevicePage',
+    method: 'post',
+    data,
+  })
+}
+
+// 取设备开门日志列表
+
+export function getNetlockLogListSearch() {
+  return request({
+    url: '/api/office/getNetlockLogList',
+    method: 'get',
+    data,
+  })
+}
+
+export function getNetlockLogList(data) {
+  return request({
+    url: '/api/office/getNetlockLogList',
     method: 'post',
     data,
   })

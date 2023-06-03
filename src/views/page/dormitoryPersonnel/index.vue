@@ -198,13 +198,18 @@
         @size-change="handleSizeChange"
       ></el-pagination>
     </div>
-
     <table-edit ref="edit" @fetchData="fetchData"></table-edit>
   </div>
 </template>
 
 <script>
-  import { listHostelRentPage, deleteBuild, listSection } from '@/api/table'
+  import {
+    listHostelRentPage,
+    deleteBuild,
+    listSection,
+    setChangeIottag,
+    delHostelRent,
+  } from '@/api/table'
   import TableEdit from './components/TableEdit'
   export default {
     name: 'VueAdminBetterIndex',
@@ -329,8 +334,8 @@
       },
       async handleDelete(row) {
         console.log(row, 'rowd')
-        let buildid = { buildid: row.buildId }
-        let res = await deleteBuild(buildid)
+        let rentId = { rentId: row.rentId }
+        let res = await delHostelRent(rentId)
         if (res.resultCode == 0) {
           this.$message('删除成功')
         }

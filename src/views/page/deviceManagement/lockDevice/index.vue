@@ -125,7 +125,7 @@
 </template>
 
 <script>
-  import { getCampusList, deleteCampus } from '@/api/table'
+  import { listOfficeDevice, listOfficeDevicePage } from '@/api/table'
   import TableEdit from './components/TableEdit'
   export default {
     name: 'VueAdminBetterIndex',
@@ -164,7 +164,7 @@
     methods: {
       async fetchData() {
         this.listLoading = true
-        const datalist = await getCampusList()
+        const datalist = await listOfficeDevicePage({})
         this.list = datalist.data
         datalist.data.forEach((item) => {
           this.buildObjs = item.buildObjs

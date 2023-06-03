@@ -11,13 +11,7 @@
       </el-col>
 
       <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-        <el-descriptions
-          class="margin-top"
-          :column="1"
-          size="medium"
-          label-style="width:200px;"
-          border
-        >
+        <el-descriptions class="margin-top" :column="1" size="medium" border>
           <!-- <template slot="extra">
             <el-button type="primary" size="small">操作</el-button>
           </template> -->
@@ -104,7 +98,7 @@
 </template>
 
 <script>
-  import { getList } from '@/api/changeLog'
+  import { listOfficeDevice, listOfficeDevicePage } from '@/api/table'
   import { getNoticeList } from '@/api/notice'
 
   export default {
@@ -210,8 +204,15 @@
     beforeDestroy() {
       clearInterval(this.timer)
     },
-
+    created() {
+      this.getlistOfficeDevice()
+    },
     methods: {
+      async getlistOfficeDevice() {
+        let query = {}
+        let listOfficedatas = await listOfficeDevice()
+        console.log(listOfficedatas, 'listOfficeDevice')
+      },
       handleClick(e) {
         this.$baseMessage(`点击了${e.name},这里可以写跳转`)
       },

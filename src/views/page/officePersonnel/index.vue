@@ -139,7 +139,7 @@
           <template #default="{ row }">
             <el-button type="text" @click="handleEdit(row)">编辑</el-button>
             <el-button type="text" @click="handleDelete(row)">删除</el-button>
-            <el-button type="text">开门记录</el-button>
+            <el-button type="text" @click="handleOpen(row)">开门记录</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -154,7 +154,8 @@
       ></el-pagination>
     </div>
 
-    <table-edit ref="edit" @fetchData="fetchData"></table-edit>
+    <TableEdit ref="edit" @fetchData="fetchData"></TableEdit>
+    <OpenDoorRecord ref="opendoor" @fetchData="fetchData"></OpenDoorRecord>
   </div>
 </template>
 
@@ -166,10 +167,12 @@
     delOfficeRent,
   } from '@/api/table'
   import TableEdit from './components/TableEdit'
+  import OpenDoorRecord from './components/openDoorRecord'
   export default {
     name: 'VueAdminBetterIndex',
     components: {
       TableEdit,
+      OpenDoorRecord,
     },
     data() {
       return {
@@ -200,6 +203,7 @@
           label: 'sectionName',
         },
         section: '',
+        opendoor: false,
       }
     },
     computed: {
@@ -214,6 +218,10 @@
     },
 
     methods: {
+      handleOpen(row) {
+        console.log(row, 'opendoor')
+        this.$refs['opendoor'].showEdit(row)
+      },
       handleNodeClick(data) {
         this.section = data.sectionName
         this.fetchData()
