@@ -172,6 +172,7 @@
     deleteBuild,
     getCampusList,
     delOfficeRent,
+    listOfficeDevicePage,
   } from '@/api/table'
   import TableEdit from './components/TableEdit'
   export default {
@@ -222,6 +223,15 @@
     },
 
     methods: {
+      async getlistOfficeDevice() {
+        let datas = {
+          buildKeys: '14606',
+          pageNumber: 1,
+          pageSize: 10,
+        }
+        let listOfficedatas = await listOfficeDevicePage(datas, {})
+        console.log(listOfficedatas, 'listOfficeDevice')
+      },
       handleNodeClick(data) {
         this.section = data.sectionName
         this.fetchData()
@@ -245,15 +255,12 @@
       async fetchData() {
         // this.listLoading = true
         let formdata = {
-          pageNumber: this.queryForm.pageNo,
-          pageSize: this.queryForm.pageSize,
-          pagenumber: 1,
-          pagesize: 10,
-          section: this.section == '办公室' ? '' : this.section,
+          buildKeys: '',
+          pageNumber: 1,
+          pageSize: 10,
         }
-        console.log(formdata, 'formdata')
-        const datalist = await listRentCustomerPage(formdata, {})
-        this.list = datalist.data.datas
+        let listOfficedatas = await listOfficeDevicePage(formdata, {})
+        this.list = listOfficedatas.data.datas
         this.total = datalist.data.dataCount
         // datalist.data.datas.forEach((item) => {
         //   this.buildObjs = item.buildObjs

@@ -160,9 +160,9 @@
         }
         this.dialogFormVisible = true
       },
-      async fetchData() {
-        let data = await getNetlockLogList(query)
-      },
+      // async fetchData() {
+      //   let data = await getNetlockLogList(query)
+      // },
       handleSizeChange(val) {
         this.queryForm.pageSize = val
         console.log(this.queryForm.pageSize, 'pageSize')

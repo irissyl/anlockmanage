@@ -253,7 +253,7 @@ export function listHostelRentSearch(data) {
 }
 
 //取房间设备列表
-export function listOfficeDevice () {
+export function listOfficeDevice() {
   return request({
     url: '/api/office/listOfficeDevice',
     method: 'post',
@@ -263,10 +263,8 @@ export function listOfficeDevice () {
   })
 }
 
-
-
 //取房间设备列表(分页)
-export function listOfficeDevicePage (data) {
+export function listOfficeDevicePage(data, param) {
   return request({
     url: '/api/office/listOfficeDevicePage',
     method: 'post',
@@ -274,6 +272,7 @@ export function listOfficeDevicePage (data) {
       'Content-Type': 'application/json;charset=UTF-8',
     },
     data,
+    params: param,
   })
 }
 
@@ -287,16 +286,17 @@ export function getNetlockLogListSearch(data) {
   })
 }
 
-export function getNetlockLogList(data) {
+// 门锁设备列表
+export function getDeviceListPage(data) {
   return request({
-    url: '/api/office/getNetlockLogList',
+    url: '/api/netlock/getDeviceListPage',
     method: 'post',
     data,
   })
 }
 
 // 取账号统计数据
-export function analyseCount () {
+export function analyseCount() {
   return request({
     url: '/api/store/analyseCount',
     method: 'get',

@@ -209,11 +209,11 @@
     methods: {
       async getlistOfficeDevice() {
         let datas = {
-          buildKeys: '14606',
+          buildKeys: '',
           pageNumber: 1,
           pageSize: 10,
         }
-        let listOfficedatas = await listOfficeDevicePage(datas)
+        let listOfficedatas = await listOfficeDevicePage(datas, {})
         console.log(listOfficedatas, 'listOfficeDevice')
       },
       handleClick(e) {

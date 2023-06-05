@@ -41,43 +41,45 @@
     >
       <el-table-column
         show-overflow-tooltip
-        prop="areaName"
+        width="130"
+        prop="iotTag"
         label="设备标识"
       ></el-table-column>
       <el-table-column
         show-overflow-tooltip
-        prop="areaName"
+        prop="iotName"
+        width="130"
         label="房间名称"
       ></el-table-column>
+      <el-table-column show-overflow-tooltip label="设备状态" width="130">
+        <template #default="{ row }">
+          {{ row.iotType == 1 ? '门锁' : '无' }}
+        </template>
+      </el-table-column>
       <el-table-column
         show-overflow-tooltip
-        prop="areaName"
-        label="设备类型"
-      ></el-table-column>
-      <el-table-column
-        show-overflow-tooltip
-        prop="areaName"
+        prop="procotol"
         label="协议"
       ></el-table-column>
       <el-table-column
         show-overflow-tooltip
-        prop="areaName"
+        prop="floorno"
         label="楼栋"
       ></el-table-column>
       <el-table-column
         show-overflow-tooltip
-        prop="areaName"
+        prop="heartbeatSecond"
         label="心跳间隔(秒)"
       ></el-table-column>
 
       <el-table-column
         show-overflow-tooltip
-        prop="areaAddress"
+        prop="heartbeatTime"
         label="最后一次心跳"
       ></el-table-column>
       <el-table-column
         show-overflow-tooltip
-        prop="areaAddress"
+        prop="iotlastValue"
         label="最后开门时间"
       ></el-table-column>
       <el-table-column
@@ -85,25 +87,35 @@
         prop="areaAddress"
         label="电压"
       ></el-table-column>
+      <el-table-column show-overflow-tooltip label="设备状态">
+        <template #default="{ row }">
+          信号强度:{{ row.iotlastValueJson?.rssi }}
+        </template>
+      </el-table-column>
       <el-table-column
         show-overflow-tooltip
-        prop="areaAddress"
-        label="设备状态"
-      ></el-table-column>
-      <el-table-column
-        show-overflow-tooltip
-        prop="areaAddress"
+        prop="createTime"
         label="创建时间"
       ></el-table-column>
       <el-table-column
         show-overflow-tooltip
-        prop="areaAddress"
+        prop="remark"
         label="备注"
       ></el-table-column>
       <el-table-column
         show-overflow-tooltip
-        prop="areaAddress"
+        prop="romVer"
         label="固件版本"
+      ></el-table-column>
+      <el-table-column
+        show-overflow-tooltip
+        prop="lockType"
+        label="固件状态"
+      ></el-table-column>
+      <el-table-column
+        show-overflow-tooltip
+        prop="logTime"
+        label="固件更新时间"
       ></el-table-column>
       <!-- <el-table-column show-overflow-tooltip label="所在楼栋">
         <template #default="{ row }">
@@ -125,7 +137,7 @@
 </template>
 
 <script>
-  import { listOfficeDevice, listOfficeDevicePage } from '@/api/table'
+  import { getDeviceListPage } from '@/api/table'
   import TableEdit from './components/TableEdit'
   export default {
     name: 'VueAdminBetterIndex',
@@ -149,9 +161,9 @@
         elementLoadingText: '正在加载...',
         Builddata: [],
         buildObjs: [],
-        formdata:{
-          name:''
-        }
+        formdata: {
+          name: '',
+        },
       }
     },
     computed: {
@@ -166,8 +178,8 @@
     methods: {
       async fetchData() {
         this.listLoading = true
-        const datalist = await listOfficeDevice()
-        // this.list = datalist.data
+        const datalist = await getDeviceListPage()
+        this.list = datalist.data.datas
         // datalist.data.forEach((item) => {
         //   this.buildObjs = item.buildObjs
         // })
