@@ -3,13 +3,15 @@
     <router-link to="/">
       <!-- 这里是logo变更的位置 -->
       <!-- <vab-remix-icon v-if="logo" class="logo" :icon-class="logo" /> -->
-      <span
+      <img src="../../../assets/comparison/bangonglogo.png" class="logo" alt="" srcset="">
+      <!-- <img src="../../../assets/comparison/sushelogo.png" class="logo" alt="" srcset=""> -->
+      <!-- <span
         class="title"
         :class="{ 'hidden-xs-only': layout === 'horizontal' }"
         :title="title"
       >
         {{ title }}
-      </span>
+      </span> -->
     </router-link>
   </div>
 </template>
@@ -42,9 +44,9 @@
 
   @mixin logo {
     display: inline-block;
-    width: 34px;
-    height: 34px;
-    margin-right: 3px;
+    width: 264px;
+    height: 104px;
+    margin-right: 23px;
     color: $base-title-color;
     vertical-align: middle;
   }

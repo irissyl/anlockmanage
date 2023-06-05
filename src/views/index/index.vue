@@ -4,27 +4,35 @@
       <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
         <el-card class="all1" shadow="never">
           <p class="p1">总人数</p>
+          <img src="../../assets/comparison/zongrenshu.png" class="imgs" />
           <div class="p3">300</div>
-          <!-- <span class="p3">男：30</span><span class="p3">女：270</span> -->
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
         <el-card class="all2" shadow="never">
           <p class="p1">设备数量</p>
+          <img
+            src="../../assets/comparison/shebeishuliangico.png"
+            class="imgs"
+          />
           <div class="p2">30</div>
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
         <el-card class="all3" shadow="never">
-          <p class="p1">宿舍总数</p>
+          <p class="p1">宿舍人员总数</p>
+          <img src="../../assets/comparison/sushejilu.png" class="imgs" />
           <div class="p2">300</div>
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
         <el-card class="all4" shadow="never">
-          <p class="p1">操作人员</p>
+          <p class="p1">办公室人员总数</p>
+          <img
+            src="../../assets/comparison/bangongshirenyuan.png"
+            class="imgs"
+          />
           <div class="p2">300</div>
-          <!-- <span class="p3">男：30</span><span class="p3">女：270</span> -->
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
@@ -280,25 +288,11 @@
         }
       }
     }
-
-    .icon-panel {
-      height: 117px;
-      text-align: center;
-      cursor: pointer;
-
-      svg {
-        font-size: 40px;
-      }
-
-      p {
-        margin-top: 10px;
-      }
-    }
-
-    .bottom-btn {
-      button {
-        margin: 5px 10px 15px 0;
-      }
-    }
+  }
+  .imgs {
+    float: right;
+    width: 55px;
+    height: 55px;
+    margin-top: 35px;
   }
 </style>

@@ -99,7 +99,6 @@
 
 <script>
   import { listOfficeDevice, listOfficeDevicePage } from '@/api/table'
-  import { getNoticeList } from '@/api/notice'
 
   export default {
     name: 'Index',
@@ -204,13 +203,15 @@
     beforeDestroy() {
       clearInterval(this.timer)
     },
-    created() {
+    mounted() {
       this.getlistOfficeDevice()
     },
     methods: {
       async getlistOfficeDevice() {
-        let query = {}
-        let listOfficedatas = await listOfficeDevice()
+        let param = {
+          buildkey: '',
+        }
+        let listOfficedatas = await listOfficeDevicePage(param)
         console.log(listOfficedatas, 'listOfficeDevice')
       },
       handleClick(e) {

@@ -194,7 +194,7 @@
             result.command === 'ReadCardId' &&
             result.message === '读卡成功'
           ) {
-            this.form.cardno = result.data
+            this.form.rentCardnoHex = result.data
             this.$message('读卡成功')
             console.log(this.form.cardno, 'ReadCardId')
           }
@@ -289,6 +289,9 @@
               )
             }
           })
+          this.$ws.close = function (evt) {
+            console.log('关闭：', evt)
+          }
         } else {
           this.$message('指纹数量已达到上限！')
         }

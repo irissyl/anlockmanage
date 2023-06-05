@@ -252,7 +252,7 @@ export function listHostelRentSearch(data) {
 }
 
 //取房间设备列表
-export function listOfficeDevice() {
+export function listOfficeDevice(data) {
   return request({
     url: '/api/office/listOfficeDevice',
     method: 'post',
@@ -261,17 +261,17 @@ export function listOfficeDevice() {
 }
 
 //取房间设备列表(分页)
-export function listOfficeDevicePage() {
+export function listOfficeDevicePage(param) {
   return request({
     url: '/api/office/listOfficeDevicePage',
     method: 'post',
-    data,
+    params: param,
   })
 }
 
 // 取设备开门日志列表
 
-export function getNetlockLogListSearch() {
+export function getNetlockLogListSearch(data) {
   return request({
     url: '/api/office/getNetlockLogList',
     method: 'get',

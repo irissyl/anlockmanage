@@ -74,15 +74,8 @@
         Edit: false,
       }
     },
-    mounted() {
-      this.getBuildList()
-    },
+    mounted() {},
     methods: {
-      async getBuildList() {
-        let Builddata = await getBuildList({})
-        this.Builddata = Builddata.data
-        console.log(Builddata.data, 'Builddata.data')
-      },
       showEdit(row, Builddata) {
         if (!row) {
           this.title = '添加园区'

@@ -157,19 +157,21 @@
       },
     },
 
-    created() {
-      this.fetchData()
+    async mounted() {
+      await this.fetchData()
     },
-
     methods: {
       async fetchData() {
         this.listLoading = true
-        const datalist = await listOfficeDevicePage({})
-        this.list = datalist.data
-        datalist.data.forEach((item) => {
-          this.buildObjs = item.buildObjs
-        })
-        console.log(datalist.data, 'datalist')
+        let param = {
+          buildkey: '',
+        }
+        const datalist = await listOfficeDevice()
+        // this.list = datalist.data
+        // datalist.data.forEach((item) => {
+        //   this.buildObjs = item.buildObjs
+        // })
+        console.log(datalist, 'datalist')
         setTimeout(() => {
           this.listLoading = false
         }, 500)
