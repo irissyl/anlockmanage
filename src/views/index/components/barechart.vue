@@ -6,6 +6,14 @@
   import * as echarts from 'echarts'
 
   export default {
+    props:['analyseCountData'],
+    data() {
+      return {
+        chartData:{}
+      }
+    },
+    created:{
+    },
     methods: {
       initChart(name, xData, yData) {
         let getchart = echarts.init(document.getElementById('echart-line'))
@@ -13,11 +21,11 @@
         var data = [
           {
             name: '宿舍人数',
-            value: 15,
+            value: this.analyseCountData?.hostelCount,
           },
           {
             name: '办公室人数',
-            value: 35,
+            value: this.analyseCountDatas?.officeCount,
           },
         ]
 
@@ -33,7 +41,7 @@
           // backgroundColor: '#86c9f4',
           title: {
             text: '总数',
-            subtext: 50,
+            subtext: this.analyseCountData?.hostelCount+this.analyseCountDatas?.officeCount,
             textStyle: {
               color: '#000',
               fontSize: 20,
@@ -174,6 +182,8 @@
         window.addEventListener('resize', () => {
           getchart.resize()
         })
+        console.log(this.analyseCountData,'analyseCountData')
+
       },
     },
   }

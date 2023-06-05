@@ -208,10 +208,14 @@
     },
     methods: {
       async getlistOfficeDevice() {
-        let param = {
-          buildkey: '',
+        let buildKeys = "14606"
+        var a = JSON.parse(buildKeys)
+        let data = {
+          buildKeys: a,
+          pageNumber: 1,
+          pageSize: 10
         }
-        let listOfficedatas = await listOfficeDevicePage(param)
+        let listOfficedatas = await listOfficeDevicePage({},data)
         console.log(listOfficedatas, 'listOfficeDevice')
       },
       handleClick(e) {

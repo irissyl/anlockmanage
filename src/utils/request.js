@@ -54,6 +54,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
+
     if (store.getters['user/accessToken']) {
       config.headers[tokenRequestName] =
         'bearer ' + store.getters['user/accessToken']
@@ -70,6 +71,13 @@ instance.interceptors.request.use(
         'application/x-www-form-urlencoded;charset=UTF-8'
     )
       config.data = qs.stringify(config.data)
+    if (
+      config.headers['Content-Type'] ===
+      'application/json;charset=UTF-8'
+    )
+      config.data = qs.stringify(config.data)
+    console.log(config.data, 'config.data')
+
     if (debounce.some((item) => config.url.includes(item)))
       loadingInstance = Vue.prototype.$baseLoading()
     return config

@@ -69,6 +69,7 @@ export function deleteCampus(data) {
     data,
   })
 }
+
 // 楼栋列表
 export function getBuildList(data) {
   return request({
@@ -252,20 +253,27 @@ export function listHostelRentSearch(data) {
 }
 
 //取房间设备列表
-export function listOfficeDevice(data) {
+export function listOfficeDevice () {
   return request({
     url: '/api/office/listOfficeDevice',
     method: 'post',
-    data,
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+    },
   })
 }
 
+
+
 //取房间设备列表(分页)
-export function listOfficeDevicePage(param) {
+export function listOfficeDevicePage (data) {
   return request({
     url: '/api/office/listOfficeDevicePage',
     method: 'post',
-    params: param,
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+    },
+    data,
   })
 }
 
@@ -284,5 +292,13 @@ export function getNetlockLogList(data) {
     url: '/api/office/getNetlockLogList',
     method: 'post',
     data,
+  })
+}
+
+// 取账号统计数据
+export function analyseCount () {
+  return request({
+    url: '/api/store/analyseCount',
+    method: 'get',
   })
 }

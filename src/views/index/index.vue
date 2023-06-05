@@ -5,7 +5,7 @@
         <el-card class="all1" shadow="never">
           <p class="p1">总人数</p>
           <img src="../../assets/comparison/zongrenshu.png" class="imgs" />
-          <div class="p3">300</div>
+          <div class="p3">{{analyseCountDatas.hostelCount+analyseCountDatas.officeCount}}</div>
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
@@ -15,14 +15,14 @@
             src="../../assets/comparison/shebeishuliangico.png"
             class="imgs"
           />
-          <div class="p2">30</div>
+          <div class="p2">{{analyseCountDatas.lockCount}}</div>
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
         <el-card class="all3" shadow="never">
           <p class="p1">宿舍人员总数</p>
           <img src="../../assets/comparison/sushejilu.png" class="imgs" />
-          <div class="p2">300</div>
+          <div class="p2">{{analyseCountDatas.hostelCount}}</div>
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
@@ -32,7 +32,7 @@
             src="../../assets/comparison/bangongshirenyuan.png"
             class="imgs"
           />
-          <div class="p2">300</div>
+          <div class="p2">{{analyseCountDatas.officeCount}}</div>
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
@@ -40,7 +40,7 @@
           <div slot="header">
             <span>人员数量统计图</span>
           </div>
-          <BareChart ref="chart_line_one"></BareChart>
+          <div id="chart_line_one"  :style="{ width: '100%', height: '400px' }"></div>
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="13" :lg="12" :xl="12">
@@ -60,77 +60,22 @@
           </el-timeline>
         </el-card>
       </el-col>
-
-      <!-- <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
-        <el-card shadow="never">
-          <div slot="header">
-            <span>授权数</span>
-          </div>
-          <vab-chart autoresize :options="sqs" />
-          <div class="bottom">
-            <span>
-              总授权数:
-              {{ config2.endVal }}
-            </span>
-          </div>
-        </el-card>
-      </el-col> -->
-
-      <!-- <el-col
-        v-for="(item, index) in iconList"
-        :key="index"
-        :xs="12"
-        :sm="6"
-        :md="3"
-        :lg="3"
-        :xl="3"
-      >
-        <router-link :to="item.link" target="_blank">
-          <el-card class="icon-panel" shadow="never">
-            <vab-icon
-              :style="{ color: item.color }"
-              :icon="['fas', item.icon]"
-            ></vab-icon>
-            <p>{{ item.title }}</p>
-          </el-card>
-        </router-link>
-      </el-col> -->
-
-      <!-- <el-col :xs="24" :sm="24" :md="24" :lg="11" :xl="11">
-        <el-card class="card" shadow="never">
-          <div slot="header">
-            <span>依赖信息</span>
-            <div style="float: right">部署时间:{{ updateTime }}</div>
-          </div>
-        </el-card>
-
-        <el-card shadow="never">
-          <div slot="header">
-            <span>其他信息</span>
-          </div>
-          <br />
-        </el-card>
-      </el-col> -->
     </el-row>
   </div>
 </template>
 
 <script>
-  // import VabChart from '@/plugins/echarts'
+  import * as echarts from 'echarts'
   import { dependencies, devDependencies } from '../../../package.json'
   import { getList } from '@/api/changeLog'
   import { getNoticeList } from '@/api/notice'
-  import { getRepos, getStargazers } from '@/api/github'
   import BareChart from './components/barechart.vue'
-  // import VersionInformation from './components/VersionInformation'
+  import { analyseCount } from '@/api/table'
 
   export default {
     name: 'Index',
     components: {
-      // VabChart,
       BareChart,
-      // Plan,
-      // VersionInformation,
     },
     data() {
       return {
@@ -177,21 +122,190 @@
         //其他信息
         userAgent: navigator.userAgent,
         //卡片图标
+        analyseCountDatas:{},
+        flag:false
       }
     },
     created() {
       // this.fetchData()
+      this.getanalyseCount()
     },
     beforeDestroy() {
       clearInterval(this.timer)
     },
-    mounted() {
-      this.$refs.chart_line_one.initChart()
+     mounted() {
     },
     methods: {
+      async getanalyseCount() {
+       let analyseCountData = await analyseCount()
+       if(analyseCountData.resultCode == 0){
+          this.analyseCountDatas = analyseCountData.data
+          this.initChart()
+          console.log('analyseCount:',this.analyseCountDatas)
+       }
+       
+      },
       initChart(name, xData, yData) {
-        let getchart = echarts.init(document.getElementById('echart-line'))
-        var option = {}
+        let getchart = echarts.init(document.getElementById('chart_line_one'))
+        console.log(this.analyseCountDatas,'this.analyseCountData')
+        var data = [
+          {
+            name: '宿舍人数',
+            value: this.analyseCountDatas.hostelCount,
+          },
+          {
+            name: '办公室人数',
+            value: this.analyseCountDatas.officeCount,
+          },
+        ]
+
+        var option = {
+          color: [
+            '#315f97',
+            '#005fa6',
+            '#86c9f4',
+            '#4da8ec',
+            '#315f97',
+            'rgba(250,250,250,0.3)',
+          ],
+          // backgroundColor: '#86c9f4',
+          title: {
+            text: '总数',
+            subtext: this.analyseCountDatas.hostelCount+this.analyseCountDatas.officeCount,
+            textStyle: {
+              color: '#000',
+              fontSize: 20,
+              // align: 'center'
+            },
+            subtextStyle: {
+              fontSize: 20,
+              color: ['#ff9d19'],
+            },
+            x: 'center',
+            y: 'center',
+          },
+          grid: {
+            bottom: 150,
+            left: 100,
+            right: '10%',
+            color: '#000',
+          },
+          legend: {
+            orient: 'vertical',
+            top: '2%',
+            right: '5%',
+            textStyle: {
+              color: '#000',
+              fontSize: 15,
+            },
+            icon: 'roundRect',
+            data: data,
+          },
+          tooltip: [
+            {
+              //提示框
+              trigger: 'item', //触发方式
+              axisPointer: {
+                type: 'shadow',
+                textStyle: {
+                  color: '#000',
+                },
+              },
+            },
+          ],
+          series: [
+            // 主要展示层的
+            {
+              radius: ['30%', '61%'],
+              center: ['50%', '50%'],
+              type: 'pie',
+              label: {
+                normal: {
+                  show: true,
+                  formatter: '{c}人',
+                  textStyle: {
+                    fontSize: 20,
+                  },
+                  position: 'outside',
+                },
+                emphasis: {
+                  show: true,
+                },
+              },
+              labelLine: {
+                normal: {
+                  show: true,
+                  length: 30,
+                  length2: 55,
+                },
+                emphasis: {
+                  show: true,
+                },
+              },
+              name: '人数总量',
+              data: data,
+            },
+            // 边框的设置
+            {
+              radius: ['30%', '34%'],
+              center: ['50%', '50%'],
+              type: 'pie',
+              label: {
+                normal: {
+                  show: false,
+                },
+                emphasis: {
+                  show: false,
+                },
+              },
+              labelLine: {
+                normal: {
+                  show: false,
+                },
+                emphasis: {
+                  show: false,
+                },
+              },
+              animation: false,
+              tooltip: {
+                show: false,
+              },
+              data: [
+                {
+                  value: 1,
+                  itemStyle: {
+                    color: 'rgba(250,250,250,0.3)',
+                  },
+                },
+              ],
+            },
+            {
+              name: '外边框',
+              type: 'pie',
+              clockWise: false, //顺时加载
+              hoverAnimation: false, //鼠标移入变大
+              center: ['50%', '50%'],
+              radius: ['65%', '65%'],
+              label: {
+                normal: {
+                  show: false,
+                },
+              },
+              data: [
+                {
+                  value: 9,
+                  name: '',
+                  itemStyle: {
+                    normal: {
+                      borderWidth: 2,
+                      borderColor: '#0b5263',
+                    },
+                  },
+                },
+              ],
+            },
+          ],
+        }
         getchart.setOption(option)
         //随着屏幕大小调节图表
         window.addEventListener('resize', () => {

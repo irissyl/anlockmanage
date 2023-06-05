@@ -149,6 +149,9 @@
         elementLoadingText: '正在加载...',
         Builddata: [],
         buildObjs: [],
+        formdata:{
+          name:''
+        }
       }
     },
     computed: {
@@ -163,9 +166,6 @@
     methods: {
       async fetchData() {
         this.listLoading = true
-        let param = {
-          buildkey: '',
-        }
         const datalist = await listOfficeDevice()
         // this.list = datalist.data
         // datalist.data.forEach((item) => {
