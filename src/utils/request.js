@@ -54,7 +54,6 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-
     if (store.getters['user/accessToken']) {
       config.headers[tokenRequestName] =
         'bearer ' + store.getters['user/accessToken']
@@ -72,8 +71,8 @@ instance.interceptors.request.use(
     )
       config.data = qs.stringify(config.data)
     if (
-      config.headers['Content-Type'] ===
-      'application/json;charset=UTF-8'
+      config.data &&
+      config.headers['Content-Type'] === 'application/json;charset=UTF-8'
     )
       config.data = qs.stringify(config.data)
     console.log(config.data, 'config.data')
