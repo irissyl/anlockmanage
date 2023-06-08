@@ -29,7 +29,7 @@
       ref="tableSort"
       v-loading="listLoading"
       border
-      :data="list"
+      :data="[]"
       :element-loading-text="elementLoadingText"
       :height="height"
       :header-cell-style="{ 'text-align': 'center', background: '#f5f7fa' }"

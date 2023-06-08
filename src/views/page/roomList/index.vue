@@ -278,7 +278,6 @@
       handleCurrentChange(val) {
         this.queryForm.pageNo = val
         console.log(this.queryForm.pageNo, 'pageNo')
-
         this.fetchData()
       },
       handleQuery() {

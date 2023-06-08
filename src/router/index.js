@@ -210,7 +210,7 @@ export const constantRoutes = [
     name: 'appointmentReview',
     component: Layout,
     redirect: 'noRedirect',
-    meta: { title: '预约管理', icon: 'users-cog', permissions: ['admin'] },
+    meta: { title: '预约管理', icon: 'calendar-alt', permissions: ['admin'] },
     children: [
       {
         path: '/reserve',

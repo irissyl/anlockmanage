@@ -2,31 +2,12 @@
   <el-dialog
     :title="title"
     :visible.sync="dialogFormVisible"
-    width="500px"
+    width="800px"
+    append-to-body
     @close="close"
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-      <el-form-item label="园区名称" prop="name">
-        <el-input
-          v-model.trim="form.areaName"
-          autocomplete="off"
-          placeholder="请输入园区名称"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="园区地址" prop="address">
-        <el-input
-          v-model.trim="form.areaAddress"
-          autocomplete="off"
-          placeholder="请输入园区地址"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="选择楼栋" prop="builds">
-        <!-- <el-input v-model.trim="form.buildName" autocomplete="off" placeholder="请选择楼栋"></el-input>
-        <div class="lists">
-          <div v-for="item in Builddata" :key="item.value" @click="buildsclick(item)">
-             <span>{{item.buildName}}</span>
-          </div>
-        </div> -->
+      <el-form-item label="楼栋" prop="builds">
         <el-select v-model.trim="form.builds" multiple placeholder="请选择">
           <el-option
             v-for="item in Builddata"
@@ -35,6 +16,73 @@
             :value="item.buildId"
           ></el-option>
         </el-select>
+      </el-form-item>
+      <el-form-item label="楼层" prop="builds">
+        <el-select v-model.trim="form.builds" multiple placeholder="请选择">
+          <el-option
+            v-for="item in Builddata"
+            :key="item.value"
+            :label="item.buildName"
+            :value="item.buildId"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="设备类型" prop="builds">
+        <el-select v-model.trim="form.builds" multiple placeholder="请选择">
+          <el-option
+            v-for="item in Builddata"
+            :key="item.value"
+            :label="item.buildName"
+            :value="item.buildId"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="设备类型" prop="builds">
+        <el-radio-group v-model="radio">
+          <el-radio :label="1">NBIOT</el-radio>
+          <el-radio :label="2">WIFI</el-radio>
+          <el-radio :label="3">BLEB</el-radio>
+          <el-radio :label="4">LoRa</el-radio>
+          <el-radio :label="5">电信NBIOT</el-radio>
+          <el-radio :label="6">NBIOTZF</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="设备IMEI:" prop="name">
+        <el-input
+          v-model.trim="form.areaName"
+          autocomplete="off"
+          placeholder="请输入"
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="房间名称" prop="name">
+        <el-input
+          v-model.trim="form.areaName"
+          autocomplete="off"
+          placeholder="请输入"
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="设备标识(条码):" prop="name">
+        <el-input
+          v-model.trim="form.areaName"
+          autocomplete="off"
+          placeholder="请输入"
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="心跳间隔:" prop="remark">
+        <el-input-number
+          v-model="num"
+          controls-position="right"
+          :min="1"
+          :max="10"
+        ></el-input-number>
+      </el-form-item>
+      <el-form-item label="备注" prop="remark">
+        <el-input
+          v-model.trim="form.remark"
+          type="textarea"
+          :rows="2"
+          autocomplete="off"
+        ></el-input>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -56,6 +104,8 @@
           areaAddress: '',
           builds: '',
         },
+        radio: 1,
+        num: 0,
         buildObjs: [],
         Builddata: '',
         rules: {
@@ -78,10 +128,10 @@
     methods: {
       showEdit(row, Builddata) {
         if (!row) {
-          this.title = '添加园区'
+          this.title = '添加终端设备'
           this.Edit = false
         } else {
-          this.title = '编辑园区'
+          this.title = '编辑终端设备'
           this.Edit = true
 
           this.form = Object.assign({}, row)
