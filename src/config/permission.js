@@ -34,6 +34,7 @@ router.beforeResolve(async (to, from, next) => {
     } else {
       if (store.getters['user/accessToken']) {
         let accessRoutes = []
+        store.dispatch('user/getMenuItemList')
         if (authentication === 'intelligence') {
           accessRoutes = await store.dispatch('routes/setRoutes', [])
         } else if (authentication === 'all') {

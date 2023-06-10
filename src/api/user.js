@@ -36,3 +36,10 @@ export function register() {
     method: 'post',
   })
 }
+
+export function listMenuItem() {
+  return request({
+    url: '/api/account/listMenuItem',
+    method: 'post',
+  })
+}
