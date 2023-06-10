@@ -4,7 +4,7 @@
  */
 
 import Vue from 'vue'
-import { getUserInfo, login, logout } from '@/api/user'
+import { getUserInfo, login, logout, listMenuItem } from '@/api/user'
 import {
   getAccessToken,
   removeAccessToken,
@@ -18,12 +18,14 @@ const state = () => ({
   username: '',
   avatar: '',
   permissions: [],
+  menuList: [],
 })
 const getters = {
   accessToken: (state) => state.accessToken,
   username: (state) => state.username,
   avatar: (state) => state.avatar,
   permissions: (state) => state.permissions,
+  menuList: (state) => state.menuList,
 }
 const mutations = {
   setAccessToken(state, accessToken) {
@@ -38,6 +40,10 @@ const mutations = {
   },
   setPermissions(state, permissions) {
     state.permissions = permissions
+  },
+  setMenuList(state, menuList) {
+    console.log(menuList, 'menuList')
+    state.menuList = menuList
   },
 }
 const actions = {
@@ -95,6 +101,13 @@ const actions = {
     }
     await dispatch('resetAccessToken')
     await resetRouter()
+  },
+  async getMenuItemList({ commit }) {
+    const result = await listMenuItem()
+    if (result.data && result.data.length >= 0) {
+      console.log(result, 'result')
+      commit('setMenuList', result.data)
+    }
   },
   resetAccessToken({ commit }) {
     commit('setPermissions', [])

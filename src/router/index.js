@@ -37,7 +37,7 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/index',
-    meta: { title: '首页', icon: 'home' },
+    meta: { title: '首页', icon: 'home', premissions: ['index'] },
     children: [
       {
         path: 'index',
@@ -47,6 +47,7 @@ export const constantRoutes = [
           title: '首页',
           // icon: 'home',
           affix: true,
+          premissions: ['index/index'],
         },
       },
     ],
@@ -57,26 +58,30 @@ export const constantRoutes = [
     component: Layout,
     redirect: 'noRedirect',
     name: 'contentSettings',
-    meta: { title: '基础内容设置', icon: 'users-cog' },
+    meta: {
+      title: '基础内容设置',
+      icon: 'users-cog',
+      premissions: ['contentSettings'],
+    },
     children: [
       {
         path: 'Campus',
         name: 'Campus',
         component: () => import('@/views/page/contentSettings/Campus/index'),
-        meta: { title: '园区设置' },
+        meta: { title: '园区设置', premissions: ['Campus/index'] },
       },
       {
         path: 'Building',
         name: 'Building',
         component: () => import('@/views/page/contentSettings/Building/index'),
-        meta: { title: '楼栋设置' },
+        meta: { title: '楼栋设置', premissions: ['Building/index'] },
       },
       {
         path: 'Department',
         name: 'Department',
         component: () =>
           import('@/views/page/contentSettings/Department/index'),
-        meta: { title: '部门设置' },
+        meta: { title: '部门设置', premissions: ['Department/index'] },
       },
     ],
   },
@@ -85,28 +90,32 @@ export const constantRoutes = [
     component: Layout,
     redirect: 'noRedirect',
     name: 'deviceManagement',
-    meta: { title: '智能设备管理', icon: 'unlock-alt' },
+    meta: {
+      title: '智能设备管理',
+      icon: 'unlock-alt',
+      premissions: ['deviceManagement'],
+    },
     children: [
       {
         path: 'DeviceStatistics',
         name: 'DeviceStatistics',
         component: () =>
           import('@/views/page/deviceManagement/DeviceStatistics/index.vue'),
-        meta: { title: '设备统计' },
+        meta: { title: '设备统计', premissions: ['DeviceStatistics/index'] },
       },
       {
         path: 'lockDevice',
         name: 'lockDevice',
         component: () =>
           import('@/views/page/deviceManagement/lockDevice/index.vue'),
-        meta: { title: '门锁设备' },
+        meta: { title: '门锁设备', premissions: ['lockDevice/index'] },
       },
       {
         path: 'GatewayDevice',
         name: 'GatewayDevice',
         component: () =>
           import('@/views/page/deviceManagement/GatewayDevice/index.vue'),
-        meta: { title: '网关设备' },
+        meta: { title: '网关设备', premissions: ['GatewayDevice/index'] },
       },
       {
         path: 'Water',
@@ -115,7 +124,10 @@ export const constantRoutes = [
           import(
             '@/views/page/deviceManagement/Water_meter_equipment/index.vue'
           ),
-        meta: { title: '水电表设备' },
+        meta: {
+          title: '水电表设备',
+          premissions: ['Water_meter_equipment/index'],
+        },
       },
     ],
   },
@@ -124,7 +136,11 @@ export const constantRoutes = [
     component: Layout,
     redirect: 'noRedirect',
     name: 'operatorManagement',
-    meta: { title: '操作员管理', icon: 'person-booth' },
+    meta: {
+      title: '操作员管理',
+      icon: 'person-booth',
+      premissions: ['operatorManagement'],
+    },
     children: [
       {
         path: 'operator',
@@ -133,6 +149,7 @@ export const constantRoutes = [
         meta: {
           title: '操作员列表',
           icon: 'person-booth',
+          premissions: ['operator/index'],
         },
       },
       // {
@@ -151,7 +168,11 @@ export const constantRoutes = [
     component: Layout,
     redirect: 'noRedirect',
     name: 'officePersonnel',
-    meta: { title: '人员管理', icon: 'chalkboard-teacher' },
+    meta: {
+      title: '人员管理',
+      icon: 'chalkboard-teacher',
+      premissions: ['officePersonnel'],
+    },
     children: [
       {
         path: 'office',
@@ -159,6 +180,7 @@ export const constantRoutes = [
         component: () => import('@/views/page/officePersonnel/index'),
         meta: {
           title: '办公室人员管理',
+          premissions: ['officePersonnel/index'],
         },
       },
       {
@@ -167,6 +189,7 @@ export const constantRoutes = [
         component: () => import('@/views/page/dormitoryPersonnel/index'),
         meta: {
           title: '宿舍人员管理',
+          premissions: ['dormitoryPersonnel/index'],
         },
       },
     ],
@@ -176,7 +199,11 @@ export const constantRoutes = [
     name: 'roomListManagement',
     component: Layout,
     redirect: 'noRedirect',
-    meta: { title: '房间管理', icon: 'users-cog', permissions: ['admin'] },
+    meta: {
+      title: '房间管理',
+      icon: 'users-cog',
+      permissions: ['admin', 'roomListManagement'],
+    },
     children: [
       {
         path: 'roomList',
@@ -185,6 +212,7 @@ export const constantRoutes = [
         meta: {
           title: '房间列表',
           // permissions: ['dormitory'],
+          premissions: ['roomList/index'],
         },
       },
     ],
@@ -194,7 +222,11 @@ export const constantRoutes = [
     name: 'appointmentReview',
     component: Layout,
     redirect: 'noRedirect',
-    meta: { title: '预约管理', icon: 'calendar-alt', permissions: ['admin'] },
+    meta: {
+      title: '预约管理',
+      icon: 'calendar-alt',
+      permissions: ['admin', 'appointmentReview'],
+    },
     children: [
       {
         path: '/reserve',
@@ -203,6 +235,7 @@ export const constantRoutes = [
         meta: {
           title: '预约审核',
           // permissions: ['dormitory'],
+          premissions: ['appointmentReview/index'],
         },
       },
     ],
@@ -212,19 +245,23 @@ export const constantRoutes = [
     component: Layout,
     redirect: 'noRedirect',
     name: 'systemSettings',
-    meta: { title: '系统设置', icon: 'unlock-alt' },
+    meta: {
+      title: '系统设置',
+      icon: 'unlock-alt',
+      premissions: ['systemSettings'],
+    },
     children: [
       {
         path: 'Networking',
         name: 'Networking',
         component: () => import('@/views/page/systemSettings/Networking/index'),
-        meta: { title: '联网锁设置' },
+        meta: { title: '联网锁设置', premissions: ['Networking/index'] },
       },
       {
         path: 'roleManagement',
         name: 'RoleManagement',
         component: () => import('@/views/page/systemSettings/index'),
-        meta: { title: '公司设置' },
+        meta: { title: '公司设置', premissions: ['systemSettings/index'] },
       },
     ],
   },

@@ -8,10 +8,12 @@
   >
     <template v-if="item.children && item.children.length">
       <vab-side-bar-item
+        v-if="menu?.childs?.find((item) => route.meta?.premissions?.find((premission) => item.menuUrl.indexOf(premission) != -1 ) )"
         v-for="route in item.children"
         :key="route.path"
         :full-path="handlePath(route.path)"
         :item="route"
+        :menu="menu?.childs?.find((item) => route.meta?.premissions?.find((premission) => item.menuUrl.indexOf(premission) != -1 ) )"
       />
     </template>
   </component>
@@ -31,6 +33,9 @@
       fullPath: {
         type: String,
         default: '',
+      },
+      menu: {
+        type: Object,
       },
     },
     data() {

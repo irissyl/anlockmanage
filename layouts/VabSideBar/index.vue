@@ -14,9 +14,11 @@
     >
       <template v-for="route in routes">
         <vab-side-bar-item
+          v-if="menuList.find((item) => route.meta?.premissions?.find((premission) => item.menuUrl.indexOf(premission) != -1 ) )"
           :key="route.path"
           :full-path="route.path"
           :item="route"
+          :menu="menuList.find((item) => route.meta?.premissions?.find((premission) => item.menuUrl.indexOf(premission) != -1 ) )"
         />
       </template>
     </el-menu>
@@ -38,6 +40,7 @@
       ...mapGetters({
         collapse: 'settings/collapse',
         routes: 'routes/routes',
+        menuList: 'user/menuList'
       }),
       defaultOpens() {
         if (this.collapse) {
