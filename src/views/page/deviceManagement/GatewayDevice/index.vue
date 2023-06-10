@@ -1,7 +1,9 @@
 <template>
   <div class="table-container">
     <div class="btntotal">
-      <el-button icon="el-icon-plus" type="primary">添加网关设备</el-button>
+      <el-button icon="el-icon-plus" type="primary" @click="handleAdd">
+        添加网关设备
+      </el-button>
       <el-button type="primary">表格导出</el-button>
       <el-button type="primary">刷新网关设备</el-button>
     </div>
@@ -29,9 +31,8 @@
       ref="tableSort"
       v-loading="listLoading"
       border
-      :data="[]"
+      :data="list"
       :element-loading-text="elementLoadingText"
-      :height="height"
       :header-cell-style="{ 'text-align': 'center', background: '#f5f7fa' }"
       :cell-style="{ 'text-align': 'center' }"
       style="width: 100%"
@@ -104,32 +105,28 @@
         prop="areaAddress"
         label="固件版本"
       ></el-table-column>
-      <!-- <el-table-column show-overflow-tooltip label="所在楼栋">
-        <template #default="{ row }">
-          <el-tag v-for="item in row.buildObjs" :key="item.buildId">
-            {{ item.buildName }}
-          </el-tag>
-        </template>
-      </el-table-column> -->
       <el-table-column show-overflow-tooltip label="操作" width="180px">
         <template #default="{ row }">
-          <el-button type="text">设置</el-button>
+          <el-button type="text" @click="handleSet(row)">设置</el-button>
           <el-button type="text" @click="handleEdit(row)">编辑</el-button>
           <el-button type="text" @click="handleDelete(row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <table-edit ref="edit" @fetchData="fetchData"></table-edit>
+    <Gatewayset ref="gatewayset" @fetchData="fetchData"></Gatewayset>
   </div>
 </template>
 
 <script>
   import { getCampusList, deleteCampus } from '@/api/table'
   import TableEdit from './components/TableEdit'
+  import Gatewayset from './components/gatewayset.vue'
   export default {
     name: 'VueAdminBetterIndex',
     components: {
       TableEdit,
+      Gatewayset,
     },
     data() {
       return {
@@ -190,6 +187,9 @@
       handleEdit(row) {
         console.log(row, 'row')
         this.$refs['edit'].showEdit(row)
+      },
+      handleSet(row) {
+        this.$refs['gatewayset'].showEdit(row)
       },
       async handleDelete(row) {
         console.log(row, 'rowd')

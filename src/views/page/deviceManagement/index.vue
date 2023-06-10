@@ -42,7 +42,6 @@
       v-loading="listLoading"
       :data="list"
       :element-loading-text="elementLoadingText"
-      :height="height"
       @selection-change="setSelectRows"
       @sort-change="tableSortChange"
     >

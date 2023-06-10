@@ -45,10 +45,8 @@
         </div>
         <el-table
           ref="tableSort"
-          v-loading="listLoading"
           border
-          :data="list"
-          :element-loading-text="elementLoadingText"
+          :data="[]"
           :header-cell-style="{ 'text-align': 'left', background: '#f5f7fa' }"
           :cell-style="{ 'text-align': 'left' }"
           style="width: 100%"
@@ -84,7 +82,7 @@
             label="开锁时间"
           ></el-table-column>
         </el-table>
-        <el-pagination
+        <!-- <el-pagination
           :background="background"
           :current-page="queryForm.pageNo"
           :layout="layout"
@@ -92,7 +90,7 @@
           :total="total"
           @current-change="handleCurrentChange"
           @size-change="handleSizeChange"
-        ></el-pagination>
+        ></el-pagination> -->
       </div>
     </div>
   </el-dialog>
@@ -136,35 +134,22 @@
         value1: [new Date(2023, 6, 3, 10, 10), new Date(2000, 10, 11, 10, 10)],
       }
     },
-    computed: {
-      height() {
-        return this.$baseTableHeight()
-      },
-    },
+    computed: {},
     created() {},
     methods: {
       showEdit(row) {
-        if (!row) {
-          this.title = '添加'
-        } else {
-          this.title = '用户:  ' + row.customerName + '开锁记录'
-          this.form = Object.assign({}, row)
-          console.log(this.title, row, 'rowtitle')
-        }
+        this.title = '开锁记录'
         this.dialogFormVisible = true
       },
-      // async fetchData() {
-      //   let data = await getNetlockLogList(query)
-      // },
+      async fetchData() {
+        // let data = await getNetlockLogList(query)
+      },
       handleSizeChange(val) {
         this.queryForm.pageSize = val
-        console.log(this.queryForm.pageSize, 'pageSize')
         this.fetchData()
       },
       handleCurrentChange(val) {
         this.queryForm.pageNo = val
-        console.log(this.queryForm.pageNo, 'pageNo')
-
         this.fetchData()
       },
       handleQuery() {
@@ -173,7 +158,6 @@
       },
       handleExport(row) {
         console.log(row, 'row')
-        // this.$refs['edit'].showEdit()
       },
       close() {
         this.$refs['form'].resetFields()
@@ -184,7 +168,6 @@
       save() {
         this.$refs['form'].validate(async (valid) => {
           if (valid) {
-            const { msg } = await doEdit(this.form)
             this.$baseMessage(msg, 'success')
             this.$refs['form'].resetFields()
             this.dialogFormVisible = false

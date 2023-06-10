@@ -7,37 +7,22 @@
     @close="close"
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-      <el-form-item label="楼栋" prop="builds">
-        <el-select v-model.trim="form.builds" multiple placeholder="请选择">
-          <el-option
-            v-for="item in Builddata"
-            :key="item.value"
-            :label="item.buildName"
-            :value="item.buildId"
-          ></el-option>
+      <el-form-item label-width="120px" label="楼栋" prop="floorno">
+        <el-select v-model.trim="form.floor" placeholder="请选择">
+          <el-option value="1"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="楼层" prop="builds">
-        <el-select v-model.trim="form.builds" multiple placeholder="请选择">
-          <el-option
-            v-for="item in Builddata"
-            :key="item.value"
-            :label="item.buildName"
-            :value="item.buildId"
-          ></el-option>
+      <el-form-item label-width="120px" label="楼层" prop="builds">
+        <el-select v-model.trim="form.builds" placeholder="请选择">
+          <el-option value="3"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="设备类型" prop="builds">
-        <el-select v-model.trim="form.builds" multiple placeholder="请选择">
-          <el-option
-            v-for="item in Builddata"
-            :key="item.value"
-            :label="item.buildName"
-            :value="item.buildId"
-          ></el-option>
+      <el-form-item label-width="120px" label="设备类型" prop="iotType">
+        <el-select v-model.trim="form.iotType" placeholder="请选择">
+          <el-option value="门锁"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="设备类型" prop="builds">
+      <el-form-item label-width="120px" label="通信协议" prop="builds">
         <el-radio-group v-model="radio">
           <el-radio :label="1">NBIOT</el-radio>
           <el-radio :label="2">WIFI</el-radio>
@@ -47,36 +32,36 @@
           <el-radio :label="6">NBIOTZF</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="设备IMEI:" prop="name">
+      <el-form-item label-width="120px" label="设备IMEI" prop="name">
         <el-input
           v-model.trim="form.areaName"
           autocomplete="off"
           placeholder="请输入"
         ></el-input>
       </el-form-item>
-      <el-form-item label="房间名称" prop="name">
+      <el-form-item label-width="120px" label="房间名称" prop="name">
         <el-input
           v-model.trim="form.areaName"
           autocomplete="off"
           placeholder="请输入"
         ></el-input>
       </el-form-item>
-      <el-form-item label="设备标识(条码):" prop="name">
+      <el-form-item label-width="120px" label="设备标识(条码)" prop="name">
         <el-input
           v-model.trim="form.areaName"
           autocomplete="off"
           placeholder="请输入"
         ></el-input>
       </el-form-item>
-      <el-form-item label="心跳间隔:" prop="remark">
+      <el-form-item label-width="120px" label="心跳间隔" prop="remark">
         <el-input-number
           v-model="num"
           controls-position="right"
           :min="1"
-          :max="10"
+          :max="300"
         ></el-input-number>
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
+      <el-form-item label-width="120px" label="备注" prop="remark">
         <el-input
           v-model.trim="form.remark"
           type="textarea"
@@ -103,11 +88,12 @@
           areaName: '',
           areaAddress: '',
           builds: '',
+          floorno: '',
+          iotType: '',
         },
         radio: 1,
         num: 0,
         buildObjs: [],
-        Builddata: '',
         rules: {
           areaName: [
             { required: true, trigger: 'blur', message: '请输入园区名称' },
@@ -126,7 +112,9 @@
     },
     mounted() {},
     methods: {
-      showEdit(row, Builddata) {
+      showEdit(row) {
+        console.log(row, 'row')
+
         if (!row) {
           this.title = '添加终端设备'
           this.Edit = false
@@ -135,9 +123,7 @@
           this.Edit = true
 
           this.form = Object.assign({}, row)
-          this.form.builds = row.builds.split(',').map((item) => {
-            return Number(item)
-          })
+
           console.log(this.form, row, 'row2')
         }
         this.dialogFormVisible = true

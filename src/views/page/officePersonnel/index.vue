@@ -66,7 +66,6 @@
         border
         :data="list"
         :element-loading-text="elementLoadingText"
-        :height="height"
         :header-cell-style="{ 'text-align': 'left', background: '#f5f7fa' }"
         :cell-style="{ 'text-align': 'left' }"
         style="width: 100%"
@@ -113,7 +112,6 @@
           prop="rentCardnoHex"
           label="持卡卡号"
         ></el-table-column>
-
         <el-table-column
           show-overflow-tooltip
           prop="fingerCount"
@@ -129,7 +127,6 @@
           prop="rentInputUser"
           label="操作员"
         ></el-table-column>
-
         <el-table-column
           show-overflow-tooltip
           label="操作"

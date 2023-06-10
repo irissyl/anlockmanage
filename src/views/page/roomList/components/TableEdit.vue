@@ -172,8 +172,8 @@
         activities: [],
       }
     },
-    created() {
-      this.getlistSection()
+    mounted() {
+      // this.getlistSection()
     },
     methods: {
       async getlistSection() {
@@ -324,10 +324,10 @@
           this.title = '编辑房间和设备'
           this.Edit = true
           this.form = Object.assign({}, row)
-          this.form.content = row.rentContent.split(',').map((item) => {
-            return Number(item)
-          })
-          console.log(this.form, row, 'row2')
+          // this.form.content = row.rentContent.split(',').map((item) => {
+          //   return Number(item)
+          // })
+          // console.log(this.form, row, 'row2')
         }
         this.dialogFormVisible = true
       },
@@ -343,19 +343,7 @@
             if (this.Edit == false) {
               let contents = this.form.content.join(',')
               console.log(contents, 'contents')
-              let formdata = {
-                customername: this.form.customerName,
-                cardno: this.form.cardno,
-                content: contents,
-                idcard: this.form.idcard,
-                mobile: this.form.mobile,
-                pwd: this.form.pwd,
-                remark: this.form.remark,
-              }
-              console.log(formdata, this.Edit, 'valid')
 
-              let data = await addOfficeRent(formdata)
-              console.log(data, 'success')
               if (data.resultCode == 0) {
                 this.$message('添加成功')
               }

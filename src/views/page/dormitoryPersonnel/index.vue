@@ -66,7 +66,6 @@
         border
         :data="list"
         :element-loading-text="elementLoadingText"
-        :height="height"
         :header-cell-style="{ 'text-align': 'left', background: '#f5f7fa' }"
         :cell-style="{ 'text-align': 'left' }"
         style="width: 100%"

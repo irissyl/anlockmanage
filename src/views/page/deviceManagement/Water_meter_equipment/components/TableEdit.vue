@@ -2,39 +2,76 @@
   <el-dialog
     :title="title"
     :visible.sync="dialogFormVisible"
-    width="500px"
+    width="800px"
+    append-to-body
     @close="close"
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-      <el-form-item label="园区名称" prop="name">
+      <el-form-item label-width="120px" label="楼栋" prop="floorno">
+        <el-select v-model.trim="form.floor" placeholder="请选择">
+          <el-option value="1"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label-width="120px" label="楼层" prop="builds">
+        <el-select v-model.trim="form.builds" placeholder="请选择">
+          <el-option value="3"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label-width="120px" label="设备类型" prop="iotType">
+        <el-select v-model="bvalue" placeholder="请选择">
+          <el-option label="门锁" value="1"></el-option>
+          <el-option label="水表" value="5"></el-option>
+          <el-option label="电表" value="6"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label-width="120px" label="通信协议" prop="builds">
+        <el-radio-group v-model="radio">
+          <el-radio :label="1">NBIOT</el-radio>
+          <el-radio :label="2">WIFI</el-radio>
+          <el-radio :label="3">BLEB</el-radio>
+          <el-radio :label="4">LoRa</el-radio>
+          <el-radio :label="5">电信NBIOT</el-radio>
+          <el-radio :label="6">NBIOTZF</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label-width="120px" label="设备IMEI" prop="name" disabled>
         <el-input
           v-model.trim="form.areaName"
           autocomplete="off"
-          placeholder="请输入园区名称"
+          placeholder="请输入"
         ></el-input>
       </el-form-item>
-      <el-form-item label="园区地址" prop="address">
+      <el-form-item label-width="120px" label="房间名称" prop="name">
         <el-input
-          v-model.trim="form.areaAddress"
+          v-model.trim="form.areaName"
           autocomplete="off"
-          placeholder="请输入园区地址"
+          placeholder="请输入"
         ></el-input>
       </el-form-item>
-      <el-form-item label="选择楼栋" prop="builds">
-        <!-- <el-input v-model.trim="form.buildName" autocomplete="off" placeholder="请选择楼栋"></el-input>
-        <div class="lists">
-          <div v-for="item in Builddata" :key="item.value" @click="buildsclick(item)">
-             <span>{{item.buildName}}</span>
-          </div>
-        </div> -->
-        <el-select v-model.trim="form.builds" multiple placeholder="请选择">
-          <el-option
-            v-for="item in Builddata"
-            :key="item.value"
-            :label="item.buildName"
-            :value="item.buildId"
-          ></el-option>
-        </el-select>
+      <el-form-item label-width="120px" label="设备标识(条码)" prop="name">
+        <el-input
+          v-model.trim="form.areaName"
+          autocomplete="off"
+          placeholder="请输入"
+          style="width: 520px; margin-right: 10px"
+        ></el-input>
+        <el-button type="primary">更换设备</el-button>
+      </el-form-item>
+      <el-form-item label-width="120px" label="心跳间隔" prop="remark">
+        <el-input-number
+          v-model="num"
+          controls-position="right"
+          :min="86400"
+          :max="86400"
+        ></el-input-number>
+      </el-form-item>
+      <el-form-item label-width="120px" label="备注" prop="remark">
+        <el-input
+          v-model.trim="form.remark"
+          type="textarea"
+          :rows="2"
+          autocomplete="off"
+        ></el-input>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -55,9 +92,13 @@
           areaName: '',
           areaAddress: '',
           builds: '',
+          floorno: '',
+          iotType: '',
         },
+        radio: 1,
+        bvalue: '',
+        num: 300,
         buildObjs: [],
-        Builddata: '',
         rules: {
           areaName: [
             { required: true, trigger: 'blur', message: '请输入园区名称' },
@@ -74,27 +115,20 @@
         Edit: false,
       }
     },
-    mounted() {
-      this.getBuildList()
-    },
+    mounted() {},
     methods: {
-      async getBuildList() {
-        let Builddata = await getBuildList({})
-        this.Builddata = Builddata.data
-        console.log(Builddata.data, 'Builddata.data')
-      },
-      showEdit(row, Builddata) {
+      showEdit(row) {
+        console.log(row, 'row')
+
         if (!row) {
-          this.title = '添加园区'
+          this.title = '添加终端设备'
           this.Edit = false
         } else {
-          this.title = '编辑园区'
+          this.title = '编辑终端设备'
           this.Edit = true
 
           this.form = Object.assign({}, row)
-          this.form.builds = row.builds.split(',').map((item) => {
-            return Number(item)
-          })
+
           console.log(this.form, row, 'row2')
         }
         this.dialogFormVisible = true

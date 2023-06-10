@@ -34,7 +34,6 @@
       border
       :data="list"
       :element-loading-text="elementLoadingText"
-      :height="height"
       :header-cell-style="{ 'text-align': 'left', background: '#f5f7fa' }"
       style="width: 100%"
       @selection-change="setSelectRows"
@@ -94,13 +93,6 @@
         show-overflow-tooltip
         prop="logTime"
         label="最后开门时间"
-        width="110"
-      ></el-table-column>
-
-      <el-table-column
-        show-overflow-tooltip
-        prop="createTime"
-        label="创建时间"
         width="110"
       ></el-table-column>
       <el-table-column
@@ -163,7 +155,7 @@
         fixed="right"
       >
         <template #default="{ row }">
-          <el-button type="text">设置</el-button>
+          <el-button type="text" @click="handleSet(row)">设置</el-button>
           <el-button type="text" @click="handleEdit(row)">编辑</el-button>
           <el-button type="text" @click="handleDelete(row)">删除</el-button>
         </template>
@@ -180,6 +172,7 @@
     ></el-pagination>
     <table-edit ref="edit" @fetchData="fetchData"></table-edit>
     <LockParameter ref="lockParameter" @fetchData="fetchData"></LockParameter>
+    <lock-set ref="lockset" @fetchData="fetchData"></lock-set>
   </div>
 </template>
 
@@ -187,11 +180,13 @@
   import { getDeviceListPage } from '@/api/table'
   import TableEdit from './components/TableEdit'
   import LockParameter from './components/lockParameter.vue'
+  import LockSet from './components/lockSet.vue'
   export default {
     name: 'VueAdminBetterIndex',
     components: {
       TableEdit,
       LockParameter,
+      LockSet,
     },
     data() {
       return {
@@ -268,8 +263,10 @@
       handleAdd() {
         this.$refs['edit'].showEdit()
       },
+      handleSet(row) {
+        this.$refs['lockset'].showEdit(row)
+      },
       handleEdit(row) {
-        console.log(row, 'row')
         this.$refs['edit'].showEdit(row)
       },
       async handleDelete(row) {

@@ -51,23 +51,7 @@ export const constantRoutes = [
       },
     ],
   },
-  /* {
-    path: "/test",
-    component: Layout,
-    redirect: "noRedirect",
-    children: [
-      {
-        path: "test",
-        name: "Test",
-        component: () => import("@/views/test/index"),
-        meta: {
-          title: "test",
-          icon: "marker",
-          permissions: ["admin"],
-        },
-      },
-    ],
-  }, */
+
   {
     path: '/contentSettings',
     component: Layout,
@@ -151,15 +135,15 @@ export const constantRoutes = [
           icon: 'person-booth',
         },
       },
-      {
-        path: 'operatorHouse',
-        name: 'operatorHouse',
-        component: () =>
-          import('@/views/page/operatorManagement/operatorHouse/index.vue'),
-        meta: {
-          title: '操作员房间权限',
-        },
-      },
+      // {
+      //   path: 'operatorHouse',
+      //   name: 'operatorHouse',
+      //   component: () =>
+      //     import('@/views/page/operatorManagement/operatorHouse/index.vue'),
+      //   meta: {
+      //     title: '操作员房间权限',
+      //   },
+      // },
     ],
   },
   {

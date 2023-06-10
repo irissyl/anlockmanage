@@ -5,12 +5,29 @@
     width="500px"
     @close="close"
   >
-    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-      <el-form-item label="标题" prop="title">
+    <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+      <el-form-item label="登录名称:" prop="title">
         <el-input v-model.trim="form.title" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="作者" prop="author">
+      <el-form-item label="登录密码:" prop="author">
         <el-input v-model.trim="form.author" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="用户电话:" prop="title">
+        <el-input v-model.trim="form.title" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="用户详情:" prop="author">
+        <el-input v-model.trim="form.author" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="创建时间:" prop="title">
+        <el-date-picker
+          v-model="times"
+          type="datetime"
+          placeholder="选择日期时间"
+          default-time="12:00:00"
+        ></el-date-picker>
+      </el-form-item>
+      <el-form-item label="帐号类型:" prop="author">
+        <el-radio v-model="radio" label="1">普通操作员</el-radio>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -31,11 +48,10 @@
           title: '',
           author: '',
         },
-        rules: {
-          title: [{ required: true, trigger: 'blur', message: '请输入标题' }],
-          author: [{ required: true, trigger: 'blur', message: '请输入作者' }],
-        },
+        rules: {},
         title: '',
+        times: '',
+        radio: '1',
         dialogFormVisible: false,
       }
     },
@@ -43,9 +59,9 @@
     methods: {
       showEdit(row) {
         if (!row) {
-          this.title = '添加'
+          this.title = '添加操作员'
         } else {
-          this.title = '编辑'
+          this.title = '编辑操作员'
           this.form = Object.assign({}, row)
         }
         this.dialogFormVisible = true

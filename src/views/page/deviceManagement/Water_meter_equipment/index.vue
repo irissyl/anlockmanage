@@ -1,7 +1,9 @@
 <template>
   <div class="table-container">
     <div class="btntotal">
-      <el-button icon="el-icon-plus" type="primary">添加表计设备</el-button>
+      <el-button icon="el-icon-plus" type="primary" @click="handleAdd">
+        添加表计设备
+      </el-button>
       <el-button type="primary">表格导出</el-button>
       <el-button type="primary">刷新设备列表</el-button>
     </div>
@@ -9,9 +11,8 @@
       ref="tableSort"
       v-loading="listLoading"
       border
-      :data="[]"
+      :data="list"
       :element-loading-text="elementLoadingText"
-      :height="height"
       :header-cell-style="{ 'text-align': 'center', background: '#f5f7fa' }"
       :cell-style="{ 'text-align': 'center' }"
       style="width: 100%"
@@ -76,23 +77,26 @@
       ></el-table-column>
       <el-table-column show-overflow-tooltip label="操作" width="180px">
         <template #default="{ row }">
-          <el-button type="text">设置</el-button>
+          <el-button type="text" @click="handleSet(row)">设置</el-button>
           <el-button type="text" @click="handleEdit(row)">编辑</el-button>
           <el-button type="text" @click="handleDelete(row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <table-edit ref="edit" @fetchData="fetchData"></table-edit>
+    <water-meter-info ref="waterinfo" @fetchData="fetchData"></water-meter-info>
   </div>
 </template>
 
 <script>
   import { getCampusList, deleteCampus } from '@/api/table'
   import TableEdit from './components/TableEdit'
+  import WaterMeterInfo from './components/waterMeterInfo.vue'
   export default {
     name: 'VueAdminBetterIndex',
     components: {
       TableEdit,
+      WaterMeterInfo,
     },
     data() {
       return {
@@ -136,7 +140,6 @@
           this.listLoading = false
         }, 500)
       },
-
       tableSortChange() {
         const imageList = []
         this.$refs.tableSort.tableData.forEach((item, index) => {
@@ -147,11 +150,13 @@
       setSelectRows(val) {
         this.selectRows = val
       },
+      handleSet() {
+        this.$refs['waterinfo'].showEdit()
+      },
       handleAdd() {
         this.$refs['edit'].showEdit()
       },
       handleEdit(row) {
-        console.log(row, 'row')
         this.$refs['edit'].showEdit(row)
       },
       async handleDelete(row) {
