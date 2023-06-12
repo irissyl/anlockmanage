@@ -149,18 +149,18 @@ export const constantRoutes = [
         meta: {
           title: '操作员列表',
           icon: 'person-booth',
-          premissions: ['operator/index'],
+          premissions: ['operatorManagement/index'],
         },
       },
-      // {
-      //   path: 'operatorHouse',
-      //   name: 'operatorHouse',
-      //   component: () =>
-      //     import('@/views/page/operatorManagement/operatorHouse/index.vue'),
-      //   meta: {
-      //     title: '操作员房间权限',
-      //   },
-      // },
+      {
+        path: 'operatorHouse',
+        name: 'operatorHouse',
+        component: () =>
+          import('@/views/page/operatorManagement/operatorHouse/index.vue'),
+        meta: {
+          title: '操作员房间权限',
+        },
+      },
     ],
   },
   {

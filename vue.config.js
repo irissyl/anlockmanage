@@ -29,7 +29,7 @@ const dayjs = require('dayjs')
 const date = dayjs().format('YYYY_M_D')
 const time = dayjs().format('YYYY-M-D HH:mm:ss')
 process.env.VUE_APP_TITLE = title || 'vue-admin-beautiful'
-process.env.VUE_APP_AUTHOR = author || 'https://vue-admin-beautiful.com'
+process.env.VUE_APP_AUTHOR = author || ''
 process.env.VUE_APP_UPDATE_TIME = time
 process.env.VUE_APP_VERSION = version
 process.env.VUE_APP_URL = 'https://yunm.an-lock.com/'
@@ -60,6 +60,7 @@ module.exports = {
         pathRewrite: { '^/api': '' }, //重写路径  匹配以/api为开头的路径都变为空字符串,/api 仅仅是一个请求转发标志，真正的接口中没有/api，所以在转发时重写请求路径，把/api删掉。
         ws: true, //用于支持websocket
         changeOrigin: true, //用于控制请求头中的host值
+        secure: true,
       },
     },
     overlay: {
