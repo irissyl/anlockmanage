@@ -6,7 +6,7 @@ const network = {
   baseURL:
     process.env.NODE_ENV === 'development'
       ? '/api'
-      : 'https://yunm.an-lock.com/',
+      : 'https://yunm.an-lock.com/iotwebapi',
   //配后端数据的接收方式application/json;charset=UTF-8或者application/x-www-form-urlencoded;charset=UTF-8
   contentType: 'application/json;charset=UTF-8',
   //消息框消失时间

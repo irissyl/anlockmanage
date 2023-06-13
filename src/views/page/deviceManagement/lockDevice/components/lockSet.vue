@@ -309,7 +309,7 @@
       float: left;
     }
     .cans {
-      background-color: rgb(237, 234, 185);
+      background-color: rgb(255, 255, 255);
     }
     .el-calendar-table .el-calendar-day {
       height: 50px;

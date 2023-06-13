@@ -22,6 +22,13 @@
         type="selection"
         width="55"
       ></el-table-column> -->
+      <el-table-column show-overflow-tooltip label="选择园区">
+        <template #default="{ row }">
+          <el-tag v-for="item in row.buildObjs" :key="item.buildId">
+            {{ item.buildName }}
+          </el-tag>
+        </template>
+      </el-table-column>
       <el-table-column
         show-overflow-tooltip
         prop="buildName"

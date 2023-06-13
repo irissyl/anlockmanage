@@ -2,49 +2,54 @@
   <div class="index-container">
     <el-row :gutter="20">
       <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
-        <el-card class="all1" shadow="never">
+        <el-card class="all1" shadow="hover">
           <p class="p1">总人数</p>
           <img src="../../assets/comparison/zongrenshu.png" class="imgs" />
-          <div class="p3">{{analyseCountDatas.hostelCount+analyseCountDatas.officeCount}}</div>
+          <div class="p3">
+            {{ analyseCountDatas.hostelCount + analyseCountDatas.officeCount }}
+          </div>
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
-        <el-card class="all2" shadow="never">
+        <el-card class="all2" shadow="hover">
           <p class="p1">设备数量</p>
           <img
             src="../../assets/comparison/shebeishuliangico.png"
             class="imgs"
           />
-          <div class="p2">{{analyseCountDatas.lockCount}}</div>
+          <div class="p2">{{ analyseCountDatas.lockCount }}</div>
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
-        <el-card class="all3" shadow="never">
+        <el-card class="all3" shadow="hover">
           <p class="p1">宿舍人员总数</p>
           <img src="../../assets/comparison/sushejilu.png" class="imgs" />
-          <div class="p2">{{analyseCountDatas.hostelCount}}</div>
+          <div class="p2">{{ analyseCountDatas.hostelCount }}</div>
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
-        <el-card class="all4" shadow="never">
+        <el-card class="all4" shadow="hover">
           <p class="p1">办公室人员总数</p>
           <img
             src="../../assets/comparison/bangongshirenyuan.png"
             class="imgs"
           />
-          <div class="p2">{{analyseCountDatas.officeCount}}</div>
+          <div class="p2">{{ analyseCountDatas.officeCount }}</div>
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-        <el-card shadow="never" style="height: 590px">
+        <el-card shadow="hover" style="height: 590px">
           <div slot="header">
             <span>人员数量统计图</span>
           </div>
-          <div id="chart_line_one"  :style="{ width: '100%', height: '400px' }"></div>
+          <div
+            id="chart_line_one"
+            :style="{ width: '100%', height: '400px' }"
+          ></div>
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="13" :lg="12" :xl="12">
-        <el-card class="card" shadow="never" style="height: 590px">
+        <el-card class="card" shadow="hover" style="height: 590px">
           <div slot="header">
             <span>设备报警记录</span>
           </div>
@@ -69,14 +74,11 @@
   import { dependencies, devDependencies } from '../../../package.json'
   import { getList } from '@/api/changeLog'
   import { getNoticeList } from '@/api/notice'
-  import BareChart from './components/barechart.vue'
   import { analyseCount } from '@/api/table'
 
   export default {
     name: 'Index',
-    components: {
-      BareChart,
-    },
+
     data() {
       return {
         timer: 0,
@@ -122,8 +124,8 @@
         //其他信息
         userAgent: navigator.userAgent,
         //卡片图标
-        analyseCountDatas:{},
-        flag:false
+        analyseCountDatas: {},
+        flag: false,
       }
     },
     created() {
@@ -133,21 +135,19 @@
     beforeDestroy() {
       clearInterval(this.timer)
     },
-     mounted() {
-    },
+    mounted() {},
     methods: {
       async getanalyseCount() {
-       let analyseCountData = await analyseCount()
-       if(analyseCountData.resultCode == 0){
+        let analyseCountData = await analyseCount()
+        if (analyseCountData.resultCode == 0) {
           this.analyseCountDatas = analyseCountData.data
           this.initChart()
-          console.log('analyseCount:',this.analyseCountDatas)
-       }
-       
+          console.log('analyseCount:', this.analyseCountDatas)
+        }
       },
       initChart(name, xData, yData) {
         let getchart = echarts.init(document.getElementById('chart_line_one'))
-        console.log(this.analyseCountDatas,'this.analyseCountData')
+        console.log(this.analyseCountDatas, 'this.analyseCountData')
         var data = [
           {
             name: '宿舍人数',
@@ -171,7 +171,9 @@
           // backgroundColor: '#86c9f4',
           title: {
             text: '总数',
-            subtext: this.analyseCountDatas.hostelCount+this.analyseCountDatas.officeCount,
+            subtext:
+              this.analyseCountDatas.hostelCount +
+              this.analyseCountDatas.officeCount,
             textStyle: {
               color: '#000',
               fontSize: 20,

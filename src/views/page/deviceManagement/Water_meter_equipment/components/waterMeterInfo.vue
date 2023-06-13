@@ -206,7 +206,7 @@
       initChart(name, xData, yData) {
         let getchart = echarts.init(document.getElementById('report'))
         var option = {
-          backgroundColor: '#00265f',
+          // backgroundColor: '#00265f',
           tooltip: {
             trigger: 'axis',
             axisPointer: {
@@ -225,7 +225,7 @@
             right: '11%',
             data: ['2023-06用量'],
             textStyle: {
-              color: '#f9f9f9',
+              color: '#000',
               borderColor: '#fff',
             },
           },
@@ -235,12 +235,12 @@
               data: ['0', '5', '10', '15', '20', '25', '30'],
               axisLine: {
                 lineStyle: {
-                  color: 'rgba(255,255,255,0.12)',
+                  color: '#cdcdcd',
                 },
               },
               axisLabel: {
                 margin: 10,
-                color: '#e2e9ff',
+                color: '#000',
                 textStyle: {
                   fontSize: 14,
                 },
@@ -251,14 +251,14 @@
             {
               axisLabel: {
                 formatter: '{value}',
-                color: '#e2e9ff',
+                color: '#000',
               },
               axisLine: {
                 show: false,
               },
               splitLine: {
                 lineStyle: {
-                  color: 'rgba(255,255,255,0.12)',
+                  color: '#ededed',
                 },
               },
             },
@@ -311,7 +311,7 @@
                       color: '#3CDDCF',
                     },
                     a: {
-                      color: '#fff',
+                      color: '#000',
                       align: 'center',
                     },
                     b: {
@@ -342,6 +342,7 @@
     height: 200px;
     width: 200px;
     margin-left: 40px;
+    // background-color: #ededed;
     // margin: 0 auto;
   }
   .count {
