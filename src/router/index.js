@@ -202,7 +202,7 @@ export const constantRoutes = [
     meta: {
       title: '房间管理',
       icon: 'users-cog',
-      permissions: ['roomList'],
+      premissions: ['roomList'],
     },
     children: [
       {
@@ -224,7 +224,7 @@ export const constantRoutes = [
     meta: {
       title: '预约管理',
       icon: 'calendar-alt',
-      permissions: ['appointmentReview'],
+      premissions: ['appointmentReview'],
     },
     children: [
       {
