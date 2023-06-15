@@ -67,9 +67,9 @@
             return true
           }
         })
-        // if (showChildren.length === 1) {
-        //   return true
-        // }
+        if (showChildren.length === 1) {
+          return true
+        }
 
         if (showChildren.length === 0) {
           this.routeChildren = {

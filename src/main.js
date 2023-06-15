@@ -8,6 +8,7 @@ import router from './router'
 import './plugins'
 import '@/layouts/export'
 import ws from '@/utils/socket'
+import './utils/dialog' // 引入可拖动的js
 
 Vue.prototype.$ws = ws
 if (process.env.NODE_ENV === 'production') {

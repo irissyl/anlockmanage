@@ -302,3 +302,29 @@ export function analyseCount() {
     method: 'get',
   })
 }
+
+// 获取菜单
+export function listMenuItem(data) {
+  return request({
+    url: '/api/account/listMenuItem',
+    method: 'post',
+    data,
+  })
+}
+
+// 添加菜单
+export function addMenuItem(data) {
+  return request({
+    url: '/api/account/addMenuItem',
+    method: 'post',
+    data,
+  })
+}
+// 删除菜单
+export function delMenuItem(data) {
+  return request({
+    url: '/api/account/delMenuItem',
+    method: 'post',
+    data,
+  })
+}

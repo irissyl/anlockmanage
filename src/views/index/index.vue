@@ -1,7 +1,7 @@
 <template>
   <div class="index-container">
     <el-row :gutter="20">
-      <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
+      <!-- <el-col :xs="24" :sm="24" :md="12" :lg="6" :xl="6">
         <el-card class="all1" shadow="hover">
           <p class="p1">总人数</p>
           <img src="../../assets/comparison/zongrenshu.png" class="imgs" />
@@ -64,7 +64,7 @@
             </el-timeline-item>
           </el-timeline>
         </el-card>
-      </el-col>
+      </el-col> -->
     </el-row>
   </div>
 </template>

@@ -82,15 +82,6 @@
             label="开锁时间"
           ></el-table-column>
         </el-table>
-        <!-- <el-pagination
-          :background="background"
-          :current-page="queryForm.pageNo"
-          :layout="layout"
-          :page-size="queryForm.pageSize"
-          :total="total"
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-        ></el-pagination> -->
       </div>
     </div>
   </el-dialog>

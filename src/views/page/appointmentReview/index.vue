@@ -98,7 +98,6 @@
                 icon="el-icon-search"
                 type="primary"
                 native-type="submit"
-                @click="handleQuery"
               >
                 查询
               </el-button>
@@ -177,6 +176,11 @@
     data() {
       return {
         activeName: 'first',
+        queryForm: {
+          pageNo: 1,
+          pageSize: 20,
+          title: '',
+        },
         tableData: [{ date: 1 }],
         value1: [
           new Date(2000, 10, 10, 10, 10),

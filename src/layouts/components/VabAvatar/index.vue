@@ -1,19 +1,15 @@
 <template>
   <el-dropdown @command="handleCommand">
     <span class="avatar-dropdown">
-      <!--<el-avatar class="user-avatar" :src="avatar"></el-avatar>-->
       <img class="user-avatar" :src="defaultUserPng" alt="" />
       <div class="user-name">
         {{ username }}
         <i class="el-icon-arrow-down el-icon--right"></i>
       </div>
     </span>
-
     <el-dropdown-menu slot="dropdown">
-      <!-- <el-dropdown-item command="github">github地址</el-dropdown-item>
-      <el-dropdown-item command="gitee" divided>码云地址</el-dropdown-item>
-      <el-dropdown-item command="pro" divided>pro付费版地址</el-dropdown-item>
-      <el-dropdown-item command="plus" divided>plus付费版地址</el-dropdown-item> -->
+      <el-dropdown-item command="changeRoom"  divided>切换到宿舍管理</el-dropdown-item>
+      <el-dropdown-item command="changeOffice"  divided>切换到办公管理</el-dropdown-item>
       <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
     </el-dropdown-menu>
   </el-dropdown>
@@ -23,7 +19,7 @@
   import { mapGetters } from 'vuex'
   import { recordRoute } from '@/config'
   import UserPng from '@/assets/user.png'
-
+  import { listMenuItem,addMenuItem,delMenuItem } from '@/api/table'
   export default {
     name: 'VabAvatar',
     computed: {
@@ -43,28 +39,16 @@
           case 'logout':
             this.logout()
             break
-          case 'personalCenter':
-            this.personalCenter()
+          case 'changeRoom':
+            this.change()
             break
-          case 'github':
-            window.open('https://github.com/chuzhixin/vue-admin-beautiful')
+          case 'changeOffice':
+            this.changeOffice()
             break
-          case 'gitee':
-            window.open('https://gitee.com/chu1204505056/vue-admin-beautiful')
-            break
-          case 'pro':
-            window.open(
-              'https://vue-admin-beautiful.com/admin-pro/?hmsr=homeAd&hmpl=&hmcu=&hmkw=&hmci='
-            )
-            break
-          case 'plus':
-            window.open(
-              'https://vue-admin-beautiful.com/admin-plus/?hmsr=homeAd&hmpl=&hmcu=&hmkw=&hmci='
-            )
         }
       },
-      personalCenter() {
-        this.$router.push('/personalCenter/personalCenter')
+      change() {
+        
       },
       logout() {
         this.$baseConfirm(
@@ -85,6 +69,9 @@
           }
         )
       },
+      changeOffice(){
+        
+      }
     },
   }
 </script>
