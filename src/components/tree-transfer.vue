@@ -102,7 +102,7 @@
           :render-after-expand="renderAfterExpand"
           :expand-on-click-node="expandOnClickNode"
           :check-strictly="fatherChoose"
-          @check="fromTreeChecked"
+          @check="toTreeChecked"
         ></el-tree>
         <!-- 
           <el-checkbox-group
@@ -426,7 +426,20 @@
 
       // 右侧树选中事件
       toTreeChecked(nodeObj) {
-        this.listCheckKey = this.$refs['from-tree-right'].getCheckedKeys()
+        this.listCheckKey = this.$refs['from-tree-right'].getCheckedKeys(
+          !this.fatherChoose
+        )
+
+        if (this.isRadio) {
+          this.$refs['from-tree-right'].setCheckedKeys([nodeObj.id])
+          this.listCheckKey = [nodeObj.id]
+        } else {
+          this.$refs['from-tree-right'].setCheckedKeys([
+            ...this.listCheckKey,
+            nodeObj.id,
+          ])
+        }
+
         this.$emit('right-check-change', this.listCheckKey)
       },
 
