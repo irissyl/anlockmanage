@@ -4,7 +4,7 @@
       v-dialogDrag
       title="房间匹配"
       :visible.sync="dialogVisible"
-      width="60%"
+      width="70%"
       destroy-on-close
       @close="handleClose"
     >

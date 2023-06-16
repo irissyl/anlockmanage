@@ -74,11 +74,10 @@ instance.interceptors.request.use(
       config.data &&
       config.headers['Content-Type'] === 'application/json;charset=UTF-8'
     )
-      // config.data = qs.stringify(config.data)
-      console.log(config.data, 'config.data')
+      if (debounce.some((item) => config.url.includes(item)))
+        // config.data = qs.stringify(config.data)
 
-    if (debounce.some((item) => config.url.includes(item)))
-      loadingInstance = Vue.prototype.$baseLoading()
+        loadingInstance = Vue.prototype.$baseLoading()
     return config
   },
   (error) => {
