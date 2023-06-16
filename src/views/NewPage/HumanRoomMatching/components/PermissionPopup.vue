@@ -41,7 +41,7 @@
 
 <script>
   import { getCampusList } from '@/api/table'
-  import treeTransfer from 'element-tree-transfer-pro'
+  import treeTransfer from '@/components/tree-transfer.vue'
   const tree = [
     {
       label: 'A部门',
