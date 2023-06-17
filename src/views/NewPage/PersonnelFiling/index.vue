@@ -1,13 +1,14 @@
 <template>
   <div class="table-container">
-    <el-tree
-      class="left"
-      :data="data"
-      node-key="sectionId"
-      :default-expanded-keys="[1]"
-      :props="defaultProps"
-      @node-click="handleNodeClick"
-    ></el-tree>
+    <div class="left">
+      <el-tree
+        :data="data"
+        node-key="sectionId"
+        :default-expanded-keys="[1]"
+        :props="defaultProps"
+        @node-click="handleNodeClick"
+      ></el-tree>
+    </div>
     <div class="right">
       <div class="inputtotal">
         <el-form
@@ -336,30 +337,9 @@
 </script>
 
 <style lang="scss" scoped>
-  .btntotal {
-    float: right;
-    margin-bottom: 20px;
-  }
-  .inputtotal {
-    width: 100%;
-    float: left;
-    // border: 1px solid saddlebrown;
-
-    .ei {
-      float: right;
-      width: 150px;
-    }
-    .lb {
-      // border: 1px solid saddlebrown;
-      float: left;
-      margin-right: 10px;
-    }
-  }
-
   .left {
-    width: 150px;
-    // height: 560px;
     float: left;
+    width: 10%;
     margin-top: 50px;
     border: 1px solid rgb(231, 231, 231);
   }
@@ -367,5 +347,21 @@
   .right {
     width: 88%;
     float: right;
+
+    .inputtotal {
+      width: 90%;
+      float: left;
+      // border: 1px solid saddlebrown;
+
+      .ei {
+        float: right;
+        width: 150px;
+      }
+      .lb {
+        // border: 1px solid saddlebrown;
+        float: left;
+        margin-right: 10px;
+      }
+    }
   }
 </style>

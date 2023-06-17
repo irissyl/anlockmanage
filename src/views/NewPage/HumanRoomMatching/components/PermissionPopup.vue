@@ -8,29 +8,23 @@
       destroy-on-close
       @close="handleClose"
     >
-      <el-row :gutter="10">
-        <el-col
-          :xs="24"
-          :sm="24"
-          :md="24"
-          :lg="22"
-          :xl="22"
-          style="margin-left: 0px"
-        >
-          <tree-transfer
-            ref="treeTransfer"
-            :data-source.sync="dataSource"
-            :default-checked-keys="defaultValue"
-            :is-radio="false"
-            :filterable="true"
-            :father-choose="false"
-            @left-check-change="handleLeftCheckChange"
-            @right-check-change="handleRightCheckChange"
-            @change="handleChange"
-          ></tree-transfer>
-          <!-- <el-transfer class="trans" v-model="generatevalue" :titles="['未分配:', '已分配:']" :button-texts="['删除', '添加人员']" filterable :filter-method="filterMethod" filter-placeholder="请输入人员信息" :data="generateData"></el-transfer> -->
-        </el-col>
-      </el-row>
+      <div class="trans">
+        <tree-transfer
+          ref="treeTransfer"
+          class="transtransfer"
+          :titles="['未分配:', '已分配:']"
+          :button-texts="['删除', '添加人员']"
+          :data-source.sync="dataSource"
+          :default-checked-keys="defaultValue"
+          :is-radio="false"
+          :filterable="true"
+          :father-choose="false"
+          @left-check-change="handleLeftCheckChange"
+          @right-check-change="handleRightCheckChange"
+          @change="handleChange"
+        ></tree-transfer>
+        <!-- <el-transfer class="trans" v-model="generatevalue" :titles="['未分配:', '已分配:']" :button-texts="['删除', '添加人员']" filterable :filter-method="filterMethod" filter-placeholder="请输入人员信息" :data="generateData"></el-transfer> -->
+      </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="handleClose">取 消</el-button>
         <el-button type="primary" @click="handleClose">确 定</el-button>
@@ -179,15 +173,12 @@
 
 <style lang="scss">
   .trans {
-    float: left;
-    height: 400px;
-    margin-left: 160px;
-    .el-transfer-panel {
-      width: 270px;
-      height: 400px;
+    width: 90%;
+    margin: 0 auto;
+    .transtransfer {
     }
-    .el-transfer-panel__list.is-filterable {
-      height: 400px;
+    .transfer-center {
+      // width: 270px;
     }
   }
 </style>

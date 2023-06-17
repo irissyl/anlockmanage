@@ -10,7 +10,7 @@
           @change="treeAllBoxChange"
         ></el-checkbox>
         <span>{{ treeTitle }}</span>
-        <span class="total">{{ treeLength }}/{{ treeCheckKeys.length }}</span>
+        <span class="total">{{ treeLength }}</span>
       </div>
       <div class="transfer-main">
         <el-input
@@ -75,7 +75,7 @@
         ></el-checkbox>
         <span>{{ listTitle }}</span>
         <span class="total">
-          {{ rightList.length }}/{{ listCheckKey.length }}
+          {{ rightList.length }}
         </span>
       </div>
       <div class="transfer-main">
@@ -134,12 +134,12 @@
       // 宽度
       width: {
         type: String,
-        default: '800px',
+        default: '',
       },
       // 高度
       height: {
         type: String,
-        default: '500px',
+        default: '450px',
       },
       // 标题
       titles: {
@@ -280,9 +280,14 @@
       // 右侧树中的数据是根据rightList中的key，从treeFromData中的子节点中筛选出来的，同时要保留树的结构
       rightTreeData() {
         const rightList = JSON.parse(JSON.stringify(this.rightList))
+        console.log(rightList, 'rightList')
+
         const treeFromData = JSON.parse(JSON.stringify(this.treeFromData))
+        console.log(treeFromData, this.nodeKey, 'treeFromData')
 
         let rightKeys = rightList.map((item) => item[this.nodeKey])
+        console.log(rightKeys, 'rightKeys')
+
         let result = treeFromData.filter((item) => {
           if (
             item[this.nodeKey] &&
@@ -296,17 +301,11 @@
                 rightKeys.indexOf(child[this.nodeKey]) > -1
               ) {
                 return true
-              } else if (
-                child.children &&
-                child.children.length > 0 &&
-                rightList.some(
-                  (right) => right[this.nodeKey] == child[this.nodeKey]
-                )
-              ) {
-                child.children = child.children.filter((c) => {
+              } else if (child.children && child.children.length > 0) {
+                child.children = child.children.filter((grandchild) => {
                   if (
-                    c[this.nodeKey] &&
-                    rightKeys.indexOf(c[this.nodeKey]) > -1
+                    grandchild[this.nodeKey] &&
+                    rightKeys.indexOf(grandchild[this.nodeKey]) > -1
                   ) {
                     return true
                   }
@@ -317,6 +316,7 @@
             return item.children.length > 0
           }
         })
+        console.log(result, 'result')
 
         // 将所有节点的disabled置为false
         const setDisabled = (data) => {
@@ -328,7 +328,6 @@
           })
         }
         setDisabled(result)
-
         return result
       },
     },

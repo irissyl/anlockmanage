@@ -117,7 +117,7 @@
 </template>
 
 <script>
-  import PermissionPopup from '../../GatewayDevice/components/PermissionPopup.vue'
+  import PermissionPopup from './PermissionPopup'
 
   export default {
     components: { PermissionPopup },

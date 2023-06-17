@@ -4,6 +4,7 @@
     :title="title"
     :visible.sync="dialogFormVisible"
     width="60%"
+    destroy-on-close
     @close="close"
   >
     <div class="btntotal">
