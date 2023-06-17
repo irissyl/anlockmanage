@@ -248,13 +248,8 @@
         const datalist = await listRentCustomerPage(formdata, {})
         this.list = datalist.data.datas
         this.total = datalist.data.dataCount
-        // datalist.data.datas.forEach((item) => {
-        //   this.buildObjs = item.buildObjs
-        // })
         console.log(datalist, 'datalist')
-        setTimeout(() => {
-          this.listLoading = false
-        }, 500)
+        this.listLoading = false
       },
       handleSizeChange(val) {
         this.queryForm.pageSize = val

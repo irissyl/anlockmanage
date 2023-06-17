@@ -136,9 +136,7 @@
           this.buildObjs = item.buildObjs
         })
         console.log(datalist.data, 'datalist')
-        setTimeout(() => {
-          this.listLoading = false
-        }, 500)
+        this.listLoading = false
       },
       tableSortChange() {
         const imageList = []

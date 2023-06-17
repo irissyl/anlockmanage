@@ -287,9 +287,7 @@
         //   this.buildObjs = item.buildObjs
         // })
         console.log(datalist, this.section, 'fetchData')
-        setTimeout(() => {
-          this.listLoading = false
-        }, 500)
+        this.listLoading = false
       },
       handleSizeChange(val) {
         this.queryForm.pageSize = val

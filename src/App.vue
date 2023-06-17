@@ -10,3 +10,8 @@
     mounted() {},
   }
 </script>
+<style>
+  body {
+    padding-right: 0 !important;
+  }
+</style>

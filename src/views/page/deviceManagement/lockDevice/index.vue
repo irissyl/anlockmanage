@@ -228,9 +228,7 @@
         //   this.buildObjs = item.buildObjs
         // })
         console.log(datalist, 'datalist')
-        setTimeout(() => {
-          this.listLoading = false
-        }, 500)
+        this.listLoading = false
       },
       addLockDevice() {},
       handleSizeChange(val) {

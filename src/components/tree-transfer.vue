@@ -425,19 +425,20 @@
 
       // 右侧树选中事件
       toTreeChecked(nodeObj) {
+        console.log(nodeObj, 'nodeObj')
         this.listCheckKey = this.$refs['from-tree-right'].getCheckedKeys(
           !this.fatherChoose
         )
 
-        if (this.isRadio) {
-          this.$refs['from-tree-right'].setCheckedKeys([nodeObj.id])
-          this.listCheckKey = [nodeObj.id]
-        } else {
-          this.$refs['from-tree-right'].setCheckedKeys([
-            ...this.listCheckKey,
-            nodeObj.id,
-          ])
-        }
+        // if (this.isRadio) {
+        //   this.$refs['from-tree-right'].setCheckedKeys([nodeObj.id])
+        //   this.listCheckKey = [nodeObj.id]
+        // } else {
+        //   this.$refs['from-tree-right'].setCheckedKeys([
+        //     ...this.listCheckKey,
+        //     nodeObj.id,
+        //   ])
+        // }
 
         this.$emit('right-check-change', this.listCheckKey)
       },
@@ -703,7 +704,7 @@
   .transfer-left,
   .transfer-right {
     border: 1px solid #ebeef5;
-    width: 40%;
+    width: 35%;
     height: 100%;
     box-sizing: border-box;
     border-radius: 5px;
@@ -713,8 +714,8 @@
   .transfer-center {
     position: absolute;
     top: 50%;
-    left: 40%;
-    width: 20%;
+    left: 35%;
+    width: 30%;
     text-align: center;
     vertical-align: center;
   }

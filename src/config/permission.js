@@ -24,6 +24,7 @@ VabProgress.configure({
 router.beforeResolve(async (to, from, next) => {
   if (progressBar) VabProgress.start()
   let hasToken = store.getters['user/accessToken']
+  // let scene = store.getters['user/scene']
 
   if (!loginInterception) hasToken = true
 

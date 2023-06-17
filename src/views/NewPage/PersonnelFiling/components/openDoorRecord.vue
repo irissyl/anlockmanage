@@ -3,7 +3,7 @@
     v-dialogDrag
     :title="title"
     :visible.sync="dialogFormVisible"
-    width="60%"
+    width="70%"
     destroy-on-close
     @close="close"
   >

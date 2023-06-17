@@ -360,9 +360,7 @@
         // datalist.data.datas.forEach((item) => {
         //   this.buildObjs = item.buildObjs
         // })
-        setTimeout(() => {
-          this.listLoading = false
-        }, 500)
+        this.listLoading = false
       },
       handleClose() {},
       handleSizeChange(val) {

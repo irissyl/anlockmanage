@@ -4,7 +4,7 @@
       v-dialogDrag
       title="授权房间"
       :visible.sync="dialogVisible"
-      width="60%"
+      width="70%"
       destroy-on-close
       append-to-body
       @close="handleClose"
@@ -14,7 +14,7 @@
           ref="treeTransfer"
           class="transtransfer"
           :titles="['未分配:', '已分配:']"
-          :button-texts="['删除', '添加人员']"
+          :button-texts="['取消人员', '添加人员']"
           :data-source.sync="dataSource"
           :default-checked-keys="defaultValue"
           :is-radio="false"
@@ -24,14 +24,12 @@
           @right-check-change="handleRightCheckChange"
           @change="handleChange"
         ></tree-transfer>
-        <!-- <el-transfer class="trans" v-model="generatevalue" :titles="['未分配:', '已分配:']" :button-texts="['删除', '添加人员']" filterable :filter-method="filterMethod" filter-placeholder="请输入人员信息" :data="generateData"></el-transfer> -->
       </div>
       <div class="botm">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <i class="el-icon-info fon"></i>
             <span class="fon" style="font-size: 15px">授权对象：</span>
-            <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
           </div>
           <el-form ref="form" :model="form" :rules="rules" label-width="80px">
             <el-form-item label="姓名:" prop="customerName">
@@ -163,21 +161,7 @@
       treeTransfer,
     },
     data() {
-      const generateData = (_) => {
-        const data = []
-        const cities = ['张三', '李四', '王五']
-        const pinyin = ['zhangsan', 'lisi', 'wangwu']
-        cities.forEach((city, index) => {
-          data.push({
-            label: city,
-            key: index,
-            pinyin: pinyin[index],
-          })
-        })
-        return data
-      }
       return {
-        generateData: generateData(),
         form: {
           customerName: '',
           rentCardnoHex: '',
@@ -187,15 +171,8 @@
           rentDoorPass: '',
           remark: '',
         },
-        rules: {
-          // customerName: [
-          //   { required: true, trigger: 'blur', message: '请输入姓名' },
-          // ],
-        },
-        generatevalue: [],
-        filterMethod(query, item) {
-          return item.pinyin.indexOf(query) > -1
-        },
+        rules: {},
+
         areaId: '',
         departdatalist: [],
         departname: '',

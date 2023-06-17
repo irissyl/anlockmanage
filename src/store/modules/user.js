@@ -19,6 +19,7 @@ const state = () => ({
   avatar: '',
   permissions: [],
   menuList: [],
+  scene: '',
 })
 const getters = {
   accessToken: (state) => state.accessToken,
@@ -26,6 +27,7 @@ const getters = {
   avatar: (state) => state.avatar,
   permissions: (state) => state.permissions,
   menuList: (state) => state.menuList,
+  scene: (state) => state.scene,
 }
 const mutations = {
   setAccessToken(state, accessToken) {
@@ -45,6 +47,10 @@ const mutations = {
     console.log(menuList, 'menuList')
     state.menuList = menuList
   },
+  setScene(state, scene) {
+    console.log(scene, 'menuList')
+    state.scene = scene
+  },
 }
 const actions = {
   setPermissions({ commit }, permissions) {
@@ -53,27 +59,31 @@ const actions = {
   async login({ commit }, userInfo) {
     const data = await login(userInfo)
     const accessToken = data[tokenName]
-    console.log(data[tokenName], accessToken, 'data2222')
-
-    if (accessToken) {
-      commit('setAccessToken', accessToken)
-      const hour = new Date().getHours()
-      const thisTime =
-        hour < 8
-          ? '早上好'
-          : hour <= 11
-          ? '上午好'
-          : hour <= 13
-          ? '中午好'
-          : hour < 18
-          ? '下午好'
-          : '晚上好'
-      Vue.prototype.$baseNotify(`欢迎登录${title}`, `${thisTime}！`)
+    const scene = data.scene
+    console.log(data[tokenName], accessToken, data, scene, 'data2222')
+    if (scene && scene == '办公室') {
+      if (accessToken) {
+        commit('setAccessToken', accessToken)
+        const hour = new Date().getHours()
+        const thisTime =
+          hour < 8
+            ? '早上好'
+            : hour <= 11
+            ? '上午好'
+            : hour <= 13
+            ? '中午好'
+            : hour < 18
+            ? '下午好'
+            : '晚上好'
+        Vue.prototype.$baseNotify(`欢迎登录${title}`, `${thisTime}！`)
+      } else {
+        Vue.prototype.$baseMessage(
+          `登录接口异常，未正确返回${tokenName}...`,
+          'error'
+        )
+      }
     } else {
-      Vue.prototype.$baseMessage(
-        `登录接口异常，未正确返回${tokenName}...`,
-        'error'
-      )
+      Vue.prototype.$baseMessage('请使用办公室账号登录!', 'error')
     }
   },
   async getUserInfo({ commit, state }) {

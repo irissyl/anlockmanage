@@ -226,9 +226,7 @@
         })
         this.imageList = imageList
         this.total = totalCount
-        setTimeout(() => {
-          this.listLoading = false
-        }, 500)
+        this.listLoading = false
       },
       testMessage() {
         this.$baseMessage('test1', 'success')

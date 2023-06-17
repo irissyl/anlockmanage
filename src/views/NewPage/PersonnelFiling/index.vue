@@ -97,7 +97,7 @@
         ></el-table-column>
         <el-table-column show-overflow-tooltip prop="keycount" label="钥匙数">
           <template #default="{ row }">
-            <el-button type="primary" @click="setKey(row)">
+            <el-button type="primary" plain @click="setKey(row)">
               {{ row.keycount }}
             </el-button>
           </template>
@@ -272,9 +272,7 @@
         //   this.buildObjs = item.buildObjs
         // })
         console.log(datalist, 'datalist')
-        setTimeout(() => {
-          this.listLoading = false
-        }, 500)
+        this.listLoading = false
       },
       handleSizeChange(val) {
         this.queryForm.pageSize = val
@@ -345,7 +343,7 @@
   }
 
   .right {
-    width: 88%;
+    width: 85%;
     float: right;
 
     .inputtotal {

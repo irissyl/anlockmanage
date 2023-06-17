@@ -218,9 +218,7 @@
         //   this.buildObjs = item.buildObjs
         // })
         console.log(datalist.data, 'datalist')
-        setTimeout(() => {
-          this.listLoading = false
-        }, 100)
+        this.listLoading = false
       },
 
       tableSortChange() {
