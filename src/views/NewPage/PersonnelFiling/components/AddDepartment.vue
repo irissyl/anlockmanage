@@ -1,5 +1,6 @@
 <template>
   <el-dialog
+    v-dialogDrag
     :title="title"
     :visible.sync="dialogFormVisible"
     width="500px"
