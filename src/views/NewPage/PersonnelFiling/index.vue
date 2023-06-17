@@ -343,7 +343,7 @@
   }
 
   .right {
-    width: 85%;
+    width: 88%;
     float: right;
 
     .inputtotal {
