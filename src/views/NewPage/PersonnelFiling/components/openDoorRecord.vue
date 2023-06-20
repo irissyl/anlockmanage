@@ -18,6 +18,7 @@
           <label class="lb">查询时间段开锁日志 :</label>
           <el-date-picker
             v-model="value1"
+            value-format="yyyy-MM-dd HH:mm:ss"
             type="datetimerange"
             range-separator="至"
             start-placeholder="开始日期"
@@ -26,12 +27,7 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button
-            icon="el-icon-search"
-            type="primary"
-            native-type="submit"
-            @click="handleQuery"
-          >
+          <el-button icon="el-icon-search" type="primary" @click="fetchData">
             查询
           </el-button>
           <el-button icon="el-icon-plus" type="primary" @click="handleExport">
@@ -85,11 +81,7 @@
 </template>
 
 <script>
-  import {
-    doEdit,
-    getNetlockLogListSearch,
-    getNetlockLogList,
-  } from '@/api/table'
+  import { doEdit, getNetlockLogListSearch } from '@/api/table'
 
   export default {
     data() {
@@ -100,19 +92,12 @@
           author: '',
         },
         listLoading: true,
-        layout: 'total, sizes, prev, pager, next, jumper',
         total: 0,
         background: true,
-        selectRows: '',
-        elementLoadingText: '正在加载...',
         queryForm: {
           pageNo: 1,
           pageSize: 10,
           title: '',
-        },
-        rules: {
-          title: [{ required: true, trigger: 'blur', message: '请输入标题' }],
-          author: [{ required: true, trigger: 'blur', message: '请输入作者' }],
         },
         title: '',
         dialogFormVisible: false,
@@ -120,6 +105,7 @@
         end: '',
         start: '',
         value1: '',
+        datatime: [],
       }
     },
     computed: {},
@@ -128,26 +114,22 @@
       showEdit(row) {
         this.title = '开锁记录'
         this.dialogFormVisible = true
+        this.rentid = row.rentId
+        console.log(row, 'row')
       },
       async fetchData() {
         let data = {
           rentid: this.rentid,
-          start: '',
-          end: '',
+          start: '2023-06-15 16:12:26',
+          end: '2023-06-20 16:22:26',
         }
-        let Netlockdata = await getNetlockLogList(data)
+        console.log(data, 'data')
+        let Netlockdata = await getNetlockLogListSearch(data)
         console.log(Netlockdata, 'Netlockdata')
       },
-      changes(val, a, v) {
-        console.log(val, a, v, 'val,a,v')
-      },
-      handleSizeChange(val) {
-        this.queryForm.pageSize = val
-        this.fetchData()
-      },
-      handleCurrentChange(val) {
-        this.queryForm.pageNo = val
-        this.fetchData()
+      changes(val) {
+        this.datatime = val
+        console.log(val, 'val')
       },
       handleQuery() {
         this.queryForm.pageNo = 1
