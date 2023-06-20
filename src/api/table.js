@@ -282,6 +282,9 @@ export function getNetlockLogListSearch() {
   return request({
     url: '/api/office/getNetlockLogList',
     method: 'get',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+    },
   })
 }
 
@@ -290,6 +293,9 @@ export function getDeviceListPage(data) {
   return request({
     url: '/api/netlock/getDeviceListPage',
     method: 'post',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+    },
     data,
   })
 }

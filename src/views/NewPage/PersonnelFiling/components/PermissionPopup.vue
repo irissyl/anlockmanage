@@ -172,7 +172,7 @@
           remark: '',
         },
         rules: {},
-
+        Builddata: [],
         areaId: '',
         departdatalist: [],
         departname: '',

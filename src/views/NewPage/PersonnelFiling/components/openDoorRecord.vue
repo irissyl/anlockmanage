@@ -8,7 +8,37 @@
     @close="close"
   >
     <div class="btntotal">
-      <el-button type="primary">表格导出</el-button>
+      <el-form
+        ref="form"
+        :model="queryForm"
+        :inline="true"
+        @submit.native.prevent
+      >
+        <el-form-item>
+          <label class="lb">查询时间段开锁日志 :</label>
+          <el-date-picker
+            v-model="value1"
+            type="datetimerange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            @change="changes"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item>
+          <el-button
+            icon="el-icon-search"
+            type="primary"
+            native-type="submit"
+            @click="handleQuery"
+          >
+            查询
+          </el-button>
+          <el-button icon="el-icon-plus" type="primary" @click="handleExport">
+            导出表格
+          </el-button>
+        </el-form-item>
+      </el-form>
     </div>
     <div class="table-container">
       <el-table
@@ -89,7 +119,7 @@
         rentid: '',
         end: '',
         start: '',
-        value1: [new Date(2023, 6, 3, 10, 10), new Date(2000, 10, 11, 10, 10)],
+        value1: '',
       }
     },
     computed: {},
@@ -100,7 +130,16 @@
         this.dialogFormVisible = true
       },
       async fetchData() {
-        // let data = await getNetlockLogList(query)
+        let data = {
+          rentid: this.rentid,
+          start: '',
+          end: '',
+        }
+        let Netlockdata = await getNetlockLogList(data)
+        console.log(Netlockdata, 'Netlockdata')
+      },
+      changes(val, a, v) {
+        console.log(val, a, v, 'val,a,v')
       },
       handleSizeChange(val) {
         this.queryForm.pageSize = val
@@ -130,5 +169,8 @@
   .btntotal {
     float: right;
     margin-bottom: 10px;
+  }
+  .lb {
+    margin-right: 10px;
   }
 </style>

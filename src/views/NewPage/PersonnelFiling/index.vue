@@ -165,10 +165,7 @@
         @size-change="handleSizeChange"
       ></el-pagination>
     </div>
-    <add-department
-      ref="department"
-      @fetchData="getdepartmemtData"
-    ></add-department>
+    <add-department ref="department"></add-department>
     <TableEdit ref="edit" @fetchData="fetchData"></TableEdit>
     <OpenDoorRecord ref="opendoor" @fetchData="fetchData"></OpenDoorRecord>
     <keys ref="keys" @fetchData="fetchData"></keys>
