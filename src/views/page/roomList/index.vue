@@ -25,26 +25,45 @@
         </el-card>
       </el-col>
       <el-col :xs="24" :sm="24" :md="20" :lg="20" :xl="20">
-        <el-card class="all1" shadow="never">
+        <el-card class="all1" shadow="never" style="height: 800px">
           <div class="grid-content bg-purple">
             <div class="right">
               <div class="btntotal">
                 <el-button
                   icon="el-icon-plus"
                   type="primary"
+                  @click="handleyuanqu"
+                >
+                  园区
+                </el-button>
+                <el-button
+                  icon="el-icon-plus"
+                  type="primary"
+                  @click="handleloudong"
+                >
+                  楼栋
+                </el-button>
+                <el-button
+                  icon="el-icon-plus"
+                  type="primary"
+                  @click="handlelouceng"
+                >
+                  楼层
+                </el-button>
+                <el-button
+                  icon="el-icon-plus"
+                  type="primary"
                   @click="handleAdd"
                 >
-                  添加房间
+                  单个房间
+                </el-button>
+                <el-button icon="el-icon-plus" type="primary" @click="batchAdd">
+                  批量创建房间
                 </el-button>
               </div>
 
               <div class="inputtotal">
-                <el-form
-                  ref="form"
-                  :model="queryForm"
-                  :inline="true"
-                  @submit.native.prevent
-                >
+                <el-form ref="form" :model="queryForm" :inline="true">
                   <el-form-item>
                     <label class="lb">房间名称:</label>
                     <el-input
@@ -100,37 +119,18 @@
                   label="房间名称"
                 ></el-table-column>
                 <el-table-column
-                  min-width="110px"
                   show-overflow-tooltip
                   prop="keyCount"
                   label="钥匙数"
-                ></el-table-column>
-                <el-table-column
-                  min-width="110px"
-                  show-overflow-tooltip
-                  prop=""
-                  label="房间类别"
                 >
                   <template #default="{ row }">
-                    <span v-if="row.attribute">
-                      {{ JSON.parse(row.attribute)?.room_type }}
-                    </span>
+                    <el-button type="primary" plain @click="setKey(row)">
+                      {{ row.keyCount }}
+                    </el-button>
                   </template>
                 </el-table-column>
                 <el-table-column
-                  min-width="110px"
-                  show-overflow-tooltip
-                  prop=""
-                  label="房型"
-                >
-                  <template #default="{ row }">
-                    <span v-if="row.attribute">
-                      {{ JSON.parse(row.attribute).room_attr }}
-                    </span>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  min-width="110px"
+                  min-width="120px"
                   show-overflow-tooltip
                   prop="iotTag"
                   label="门锁标识"
@@ -187,19 +187,37 @@
                   min-width="110px"
                   show-overflow-tooltip
                   label="操作"
-                  width="200px"
+                  width="220px"
                   fixed="right"
                 >
                   <template #default="{ row }">
-                    <el-button type="text" @click="handleEdit(row)">
+                    <el-button
+                      type="primary"
+                      style="margin-right: 10px"
+                      size="mini"
+                      plain
+                      @click="handleEdit(row)"
+                    >
                       编辑
                     </el-button>
-                    <el-button type="text" @click="handleDelete(row)">
-                      取临时密码
-                    </el-button>
-                    <el-button type="text" @click="record(row)">
-                      开门记录
-                    </el-button>
+                    <el-dropdown split-button type="primary" size="mini">
+                      更多操作
+                      <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item>
+                          <el-button type="text">远程开锁</el-button>
+                        </el-dropdown-item>
+                        <el-dropdown-item>
+                          <el-button type="text" @click="handleDelete(row)">
+                            取临时密码
+                          </el-button>
+                        </el-dropdown-item>
+                        <el-dropdown-item>
+                          <el-button type="text" @click="record(row)">
+                            开门记录
+                          </el-button>
+                        </el-dropdown-item>
+                      </el-dropdown-menu>
+                    </el-dropdown>
                   </template>
                 </el-table-column>
               </el-table>
@@ -219,14 +237,15 @@
     </el-row>
     <table-edit ref="edit" @fetchData="fetchData"></table-edit>
     <open-door-record ref="record" @fetchData="fetchData"></open-door-record>
-
+    <batch-build ref="batch" @fetchData="fetchData"></batch-build>
     <el-dialog
+      v-dialogDrag
       title="取临时密码"
       size="small"
       :visible.sync="linshidialogVisible"
       width="35%"
-      :before-close="handleClose"
       append-to-body
+      @close="handleClose"
     >
       <div class="contents">
         <div class="top">4818662</div>
@@ -261,6 +280,10 @@
         </el-button>
       </span>
     </el-dialog>
+    <keys ref="keys" @fetchData="fetchData"></keys>
+    <yuanquAdd ref="yuanqu" @fetchData="fetchData"></yuanquAdd>
+    <loudongAdd ref="loudong" @fetchData="fetchData"></loudongAdd>
+    <loucengAdd ref="louceng" @fetchData="fetchData"></loucengAdd>
   </div>
 </template>
 
@@ -274,11 +297,21 @@
   } from '@/api/table'
   import TableEdit from './components/TableEdit'
   import OpenDoorRecord from './components/openDoorRecord.vue'
+  import BatchBuild from './components/batchBuild.vue'
+  import keys from './components/keys.vue'
+  import yuanquAdd from './components/yuanquAdd.vue'
+  import loudongAdd from './components/loudongAdd'
+  import loucengAdd from './components/loucengAdd'
   export default {
     name: 'VueAdminBetterIndex',
     components: {
       TableEdit,
       OpenDoorRecord,
+      BatchBuild,
+      keys,
+      yuanquAdd,
+      loudongAdd,
+      loucengAdd,
     },
     data() {
       return {
@@ -302,7 +335,7 @@
         data: [
           {
             areaId: 1,
-            areaName: '办公室场景',
+            areaName: '办公区房间列表',
             icon: 'el-icon-s-data',
             children: [],
           },
@@ -330,7 +363,9 @@
         this.section = data.sectionName
         this.queryForm.buildkey = data.buildObjs[0].buildKey
         this.fetchData()
-        console.log(data, data.buildObjs[0].buildKey, 'uuu')
+      },
+      setKey() {
+        this.$refs['keys'].showEdit()
       },
       async getdepartmemtData() {
         const departdatalist = await getCampusList()
@@ -362,7 +397,9 @@
         // })
         this.listLoading = false
       },
-      handleClose() {},
+      handleClose() {
+        this.linshidialogVisible = false
+      },
       handleSizeChange(val) {
         this.queryForm.pageSize = val
         console.log(this.queryForm.pageSize, 'pageSize')
@@ -390,6 +427,18 @@
       record(row) {
         this.$refs['record'].showEdit(row)
       },
+      handleyuanqu() {
+        this.$refs['yuanqu'].showEdit()
+      },
+      handleloudong() {
+        this.$refs['loudong'].showEdit()
+      },
+      handlelouceng() {
+        this.$refs['louceng'].showEdit()
+      },
+      batchAdd() {
+        this.$refs['batch'].showEdit()
+      },
       handleAdd() {
         this.$refs['edit'].showEdit()
       },
@@ -404,7 +453,7 @@
       handleEdit(row) {
         this.$refs['edit'].showEdit(row)
       },
-      async handleDelete(row) {
+      handleDelete(row) {
         console.log(row, 'rowd')
         this.linshidialogVisible = true
       },
@@ -418,7 +467,7 @@
     margin-bottom: 20px;
   }
   .inputtotal {
-    width: 70%;
+    width: 45%;
     float: left;
     // border: 1px solid saddlebrown;
 

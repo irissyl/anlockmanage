@@ -68,7 +68,7 @@
     methods: {
       async fetchData() {
         this.listLoading = true
-        const datalist = await listSection({})
+        const datalist = await listSection()
         this.list = datalist.data
         datalist.data.forEach((item) => {
           this.buildObjs = item.buildObjs

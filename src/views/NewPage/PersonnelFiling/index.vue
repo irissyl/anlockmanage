@@ -2,7 +2,7 @@
   <div class="table-container">
     <div class="left">
       <el-tree
-        :data="data"
+        :data="treedata"
         node-key="sectionId"
         :default-expanded-keys="[1]"
         :props="defaultProps"
@@ -165,7 +165,10 @@
         @size-change="handleSizeChange"
       ></el-pagination>
     </div>
-    <add-department ref="department" @fetchData="fetchData"></add-department>
+    <add-department
+      ref="department"
+      @fetchData="getdepartmemtData"
+    ></add-department>
     <TableEdit ref="edit" @fetchData="fetchData"></TableEdit>
     <OpenDoorRecord ref="opendoor" @fetchData="fetchData"></OpenDoorRecord>
     <keys ref="keys" @fetchData="fetchData"></keys>
@@ -208,7 +211,7 @@
         },
         Builddata: [],
         buildObjs: [],
-        data: [
+        treedata: [
           {
             sectionId: 1,
             sectionName: '部门',
@@ -221,6 +224,7 @@
         },
         section: '',
         opendoor: false,
+        treedatadepart: [],
       }
     },
     computed: {
@@ -229,7 +233,7 @@
       },
     },
 
-    created() {
+    mounted() {
       this.fetchData()
       this.getdepartmemtData()
     },
@@ -246,14 +250,15 @@
       },
       async getdepartmemtData() {
         const departdatalist = await listSection({})
-        this.data.map((item) => {
+        console.log(departdatalist, this.treedata, 'departdatalist')
+        this.treedata.map((item) => {
           if (item.sectionId === 1) {
             // 找到要合并的元素
-            item.children = item.children.concat(departdatalist.data) // 将s数组合并到该元素的children属性中
+            item.children = item.children.concat(departdatalist.data) // 将数组合并到该元素的children属性中
           }
           return item
         })
-        console.log(this.data, departdatalist.data, 'this.data')
+        console.log(this.treedata, 'this.treedata')
       },
       async fetchData() {
         // this.listLoading = true

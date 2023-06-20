@@ -278,11 +278,10 @@ export function listOfficeDevicePage(data, param) {
 
 // 取设备开门日志列表
 
-export function getNetlockLogListSearch(data) {
+export function getNetlockLogListSearch() {
   return request({
     url: '/api/office/getNetlockLogList',
     method: 'get',
-    data,
   })
 }
 

@@ -3,44 +3,34 @@
     v-dialogDrag
     :title="title"
     :visible.sync="dialogFormVisible"
-    width="60%"
-    destroy-on-close
+    width="70%"
     @close="close"
   >
     <div class="table-container">
       <div class="right">
-        <div class="inputtotal">
+        <div>
           <el-form
             ref="form"
             :model="queryForm"
             :inline="true"
+            class="inputtotal"
             @submit.native.prevent
           >
             <el-form-item>
-              <label class="lb">时间 :</label>
-              <el-date-picker
-                v-model="value1"
-                type="datetimerange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-              ></el-date-picker>
+              <label class="lb">房名:</label>
+              <el-input v-model="value1" class="ei" type="text"></el-input>
             </el-form-item>
             <el-form-item>
+              <el-button icon="el-icon-refresh" type="info"></el-button>
               <el-button
                 icon="el-icon-search"
                 type="primary"
                 native-type="submit"
-                @click="handleQuery"
               >
                 查询
               </el-button>
-              <el-button
-                icon="el-icon-plus"
-                type="primary"
-                @click="handleExport"
-              >
-                导出表格
+              <el-button icon="el-icon-plus" type="primary" @click="shouquan">
+                授权新钥匙
               </el-button>
             </el-form-item>
           </el-form>
@@ -48,58 +38,83 @@
         <el-table
           ref="tableSort"
           border
-          :data="[]"
+          :data="listq"
           :header-cell-style="{ 'text-align': 'left', background: '#f5f7fa' }"
           :cell-style="{ 'text-align': 'left' }"
           style="width: 100%"
         >
-          <el-table-column show-overflow-tooltip label="序号" width="95">
-            <template #default="scope">
-              {{ scope.$index + 1 }}
-            </template>
-          </el-table-column>
           <el-table-column
             show-overflow-tooltip
-            prop="customerName"
-            label="门锁名称"
+            prop=""
+            label="钥匙编号"
           ></el-table-column>
           <el-table-column
             show-overflow-tooltip
-            prop="keycount"
-            label="命令"
+            prop=""
+            label="部门"
           ></el-table-column>
           <el-table-column
             show-overflow-tooltip
-            prop="mobile"
-            label="卡片类型"
+            prop=""
+            label="姓名"
           ></el-table-column>
           <el-table-column
             show-overflow-tooltip
             prop="idCard"
-            label="卡号/用户名/密码时间"
+            label="卡号"
           ></el-table-column>
           <el-table-column
             show-overflow-tooltip
-            prop="rentContent"
-            label="开锁时间"
+            prop=""
+            label="密码"
           ></el-table-column>
+          <el-table-column
+            show-overflow-tooltip
+            prop=""
+            label="指纹"
+          ></el-table-column>
+          <el-table-column
+            show-overflow-tooltip
+            prop=""
+            label="冻结"
+          ></el-table-column>
+          <el-table-column
+            show-overflow-tooltip
+            prop=""
+            label="同步"
+          ></el-table-column>
+          <el-table-column
+            show-overflow-tooltip
+            prop=""
+            label="授权开始"
+          ></el-table-column>
+          <el-table-column
+            show-overflow-tooltip
+            prop="idCard"
+            label="授权结束"
+          ></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="操作">
+            <template #default="{ row }">
+              <el-button type="text" @click="handleDelete(row)">删除</el-button>
+              <el-button type="text" @click="handlefreeze(row)">冻结</el-button>
+            </template>
+          </el-table-column>
         </el-table>
       </div>
     </div>
+    <permission-popup ref="keyrole"></permission-popup>
   </el-dialog>
 </template>
 
 <script>
-  import {
-    doEdit,
-    getNetlockLogListSearch,
-    getNetlockLogList,
-  } from '@/api/table'
+  import PermissionPopup from './PermissionPopup'
 
   export default {
+    components: { PermissionPopup },
     data() {
       return {
         list: [],
+        listq: [{ idCard: 3 }],
         form: {
           title: '',
           author: '',
@@ -124,18 +139,22 @@
         rentid: '',
         end: '',
         start: '',
-        value1: [new Date(2023, 6, 3, 10, 10), new Date(2000, 10, 11, 10, 10)],
+        value1: '',
       }
     },
-    computed: {},
-    created() {},
     methods: {
       showEdit(row) {
-        this.title = '开锁记录'
+        this.title = '授权钥匙'
         this.dialogFormVisible = true
       },
       async fetchData() {
         // let data = await getNetlockLogList(query)
+      },
+      save() {
+        this.dialogFormVisible = false
+      },
+      close() {
+        this.dialogFormVisible = false
       },
       handleSizeChange(val) {
         this.queryForm.pageSize = val
@@ -152,28 +171,46 @@
       handleExport(row) {
         console.log(row, 'row')
       },
-      close() {
-        this.dialogFormVisible = false
+      handleDelete() {},
+      shouquan() {
+        this.$refs['keyrole'].showEdit()
       },
-      save() {
-        this.$refs['form'].validate(async (valid) => {
-          if (valid) {
-            this.$baseMessage(msg, 'success')
-            this.$refs['form'].resetFields()
-            this.dialogFormVisible = false
-            this.$emit('fetch-data')
-            this.form = this.$options.data().form
-          } else {
-            return false
-          }
+      handlefreeze(row) {
+        this.$confirm('是否冻结该钥匙?', '提示', {
+          confirmButtonText: '是',
+          cancelButtonText: '否',
+          type: 'warning',
         })
+          .then(() => {
+            this.$message({
+              type: 'success',
+              message: '冻结成功!',
+            })
+          })
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消冻结',
+            })
+          })
       },
     },
   }
 </script>
 <style lang="scss" scoped>
-  .lb {
+  .inputtotal {
+    width: 100%;
     float: left;
-    margin-right: 15px;
+    // border: 1px solid saddlebrown;
+
+    .ei {
+      float: right;
+      width: 190px;
+    }
+    .lb {
+      // border: 1px solid saddlebrown;
+      float: left;
+      margin-right: 10px;
+    }
   }
 </style>

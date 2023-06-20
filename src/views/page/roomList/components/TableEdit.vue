@@ -1,12 +1,22 @@
 <template>
   <el-dialog
+    v-dialogDrag
     :title="title"
     :visible.sync="dialogFormVisible"
     width="600px"
+    destroy-on-close
     @close="close"
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-      <el-form-item label="楼栋" prop="customerName">
+      <el-form-item label="园区:" prop="customerName">
+        <el-select
+          v-model.trim="form.customerName"
+          autocomplete="off"
+          placeholder="请选择园区"
+          style="width: 450px"
+        ></el-select>
+      </el-form-item>
+      <el-form-item label="楼栋" prop="content">
         <el-select
           v-model.trim="form.content"
           multiple
@@ -36,9 +46,9 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="房间名称" prop="mobile">
+      <el-form-item label="房间名称" prop="roomname">
         <el-input
-          v-model.trim="form.mobile"
+          v-model.trim="form.roomname"
           autocomplete="off"
           placeholder="请输入房间名称"
         ></el-input>
@@ -149,6 +159,7 @@
           mobile: '',
           rentDoorPass: '',
           remark: '',
+          roomname: '',
         },
         imgShow1: true,
         imgShow2: false,
@@ -159,8 +170,8 @@
         buildObjs: [],
         Builddata: [],
         rules: {
-          customerName: [
-            { required: true, trigger: 'blur', message: '请输入姓名' },
+          roomname: [
+            { required: true, trigger: 'blur', message: '请输入房间名称' },
           ],
         },
         title: '',

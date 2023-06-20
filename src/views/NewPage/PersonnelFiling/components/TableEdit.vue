@@ -1,10 +1,10 @@
 <template>
   <el-dialog
-    v-dialogDrag
     :title="title"
     :visible.sync="dialogFormVisible"
     width="600px"
     destroy-on-close
+    :close-on-click-modal="false"
     @close="close"
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
@@ -95,6 +95,7 @@
       width="25%"
       :before-close="handleClose"
       append-to-body
+      :close-on-click-modal="false"
     >
       <div class="contents">
         <div class="right">
@@ -216,19 +217,38 @@
           this.imgShow5 = false
           this.imgShow4 = false
           this.imgShow3 = false
+
           this.$ws.send(JSON.stringify(data))
+          this.$ws.onerror = function (evt) {
+            this.$message('请检查是否开启指纹驱动')
+            this.$message.error('请检查是否开启指纹驱动')
+          }
+
           this.$ws.addEventListener('message', (event) => {
             const result = JSON.parse(event.data)
-            if (result.message === '录入指纹:请放手指') {
+            if (result.message === '开始连接设备') {
               this.printdialogVisible = true
-              this.activities.push({
-                message: result.message,
-                color: '#e98f36',
-              })
-              console.log(this.activities, 'this.activities')
+              let data = { message: '录入指纹:请放手指', color: '#e98f36' }
+              if (
+                !this.activities.some(
+                  (activity) => activity.message === data.message
+                )
+              ) {
+                this.activities.push(data)
+              }
             }
             if (result.message === '录入指纹:第1次特征录入成功') {
-              this.activities.push({ message: result.message })
+              let data = {
+                message: '录入指纹:第1次特征录入成功,请第二次放手指',
+                color: '#e98f36',
+              }
+              if (
+                !this.activities.some(
+                  (activity) => activity.message === data.message
+                )
+              ) {
+                this.activities.push(data)
+              }
               this.imgShow2 = true
               this.imgShow1 = false
               this.imgShow5 = false
@@ -236,27 +256,52 @@
               this.imgShow3 = false
             }
             if (result.message === '录入指纹:第2次特征录入成功') {
-              this.activities.push({ message: result.message })
+              let data = {
+                message: '录入指纹:第2次特征录入成功,请第三次放手指',
+                color: '#e98f36',
+              }
+              if (
+                !this.activities.some(
+                  (activity) => activity.message === data.message
+                )
+              ) {
+                this.activities.push(data)
+              }
               this.imgShow3 = true
               this.imgShow2 = false
               this.imgShow1 = false
               this.imgShow5 = false
               this.imgShow4 = false
             }
+
             if (result.message === '录入指纹:第3次特征录入成功') {
+              let data = {
+                message: '录入指纹:第3次特征录入成功,请第四次放手指',
+                color: '#e98f36',
+              }
+              if (
+                !this.activities.some(
+                  (activity) => activity.message === data.message
+                )
+              ) {
+                this.activities.push(data)
+              }
               this.imgShow4 = true
               this.imgShow3 = false
               this.imgShow2 = false
               this.imgShow1 = false
               this.imgShow5 = false
-              this.activities.push({ message: result.message })
-            }
-            if (result.message === '录入指纹:指纹模板保存成功') {
-              this.activities.push({ message: result.message })
             }
 
             if (result.command === 'Error') {
-              this.activities.push({ message: result.message })
+              let data = { message: result.message, color: '#e98f36' }
+              if (
+                !this.activities.some(
+                  (activity) => activity.message === data.message
+                )
+              ) {
+                this.activities.push(data)
+              }
               this.printdialogVisible = false
               this.activities = []
               this.$message.error(result.message)
@@ -266,28 +311,34 @@
               result.message === '指纹录入成功' &&
               result.data
             ) {
+              let data = { message: '指纹录入成功', color: '#e98f36' }
+              if (
+                !this.activities.some(
+                  (activity) => activity.message === data.message
+                )
+              ) {
+                this.activities.push(data)
+              }
+              let printdata = result.data
+              if (!this.fingerprintList.includes(printdata)) {
+                this.fingerprintList.push(printdata)
+              }
               this.imgShow5 = true
               this.imgShow4 = false
               this.imgShow3 = false
               this.imgShow2 = false
               this.imgShow1 = false
-              this.activities.push({ message: result.message })
-              this.fingerprintList.push(result.data)
-              this.currentFingerprintNum++
+
+              // console.log(
+              //   result,
+              //   this.fingerprintList,
+              //   this.activities,
+              //   this.currentFingerprintNum,
+              //   'fingerprintList'
+              // )
               this.printdialogVisible = false
-              this.activities = []
-              this.$message({
-                showClose: true,
-                message: '指纹录制成功',
-                type: 'success',
-              })
-              console.log(
-                result,
-                this.fingerprintList,
-                this.activities,
-                this.currentFingerprintNum,
-                'fingerprintList'
-              )
+              this.currentFingerprintNum = this.fingerprintList.length
+              // console.log(this.currentFingerprintNum,'this.currentFingerprintNum')
             }
           })
           this.$ws.close = function (evt) {
@@ -301,7 +352,7 @@
         this.fingerprintList = []
         this.activities = []
       },
-      showEdit(row, Builddata) {
+      showEdit(row) {
         if (!row) {
           this.title = '添加办公室名单'
           this.Edit = false
@@ -332,7 +383,13 @@
           if (valid) {
             if (this.Edit == false) {
               let contents = this.form.content.join(',')
-              console.log(contents, 'contents')
+              let a = this.fingerprintList
+              let fingerobj = {}
+              for (let i = 0; i < a.length; i++) {
+                fingerobj[`finger${i + 1}`] = a[i]
+              }
+              console.log(contents, fingerobj, 'contents')
+
               let formdata = {
                 customername: this.form.customerName,
                 cardno: this.form.cardno,
@@ -341,11 +398,11 @@
                 mobile: this.form.mobile,
                 pwd: this.form.pwd,
                 remark: this.form.remark,
-                finger1: '',
-                finger2: '',
-                finger3: '',
-                finger4: '',
-                finger5: '',
+                finger1: fingerobj.finger1,
+                finger2: fingerobj.finger2,
+                finger3: fingerobj.finger3,
+                finger4: fingerobj.finger4,
+                finger5: fingerobj.finger5,
               }
               console.log(formdata, this.Edit, 'valid')
 

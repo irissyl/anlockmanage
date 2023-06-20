@@ -260,18 +260,12 @@
         this.$ws.send(JSON.stringify(data))
         this.$ws.addEventListener('message', (event) => {
           const result = JSON.parse(event.data)
-          if (result.message === '录入指纹:请放手指') {
+          if (result.message === 'COM4串口已打开') {
             this.printdialogVisible = true
-            this.activities.push({ message: result.message, color: '#e98f36' })
-            console.log(
-              this.imgShow1,
-              this.imgShow2,
-              this.imgShow3,
-              this.imgShow4,
-              this.imgShow5,
-              this.activities,
-              'this.imgShow1'
-            )
+            this.activities.push({
+              message: '录入指纹:请放手指',
+              color: '#e98f36',
+            })
           }
           if (result.message === '录入指纹:第1次特征录入成功') {
             this.activities.push({ message: result.message })
@@ -280,15 +274,6 @@
             this.imgShow5 = false
             this.imgShow4 = false
             this.imgShow3 = false
-            console.log(
-              this.imgShow1,
-              this.imgShow2,
-              this.imgShow3,
-              this.imgShow4,
-              this.imgShow5,
-              this.activities,
-              'this.imgShow2'
-            )
           }
           if (result.message === '录入指纹:第2次特征录入成功') {
             this.activities.push({ message: result.message })
@@ -297,15 +282,6 @@
             this.imgShow1 = false
             this.imgShow5 = false
             this.imgShow4 = false
-            console.log(
-              this.imgShow1,
-              this.imgShow2,
-              this.imgShow3,
-              this.imgShow4,
-              this.imgShow5,
-              this.activities,
-              'this.imgShow3'
-            )
           }
           if (result.message === '录入指纹:第3次特征录入成功') {
             this.imgShow4 = true
@@ -313,21 +289,14 @@
             this.imgShow2 = false
             this.imgShow1 = false
             this.imgShow5 = false
-            console.log(
-              this.imgShow1,
-              this.imgShow2,
-              this.imgShow3,
-              this.imgShow4,
-              this.imgShow5,
-              this.activities,
-              'this.imgShow4'
-            )
+
             this.activities.push({ message: result.message })
           }
-          if (result.message === '录入指纹:指纹模板保存成功') {
-            this.activities.push({ message: result.message })
-          }
-          if (result.command === 'GetFingerprint') {
+
+          if (
+            result.command === 'GetFingerprint' &&
+            result.message === '指纹录入成功'
+          ) {
             this.Fingerprint.overdata = result.data
             this.imgShow5 = true
             this.imgShow4 = false
@@ -335,15 +304,6 @@
             this.imgShow2 = false
             this.imgShow1 = false
             this.activities.push({ message: result.message })
-            console.log(
-              this.imgShow1,
-              this.imgShow2,
-              this.imgShow3,
-              this.imgShow4,
-              this.imgShow15,
-              this.activities,
-              'this.imgShow5'
-            )
           }
           console.log(result, 'result')
         })
