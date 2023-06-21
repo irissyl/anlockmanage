@@ -118,13 +118,16 @@
         console.log(row, 'row')
       },
       async fetchData() {
+        if (this.datatime.length < 0) {
+          this.$message('请先选择开锁日志时间段')
+        }
         let data = {
           rentid: this.rentid,
-          start: '2023-06-15 16:12:26',
-          end: '2023-06-20 16:22:26',
+          start: this.datatime[0],
+          end: this.datatime[1],
         }
         console.log(data, 'data')
-        let Netlockdata = await getNetlockLogListSearch(data)
+        let Netlockdata = await getNetlockLogListSearch(data, {})
         console.log(Netlockdata, 'Netlockdata')
       },
       changes(val) {

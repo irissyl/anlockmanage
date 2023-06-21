@@ -278,7 +278,7 @@ export function listOfficeDevicePage(data, param) {
 
 // 取设备开门日志列表
 
-export function getNetlockLogListSearch(data) {
+export function getNetlockLogListSearch(data, param) {
   return request({
     url: '/api/office/getNetlockLogList',
     method: 'post',
@@ -286,6 +286,7 @@ export function getNetlockLogListSearch(data) {
       'Content-Type': 'application/json;charset=UTF-8',
     },
     data,
+    params: param,
   })
 }
 
