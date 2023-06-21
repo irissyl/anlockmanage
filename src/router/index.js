@@ -228,6 +228,9 @@ export const constantRoutes = [
       {
         path: '/DoorLockRecords',
         name: 'DoorLockRecords',
+        component: {
+          template: '<router-view/>',
+        },
         meta: {
           title: '门锁记录',
           premissions: ['DoorLockRecords'],
