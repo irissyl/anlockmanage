@@ -117,7 +117,7 @@
                   label="钥匙数"
                 >
                   <template #default="{ row }">
-                    <el-button type="success" plain @click="setKey(row)">
+                    <el-button type="warning" plain @click="setKey(row)">
                       {{ row.lockKey }}
                     </el-button>
                   </template>
@@ -170,10 +170,10 @@
                       编辑
                     </el-button>
                     <el-button
-                      type="primary"
+                      type="danger"
+                      plain
                       style="margin-right: 10px"
                       size="mini"
-                      plain
                       @click="del(row)"
                     >
                       删除

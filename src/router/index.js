@@ -45,7 +45,7 @@ export const constantRoutes = [
         component: () => import('@/views/index/index'),
         meta: {
           title: '首页',
-          // icon: 'home',
+          icon: 'home',
           affix: true,
           premissions: ['index/index'],
         },
@@ -430,7 +430,7 @@ export const constantRoutes = [
     redirect: 'noRedirect',
     meta: {
       title: '人找房',
-      icon: 'home',
+      icon: 'city',
       premissions: ['fintRoom'],
     },
     children: [
@@ -440,7 +440,7 @@ export const constantRoutes = [
         component: () => import('@/views/NewPage/fintRoom/index.vue'),
         meta: {
           title: '人找房',
-          icon: 'home',
+          icon: 'city',
           premissions: ['fintRoom/index'],
         },
       },
@@ -492,138 +492,138 @@ export const constantRoutes = [
   //     },
   //   ],
   // },
-  {
-    path: '/EquipmentFiling',
-    name: 'EquipmentFiling',
-    component: Layout,
-    redirect: 'noRedirect',
-    meta: {
-      title: '建档',
-      icon: 'unlock-alt',
-      premissions: ['EquipmentFiling'],
-    },
-    children: [
-      {
-        path: '/lock',
-        name: 'lock',
-        component: () => import('@/views/NewPage/lockDevice/index.vue'),
-        meta: {
-          title: '门锁设备',
-          premissions: ['lockDevice/index'],
-        },
-      },
-      {
-        path: '/Gateway',
-        name: 'Gateway',
-        component: () => import('@/views/NewPage/GatewayDevice/index.vue'),
-        meta: {
-          title: '网关设备',
-          premissions: ['GatewayDevice/index'],
-        },
-      },
-    ],
-  },
-  {
-    path: '/HumanRoomMatching',
-    name: 'HumanRoomMatching',
-    component: Layout,
-    redirect: 'noRedirect',
-    meta: {
-      title: '人房匹配',
-      icon: 'users-cog',
-      premissions: ['HumanRoomMatching'],
-    },
-    children: [
-      {
-        path: '/HumanRoom',
-        name: 'HumanRoom',
-        component: () => import('@/views/NewPage/HumanRoomMatching/index'),
-        meta: {
-          title: '人房匹配',
-          premissions: ['HumanRoomMatching/index'],
-        },
-      },
-    ],
-  },
+  // {
+  //   path: '/EquipmentFiling',
+  //   name: 'EquipmentFiling',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   meta: {
+  //     title: '建档',
+  //     icon: 'unlock-alt',
+  //     premissions: ['EquipmentFiling'],
+  //   },
+  //   children: [
+  //     {
+  //       path: '/lock',
+  //       name: 'lock',
+  //       component: () => import('@/views/NewPage/lockDevice/index.vue'),
+  //       meta: {
+  //         title: '门锁设备',
+  //         premissions: ['lockDevice/index'],
+  //       },
+  //     },
+  //     {
+  //       path: '/Gateway',
+  //       name: 'Gateway',
+  //       component: () => import('@/views/NewPage/GatewayDevice/index.vue'),
+  //       meta: {
+  //         title: '网关设备',
+  //         premissions: ['GatewayDevice/index'],
+  //       },
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: '/HumanRoomMatching',
+  //   name: 'HumanRoomMatching',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   meta: {
+  //     title: '人房匹配',
+  //     icon: 'users-cog',
+  //     premissions: ['HumanRoomMatching'],
+  //   },
+  //   children: [
+  //     {
+  //       path: '/HumanRoom',
+  //       name: 'HumanRoom',
+  //       component: () => import('@/views/NewPage/HumanRoomMatching/index'),
+  //       meta: {
+  //         title: '人房匹配',
+  //         premissions: ['HumanRoomMatching/index'],
+  //       },
+  //     },
+  //   ],
+  // },
 
-  {
-    path: '/contentSettings',
-    component: Layout,
-    redirect: 'noRedirect',
-    name: 'contentSettings',
-    meta: {
-      title: '基础内容设置',
-      icon: 'users-cog',
-      premissions: ['contentSettings'],
-    },
-    children: [
-      {
-        path: 'Campus',
-        name: 'Campus',
-        component: () => import('@/views/page/contentSettings/Campus/index'),
-        meta: { title: '园区设置', premissions: ['Campus/index'] },
-      },
-      {
-        path: 'Building',
-        name: 'Building',
-        component: () => import('@/views/page/contentSettings/Building/index'),
-        meta: { title: '楼栋设置', premissions: ['Building/index'] },
-      },
-      {
-        path: 'Department',
-        name: 'Department',
-        component: () =>
-          import('@/views/page/contentSettings/Department/index'),
-        meta: { title: '部门设置', premissions: ['Department/index'] },
-      },
-    ],
-  },
-  {
-    path: '/deviceManagement',
-    component: Layout,
-    redirect: 'noRedirect',
-    name: 'deviceManagement',
-    meta: {
-      title: '智能设备管理',
-      icon: 'unlock-alt',
-      premissions: ['deviceManagement'],
-    },
-    children: [
-      {
-        path: 'DeviceStatistics',
-        name: 'DeviceStatistics',
-        component: () =>
-          import('@/views/page/deviceManagement/DeviceStatistics/index.vue'),
-        meta: { title: '设备统计', premissions: ['DeviceStatistics/index'] },
-      },
-      {
-        path: 'lockDevice',
-        name: 'lockDevice',
-        component: () =>
-          import('@/views/page/deviceManagement/lockDevice/index.vue'),
-        meta: { title: '门锁设备', premissions: ['lockDevice/index'] },
-      },
-      {
-        path: 'GatewayDevice',
-        name: 'GatewayDevice',
-        component: () =>
-          import('@/views/page/deviceManagement/GatewayDevice/index.vue'),
-        meta: { title: '网关设备', premissions: ['GatewayDevice/index'] },
-      },
-      {
-        path: 'Water',
-        name: 'Water',
-        component: () =>
-          import(
-            '@/views/page/deviceManagement/Water_meter_equipment/index.vue'
-          ),
-        meta: {
-          title: '水电表设备',
-          premissions: ['Water_meter_equipment/index'],
-        },
-      },
-    ],
-  },
+  // {
+  //   path: '/contentSettings',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   name: 'contentSettings',
+  //   meta: {
+  //     title: '基础内容设置',
+  //     icon: 'users-cog',
+  //     premissions: ['contentSettings'],
+  //   },
+  //   children: [
+  //     {
+  //       path: 'Campus',
+  //       name: 'Campus',
+  //       component: () => import('@/views/page/contentSettings/Campus/index'),
+  //       meta: { title: '园区设置', premissions: ['Campus/index'] },
+  //     },
+  //     {
+  //       path: 'Building',
+  //       name: 'Building',
+  //       component: () => import('@/views/page/contentSettings/Building/index'),
+  //       meta: { title: '楼栋设置', premissions: ['Building/index'] },
+  //     },
+  //     {
+  //       path: 'Department',
+  //       name: 'Department',
+  //       component: () =>
+  //         import('@/views/page/contentSettings/Department/index'),
+  //       meta: { title: '部门设置', premissions: ['Department/index'] },
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: '/deviceManagement',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   name: 'deviceManagement',
+  //   meta: {
+  //     title: '智能设备管理',
+  //     icon: 'unlock-alt',
+  //     premissions: ['deviceManagement'],
+  //   },
+  //   children: [
+  //     {
+  //       path: 'DeviceStatistics',
+  //       name: 'DeviceStatistics',
+  //       component: () =>
+  //         import('@/views/page/deviceManagement/DeviceStatistics/index.vue'),
+  //       meta: { title: '设备统计', premissions: ['DeviceStatistics/index'] },
+  //     },
+  //     {
+  //       path: 'lockDevice',
+  //       name: 'lockDevice',
+  //       component: () =>
+  //         import('@/views/page/deviceManagement/lockDevice/index.vue'),
+  //       meta: { title: '门锁设备', premissions: ['lockDevice/index'] },
+  //     },
+  //     {
+  //       path: 'GatewayDevice',
+  //       name: 'GatewayDevice',
+  //       component: () =>
+  //         import('@/views/page/deviceManagement/GatewayDevice/index.vue'),
+  //       meta: { title: '网关设备', premissions: ['GatewayDevice/index'] },
+  //     },
+  //     {
+  //       path: 'Water',
+  //       name: 'Water',
+  //       component: () =>
+  //         import(
+  //           '@/views/page/deviceManagement/Water_meter_equipment/index.vue'
+  //         ),
+  //       meta: {
+  //         title: '水电表设备',
+  //         premissions: ['Water_meter_equipment/index'],
+  //       },
+  //     },
+  //   ],
+  // },
   // {
   //   path: '/operatorManagement',
   //   component: Layout,
@@ -656,106 +656,106 @@ export const constantRoutes = [
   //     },
   //   ],
   // },
-  {
-    path: '/officePersonnel',
-    component: Layout,
-    redirect: 'noRedirect',
-    name: 'officePersonnel',
-    meta: {
-      title: '人员管理',
-      icon: 'chalkboard-teacher',
-      premissions: ['officePersonnel'],
-    },
-    children: [
-      {
-        path: 'office',
-        name: 'office',
-        component: () => import('@/views/page/officePersonnel/index'),
-        meta: {
-          title: '办公室人员管理',
-          premissions: ['officePersonnel/index'],
-        },
-      },
-      {
-        path: 'dormitory',
-        name: 'dormitory',
-        component: () => import('@/views/page/dormitoryPersonnel/index'),
-        meta: {
-          title: '宿舍人员管理',
-          premissions: ['dormitoryPersonnel/index'],
-        },
-      },
-    ],
-  },
-  {
-    path: '/roomList',
-    name: 'roomList',
-    component: Layout,
-    redirect: 'noRedirect',
-    meta: {
-      title: '房间管理',
-      icon: 'users-cog',
-      premissions: ['roomList'],
-    },
-    children: [
-      {
-        path: 'roomList',
-        name: 'roomList',
-        component: () => import('@/views/page/roomList/index'),
-        meta: {
-          title: '房间列表',
-          premissions: ['roomList/index'],
-        },
-      },
-    ],
-  },
-  {
-    path: '/appointmentReview',
-    name: 'appointmentReview',
-    component: Layout,
-    redirect: 'noRedirect',
-    meta: {
-      title: '预约管理',
-      icon: 'calendar-alt',
-      premissions: ['appointmentReview'],
-    },
-    children: [
-      {
-        path: '/reserve',
-        name: 'reserve',
-        component: () => import('@/views/page/appointmentReview/index'),
-        meta: {
-          title: '预约审核',
-          premissions: ['appointmentReview/index'],
-        },
-      },
-    ],
-  },
-  {
-    path: '/systemSettings',
-    component: Layout,
-    redirect: 'noRedirect',
-    name: 'systemSettings',
-    meta: {
-      title: '系统设置',
-      icon: 'unlock-alt',
-      premissions: ['systemSettings'],
-    },
-    children: [
-      {
-        path: 'Networking',
-        name: 'Networking',
-        component: () => import('@/views/page/systemSettings/Networking/index'),
-        meta: { title: '联网锁设置', premissions: ['Networking/index'] },
-      },
-      {
-        path: 'roleManagement',
-        name: 'RoleManagement',
-        component: () => import('@/views/page/systemSettings/index'),
-        meta: { title: '公司设置', premissions: ['systemSettings/index'] },
-      },
-    ],
-  },
+  // {
+  //   path: '/officePersonnel',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   name: 'officePersonnel',
+  //   meta: {
+  //     title: '人员管理',
+  //     icon: 'chalkboard-teacher',
+  //     premissions: ['officePersonnel'],
+  //   },
+  //   children: [
+  //     {
+  //       path: 'office',
+  //       name: 'office',
+  //       component: () => import('@/views/page/officePersonnel/index'),
+  //       meta: {
+  //         title: '办公室人员管理',
+  //         premissions: ['officePersonnel/index'],
+  //       },
+  //     },
+  //     {
+  //       path: 'dormitory',
+  //       name: 'dormitory',
+  //       component: () => import('@/views/page/dormitoryPersonnel/index'),
+  //       meta: {
+  //         title: '宿舍人员管理',
+  //         premissions: ['dormitoryPersonnel/index'],
+  //       },
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: '/roomList',
+  //   name: 'roomList',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   meta: {
+  //     title: '房间管理',
+  //     icon: 'users-cog',
+  //     premissions: ['roomList'],
+  //   },
+  //   children: [
+  //     {
+  //       path: 'roomList',
+  //       name: 'roomList',
+  //       component: () => import('@/views/page/roomList/index'),
+  //       meta: {
+  //         title: '房间列表',
+  //         premissions: ['roomList/index'],
+  //       },
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: '/appointmentReview',
+  //   name: 'appointmentReview',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   meta: {
+  //     title: '预约管理',
+  //     icon: 'calendar-alt',
+  //     premissions: ['appointmentReview'],
+  //   },
+  //   children: [
+  //     {
+  //       path: '/reserve',
+  //       name: 'reserve',
+  //       component: () => import('@/views/page/appointmentReview/index'),
+  //       meta: {
+  //         title: '预约审核',
+  //         premissions: ['appointmentReview/index'],
+  //       },
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: '/systemSettings',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   name: 'systemSettings',
+  //   meta: {
+  //     title: '系统设置',
+  //     icon: 'unlock-alt',
+  //     premissions: ['systemSettings'],
+  //   },
+  //   children: [
+  //     {
+  //       path: 'Networking',
+  //       name: 'Networking',
+  //       component: () => import('@/views/page/systemSettings/Networking/index'),
+  //       meta: { title: '联网锁设置', premissions: ['Networking/index'] },
+  //     },
+  //     {
+  //       path: 'roleManagement',
+  //       name: 'RoleManagement',
+  //       component: () => import('@/views/page/systemSettings/index'),
+  //       meta: { title: '公司设置', premissions: ['systemSettings/index'] },
+  //     },
+  //   ],
+  // },
 ]
 
 export const asyncRoutes = []

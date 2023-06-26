@@ -26,13 +26,13 @@
       <el-scrollbar style="height: 80vh; overflow: hidden">
         <div class="el-drawer__body">
           <el-form ref="form" :model="theme" label-position="top">
-            <el-form-item label="主题">
+            <!-- <el-form-item label="主题">
               <el-radio-group v-model="theme.name">
                 <el-radio-button label="default">默认</el-radio-button>
                 <el-radio-button label="green">绿荫草场</el-radio-button>
                 <el-radio-button label="glory">荣耀典藏</el-radio-button>
               </el-radio-group>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="布局">
               <el-radio-group v-model="theme.layout">
                 <el-radio-button label="vertical">纵向布局</el-radio-button>

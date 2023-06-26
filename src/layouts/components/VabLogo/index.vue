@@ -44,8 +44,8 @@
 
   @mixin logo {
     display: inline-block;
-    width: 264px;
-    height: 104px;
+    width: 254px;
+    height: 74px;
     margin-right: 23px;
     color: $base-title-color;
     vertical-align: middle;
