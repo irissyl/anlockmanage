@@ -62,6 +62,7 @@
   }
   .loudong {
     width: 120px;
+    height: auto;
     border-radius: 10px;
   }
 
@@ -95,5 +96,10 @@
   div::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
     border-radius: 0;
+  }
+
+  .el-tabs__active-bar {
+    height: 40px;
+    transform: translateY(469px);
   }
 </style>
