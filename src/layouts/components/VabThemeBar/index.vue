@@ -1,10 +1,10 @@
 <template>
   <span v-if="themeBar">
-    <!-- <vab-icon
+    <vab-icon
       title="主题配置"
       :icon="['fas', 'palette']"
       @click="handleOpenThemeBar"
-    /> -->
+    />
     <!-- <div class="theme-bar-setting">
       <div @click="handleOpenThemeBar">
         <vab-icon :icon="['fas', 'palette']" />
