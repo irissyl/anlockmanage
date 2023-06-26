@@ -85,10 +85,7 @@ export function getBuildList(data) {
 // 添加楼栋
 export function addBuild(data) {
   return request({
-    url: '/api/build/addBuild',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
+    url: '/api/office/addBuild',
     method: 'post',
     data,
   })

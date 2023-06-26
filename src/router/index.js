@@ -82,6 +82,79 @@ export const constantRoutes = [
           premissions: ['PersonnelFiling/index'],
         },
       },
+      {
+        path: 'operator',
+        name: 'operator',
+        component: () => import('@/views/page/operatorManagement/index'),
+        meta: {
+          title: '操作员管理',
+          icon: '',
+          premissions: ['operatorManagement/index'],
+        },
+      },
+      {
+        path: 'DeviceManagement',
+        name: 'DeviceManagement',
+        meta: {
+          title: '设备管理',
+          icon: '',
+          premissions: ['DeviceManagement'],
+        },
+        component: {
+          template: '<router-view/>',
+        },
+        children: [
+          {
+            path: '/NB',
+            name: 'NB',
+            component: () => import('@/views/NewPage/DeviceManagement/NB.vue'),
+            meta: {
+              title: 'NB门锁',
+              premissions: ['DeviceManagement/NB'],
+            },
+          },
+          {
+            path: '/WIFI',
+            name: 'WIFI',
+            component: () =>
+              import('@/views/NewPage/DeviceManagement/WIFI.vue'),
+            meta: {
+              title: 'WIFI门锁',
+              premissions: ['DeviceManagement/WIFI'],
+            },
+          },
+          {
+            path: '/Lora',
+            name: 'Lora',
+            component: () =>
+              import('@/views/NewPage/DeviceManagement/Lora.vue'),
+            meta: {
+              title: 'Lora门锁',
+              premissions: ['DeviceManagement/Lora'],
+            },
+          },
+          {
+            path: '/GatewayDevices',
+            name: 'GatewayDevices',
+            component: () =>
+              import('@/views/NewPage/DeviceManagement/GatewayDevice.vue'),
+            meta: {
+              title: '网关信息',
+              premissions: ['DeviceManagement/GatewayDevice'],
+            },
+          },
+          {
+            path: '/GatewayMatching',
+            name: 'GatewayMatching',
+            component: () =>
+              import('@/views/NewPage/DeviceManagement/GatewayMatching.vue'),
+            meta: {
+              title: '网关匹配',
+              premissions: ['DeviceManagement/GatewayMatching'],
+            },
+          },
+        ],
+      },
     ],
   },
   {
@@ -205,26 +278,26 @@ export const constantRoutes = [
       premissions: ['RecordQuery'],
     },
     children: [
-      {
-        path: '/OperatorOperationrecords',
-        name: 'OperatorOperationrecords',
-        component: () =>
-          import('@/views/NewPage/RecordQuery/OperatorOperationrecords.vue'),
-        meta: {
-          title: '操作员操作记录',
-          premissions: ['RecordQuery/OperatorOperationrecords'],
-        },
-      },
-      {
-        path: '/BatteryReplacementRecord',
-        name: 'BatteryReplacementRecord',
-        component: () =>
-          import('@/views/NewPage/RecordQuery/BatteryReplacementRecord.vue'),
-        meta: {
-          title: '换电池记录',
-          premissions: ['RecordQuery/BatteryReplacementRecord'],
-        },
-      },
+      // {
+      //   path: '/OperatorOperationrecords',
+      //   name: 'OperatorOperationrecords',
+      //   component: () =>
+      //     import('@/views/NewPage/RecordQuery/OperatorOperationrecords.vue'),
+      //   meta: {
+      //     title: '操作员操作记录',
+      //     premissions: ['RecordQuery/OperatorOperationrecords'],
+      //   },
+      // },
+      // {
+      //   path: '/BatteryReplacementRecord',
+      //   name: 'BatteryReplacementRecord',
+      //   component: () =>
+      //     import('@/views/NewPage/RecordQuery/BatteryReplacementRecord.vue'),
+      //   meta: {
+      //     title: '换电池记录',
+      //     premissions: ['RecordQuery/BatteryReplacementRecord'],
+      //   },
+      // },
       {
         path: '/DoorLockRecords',
         name: 'DoorLockRecords',
@@ -240,7 +313,7 @@ export const constantRoutes = [
             path: '/Heartbeat',
             name: 'Heartbeat',
             component: () =>
-              import('@/views/NewPage/RecordQuery/Heartbeat.vue'),
+              import('@/views/NewPage/RecordQuery/heartbeats.vue'),
             meta: {
               title: '心跳记录',
               premissions: ['RecordQuery/Heartbeat'],
@@ -397,48 +470,39 @@ export const constantRoutes = [
     ],
   },
 
-  {
-    path: '/PersonnelFiling',
-    name: 'PersonnelFiling',
-    component: Layout,
-    redirect: 'noRedirect',
-    meta: {
-      title: '人员建档',
-      icon: 'chalkboard-teacher',
-      premissions: ['PersonnelFiling'],
-    },
-    children: [
-      {
-        path: '/Personnel',
-        name: 'Personnel',
-        component: () => import('@/views/NewPage/PersonnelFiling/index'),
-        meta: {
-          title: '人员建档',
-          premissions: ['PersonnelFiling/index'],
-        },
-      },
-    ],
-  },
+  // {
+  //   path: '/PersonnelFiling',
+  //   name: 'PersonnelFiling',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   meta: {
+  //     title: '人员建档',
+  //     icon: 'chalkboard-teacher',
+  //     premissions: ['PersonnelFiling'],
+  //   },
+  //   children: [
+  //     {
+  //       path: '/Personnel',
+  //       name: 'Personnel',
+  //       component: () => import('@/views/NewPage/PersonnelFiling/index'),
+  //       meta: {
+  //         title: '人员建档',
+  //         premissions: ['PersonnelFiling/index'],
+  //       },
+  //     },
+  //   ],
+  // },
   {
     path: '/EquipmentFiling',
     name: 'EquipmentFiling',
     component: Layout,
     redirect: 'noRedirect',
     meta: {
-      title: '设备建档',
+      title: '建档',
       icon: 'unlock-alt',
       premissions: ['EquipmentFiling'],
     },
     children: [
-      // {
-      //   path: '/Equipment',
-      //   name: 'Equipment',
-      //   component: () => import('@/views/NewPage/EquipmentFiling/index'),
-      //   meta: {
-      //     title: '设备建档',
-      //     premissions: ['EquipmentFiling/index'],
-      //   },
-      // },
       {
         path: '/lock',
         name: 'lock',
@@ -560,38 +624,38 @@ export const constantRoutes = [
       },
     ],
   },
-  {
-    path: '/operatorManagement',
-    component: Layout,
-    redirect: 'noRedirect',
-    name: 'operatorManagement',
-    meta: {
-      title: '操作员管理',
-      icon: 'person-booth',
-      premissions: ['operatorManagement'],
-    },
-    children: [
-      {
-        path: 'operator',
-        name: 'operator',
-        component: () => import('@/views/page/operatorManagement/index'),
-        meta: {
-          title: '操作员列表',
-          icon: 'person-booth',
-          premissions: ['operatorManagement/index'],
-        },
-      },
-      {
-        path: 'operatorHouse',
-        name: 'operatorHouse',
-        component: () =>
-          import('@/views/page/operatorManagement/operatorHouse/index.vue'),
-        meta: {
-          title: '操作员房间权限',
-        },
-      },
-    ],
-  },
+  // {
+  //   path: '/operatorManagement',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   name: 'operatorManagement',
+  //   meta: {
+  //     title: '操作员管理',
+  //     icon: 'person-booth',
+  //     premissions: ['operatorManagement'],
+  //   },
+  //   children: [
+  //     {
+  //       path: 'operator',
+  //       name: 'operator',
+  //       component: () => import('@/views/page/operatorManagement/index'),
+  //       meta: {
+  //         title: '操作员列表',
+  //         icon: 'person-booth',
+  //         premissions: ['operatorManagement/index'],
+  //       },
+  //     },
+  //     {
+  //       path: 'operatorHouse',
+  //       name: 'operatorHouse',
+  //       component: () =>
+  //         import('@/views/page/operatorManagement/operatorHouse/index.vue'),
+  //       meta: {
+  //         title: '操作员房间权限',
+  //       },
+  //     },
+  //   ],
+  // },
   {
     path: '/officePersonnel',
     component: Layout,

@@ -46,13 +46,6 @@
                 <el-button
                   icon="el-icon-plus"
                   type="primary"
-                  @click="handlelouceng"
-                >
-                  楼层
-                </el-button>
-                <el-button
-                  icon="el-icon-plus"
-                  type="primary"
                   @click="handleAdd"
                 >
                   单个房间
@@ -65,19 +58,19 @@
               <div class="inputtotal">
                 <el-form ref="form" :model="queryForm" :inline="true">
                   <el-form-item>
-                    <label class="lb">房间名称:</label>
+                    <label class="lb">房号:</label>
                     <el-input
-                      v-model="queryForm.title"
+                      v-model="queryForm.roomNO"
                       class="ei"
-                      placeholder="姓名"
+                      placeholder="手机号码"
                     />
                   </el-form-item>
                   <el-form-item>
-                    <label class="lb">门锁标识:</label>
+                    <label class="lb">房间名称:</label>
                     <el-input
-                      v-model="queryForm.title"
+                      v-model="queryForm.roomName"
                       class="ei"
-                      placeholder="手机号码"
+                      placeholder="姓名"
                     />
                   </el-form-item>
                   <el-form-item>
@@ -98,10 +91,10 @@
                 :data="list"
                 :element-loading-text="elementLoadingText"
                 :header-cell-style="{
-                  'text-align': 'left',
+                  'text-align': 'center',
                   background: '#f5f7fa',
                 }"
-                :cell-style="{ 'text-align': 'left' }"
+                :cell-style="{ 'text-align': 'center' }"
                 style="width: 100%"
                 @selection-change="setSelectRows"
                 @sort-change="tableSortChange"
@@ -109,23 +102,23 @@
                 <el-table-column
                   min-width="110px"
                   show-overflow-tooltip
-                  prop="floorno"
-                  label="楼栋"
+                  prop="roomNO"
+                  label="房间编号"
                 ></el-table-column>
                 <el-table-column
                   min-width="110px"
                   show-overflow-tooltip
-                  prop="iotName"
+                  prop="roomName"
                   label="房间名称"
                 ></el-table-column>
                 <el-table-column
                   show-overflow-tooltip
-                  prop="keyCount"
+                  prop="lockKey"
                   label="钥匙数"
                 >
                   <template #default="{ row }">
-                    <el-button type="primary" plain @click="setKey(row)">
-                      {{ row.keyCount }}
+                    <el-button type="success" plain @click="setKey(row)">
+                      {{ row.lockKey }}
                     </el-button>
                   </template>
                 </el-table-column>
@@ -133,19 +126,7 @@
                   min-width="120px"
                   show-overflow-tooltip
                   prop="iotTag"
-                  label="门锁标识"
-                ></el-table-column>
-                <el-table-column
-                  min-width="110px"
-                  show-overflow-tooltip
-                  prop=""
-                  label="锁报警"
-                ></el-table-column>
-                <el-table-column
-                  min-width="110px"
-                  show-overflow-tooltip
-                  prop=""
-                  label="锁电压"
+                  label="门锁编号"
                 ></el-table-column>
                 <el-table-column
                   min-width="110px"
@@ -157,37 +138,25 @@
                   min-width="110px"
                   show-overflow-tooltip
                   prop=""
-                  label="联网时间"
+                  label="门状态"
                 ></el-table-column>
                 <el-table-column
                   min-width="110px"
                   show-overflow-tooltip
                   prop=""
-                  label="最后开门时间"
+                  label="电表编号"
                 ></el-table-column>
                 <el-table-column
                   min-width="110px"
                   show-overflow-tooltip
                   prop=""
-                  label="电表"
-                ></el-table-column>
-                <el-table-column
-                  min-width="110px"
-                  show-overflow-tooltip
-                  prop=""
-                  label="水表"
-                ></el-table-column>
-                <el-table-column
-                  min-width="110px"
-                  show-overflow-tooltip
-                  prop=""
-                  label="操作员"
+                  label="水表编号"
                 ></el-table-column>
                 <el-table-column
                   min-width="110px"
                   show-overflow-tooltip
                   label="操作"
-                  width="220px"
+                  width="280px"
                   fixed="right"
                 >
                   <template #default="{ row }">
@@ -200,6 +169,15 @@
                     >
                       编辑
                     </el-button>
+                    <el-button
+                      type="primary"
+                      style="margin-right: 10px"
+                      size="mini"
+                      plain
+                      @click="del(row)"
+                    >
+                      删除
+                    </el-button>
                     <el-dropdown split-button type="primary" size="mini">
                       更多操作
                       <el-dropdown-menu slot="dropdown">
@@ -208,12 +186,12 @@
                         </el-dropdown-item>
                         <el-dropdown-item>
                           <el-button type="text" @click="handleDelete(row)">
-                            取临时密码
+                            常开设置
                           </el-button>
                         </el-dropdown-item>
                         <el-dropdown-item>
                           <el-button type="text" @click="record(row)">
-                            开门记录
+                            开锁记录
                           </el-button>
                         </el-dropdown-item>
                       </el-dropdown-menu>
@@ -240,7 +218,7 @@
     <batch-build ref="batch" @fetchData="fetchData"></batch-build>
     <el-dialog
       v-dialogDrag
-      title="取临时密码"
+      title="取临时密 码"
       size="small"
       :visible.sync="linshidialogVisible"
       width="35%"
@@ -280,6 +258,94 @@
         </el-button>
       </span>
     </el-dialog>
+    <el-dialog
+      append-to-body
+      title="常开设置"
+      width="500px"
+      :visible.sync="ckVisible"
+    >
+      <el-form :model="form">
+        <el-form-item label-width="44px">
+          <el-checkbox v-model="lockchecked" @change="lockcheckedChange">
+            开启门锁常开功能
+          </el-checkbox>
+        </el-form-item>
+
+        <el-form-item v-show="lockshow" label-width="120px" label="时间段1：">
+          <el-time-select
+            v-model="startTime"
+            placeholder="起始时间"
+            style="width: 140px; margin-right: 5px"
+            :picker-options="{
+              start: '08:30',
+              step: '00:15',
+              end: '18:30',
+            }"
+          ></el-time-select>
+          <el-time-select
+            v-model="endTime"
+            placeholder="结束时间"
+            style="width: 140px"
+            :picker-options="{
+              start: '08:30',
+              step: '00:15',
+              end: '18:30',
+              minTime: startTime,
+            }"
+          ></el-time-select>
+        </el-form-item>
+        <el-form-item v-show="lockshow" label-width="120px" label="时间段2：">
+          <el-time-select
+            v-model="startTime"
+            placeholder="起始时间"
+            style="width: 140px; margin-right: 5px"
+            :picker-options="{
+              start: '08:30',
+              step: '00:15',
+              end: '18:30',
+            }"
+          ></el-time-select>
+          <el-time-select
+            v-model="endTime"
+            placeholder="结束时间"
+            style="width: 140px"
+            :picker-options="{
+              start: '08:30',
+              step: '00:15',
+              end: '18:30',
+              minTime: startTime,
+            }"
+          ></el-time-select>
+        </el-form-item>
+        <el-form-item v-show="lockshow" label-width="120px" label="时间段3：">
+          <el-time-select
+            v-model="startTime"
+            placeholder="起始时间"
+            style="width: 140px; margin-right: 5px"
+            :picker-options="{
+              start: '08:30',
+              step: '00:15',
+              end: '18:30',
+            }"
+          ></el-time-select>
+          <el-time-select
+            v-model="endTime"
+            placeholder="结束时间"
+            style="width: 140px"
+            :picker-options="{
+              start: '08:30',
+              step: '00:15',
+              end: '18:30',
+              minTime: startTime,
+            }"
+          ></el-time-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="ckVisible = false">取 消</el-button>
+        <el-button type="primary" @click="ckconfirm">确认下发指令</el-button>
+      </div>
+    </el-dialog>
     <keys ref="keys" @fetchData="fetchData"></keys>
     <yuanquAdd ref="yuanqu" @fetchData="fetchData"></yuanquAdd>
     <loudongAdd ref="loudong" @fetchData="fetchData"></loudongAdd>
@@ -288,13 +354,14 @@
 </template>
 
 <script>
+  import { getCampusList, listOfficeDevicePage } from '@/api/table'
   import {
-    listRentCustomerPage,
-    deleteBuild,
-    getCampusList,
-    delOfficeRent,
-    listOfficeDevicePage,
-  } from '@/api/table'
+    addSingleRoom,
+    listRoom,
+    addBatchRoom,
+    delRoom,
+    SetKeepOpen,
+  } from '@/api/api'
   import TableEdit from './components/TableEdit'
   import OpenDoorRecord from './components/openDoorRecord.vue'
   import BatchBuild from './components/batchBuild.vue'
@@ -317,7 +384,17 @@
       return {
         list: [],
         imageList: [],
+        form: {
+          appld: '',
+          appSecret: '',
+          builds: '',
+        },
+        ckVisible: false,
+        endTime: '',
+        startTime: '',
         listLoading: true,
+        lockshow: false,
+        lockchecked: false,
         linshidialogVisible: false,
         layout: 'total, sizes, prev, pager, next, jumper',
         total: 0,
@@ -327,10 +404,11 @@
         queryForm: {
           pageNo: 1,
           pageSize: 10,
-          title: '',
-          buildkey: '',
+          roomName: '',
+          roomNO: '',
+          buildId: '',
         },
-        Builddata: [],
+        buildId: '',
         buildObjs: [],
         data: [
           {
@@ -353,16 +431,34 @@
       },
     },
 
-    created() {
+    mounted() {
       this.fetchData()
       this.getdepartmemtData()
     },
 
     methods: {
       handleNodeClick(data) {
+        console.log(data, 'data  ')
         this.section = data.sectionName
-        this.queryForm.buildkey = data.buildObjs[0].buildKey
+
+        this.buildId = data.builds
         this.fetchData()
+      },
+
+      async ckconfirm() {
+        // let formdata = {
+        //   iottag:
+        //   keeptype: this.
+        //   timearray
+        // }
+        //   await SetKeepOpen()
+      },
+      lockcheckedChange(val) {
+        if (val == true) {
+          this.lockshow = true
+        } else {
+          this.lockshow = false
+        }
       },
       setKey() {
         this.$refs['keys'].showEdit()
@@ -382,20 +478,33 @@
       async fetchData() {
         // this.listLoading = true
         let formdata = {
-          buildKeys: this.queryForm.buildkey,
-          pageNumber: 1,
-          pageSize: 10,
+          buildId: this.buildId ? this.buildId : '',
+          pagenumber: 1,
+          pagesize: 10,
+          roomNO: this.queryForm.roomNO,
+          roomName: this.queryForm.roomName,
         }
-        console.log(formdata, 'formdata')
-        if (this.queryForm.buildkey) {
-          let listOfficedatas = await listOfficeDevicePage(formdata, {})
+        if (this.buildId) {
+          let listOfficedatas = await listRoom(formdata)
           this.list = listOfficedatas.data.datas
+          this.total = listOfficedatas.data.dataCount
         }
         // this.total = datalist.data.dataCount
         // datalist.data.datas.forEach((item) => {
         //   this.buildObjs = item.buildObjs
         // })
         this.listLoading = false
+      },
+      async del(row) {
+        let data = {
+          roomId: row.roomId,
+        }
+        console.log(row, 'delRoom')
+        let res = await delRoom(data)
+        if (res.resultCode == 0) {
+          this.$message('删除成功')
+        }
+        this.fetchData()
       },
       handleClose() {
         this.linshidialogVisible = false
@@ -437,10 +546,16 @@
         this.$refs['louceng'].showEdit()
       },
       batchAdd() {
-        this.$refs['batch'].showEdit()
+        let buildId = this.buildId
+        this.$refs['batch'].showEdit(buildId)
       },
       handleAdd() {
-        this.$refs['edit'].showEdit()
+        let buildId = this.buildId
+        if (buildId) {
+          this.$refs['edit'].showEdit(buildId)
+        } else {
+          this.$message('请先选择左边的办公区房间列表')
+        }
       },
       handleImport(row) {
         console.log(row, 'row')
@@ -455,7 +570,7 @@
       },
       handleDelete(row) {
         console.log(row, 'rowd')
-        this.linshidialogVisible = true
+        this.ckVisible = true
       },
     },
   }

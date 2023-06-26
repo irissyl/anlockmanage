@@ -236,7 +236,7 @@
         console.log(this.data, departdatalist.data, 'this.data')
       },
       async fetchData() {
-        // this.listLoading = true
+        this.listLoading = true
         let formdata = {
           pageNumber: this.queryForm.pageNo,
           pageSize: this.queryForm.pageSize,

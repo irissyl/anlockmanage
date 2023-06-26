@@ -3,99 +3,60 @@
     v-dialogDrag
     :title="title"
     :visible.sync="dialogFormVisible"
-    width="800px"
+    width="700px"
     destroy-on-close
     @close="close"
   >
-    <div style="height: 550px">
-      <el-divider content-position="left">门锁功能</el-divider>
-      <el-checkbox-group v-model="checkList" style="margin: 0px 0 30px 0">
-        <el-checkbox label="卡片" disabled></el-checkbox>
-        <el-checkbox label="密码"></el-checkbox>
-        <el-checkbox label="蓝牙" disabled></el-checkbox>
-        <el-checkbox label="指纹"></el-checkbox>
-        <el-checkbox label="套房"></el-checkbox>
-      </el-checkbox-group>
-      <el-divider content-position="left">房间属性</el-divider>
-      <el-radio-group v-model="radio" style="margin: 0px 0 10px 0">
-        <el-radio :label="9">办公室</el-radio>
-      </el-radio-group>
-      <el-divider></el-divider>
+    <div>
       <div class="demo-input-suffix">
         房号前缀 :
-        <el-input v-model="input1" class="inpsty"></el-input>
+        <el-input v-model="formdata.prefix" class="inpsty"></el-input>
       </div>
       <div class="demo-input-suffix">
         房间类型 :
-        <el-input v-model="input2" class="inpsty"></el-input>
-      </div>
-      <div class="demo-input-suffix">
-        默认单价 :
-        <el-input-number
-          v-model="num"
-          controls-position="right"
-          :precision="2"
-          :step="0.1"
-          :max="100000"
+        <el-select
+          v-model.trim="formdata.sceneType"
+          placeholder="请选择房间类别"
           class="inpsty"
-        ></el-input-number>
+        >
+          <el-option label="办公室" value="办公室"></el-option>
+          <el-option label="宿舍" value="宿舍"></el-option>
+          <el-option label="预约" value="预约"></el-option>
+        </el-select>
       </div>
       <div class="demo-input-suffix">
         <label class="la" for="">楼 层 :</label>
         <el-input-number
-          v-model="num2"
+          v-model="formdata.floorStart"
           controls-position="right"
           :min="1"
-          :max="10"
+          :max="99"
           class="inpsty1"
         ></el-input-number>
         <el-input-number
-          v-model="num4"
+          v-model="formdata.floorEnd"
           class="inpsty1"
           controls-position="right"
           :min="1"
-          :max="10"
+          :max="99"
         ></el-input-number>
       </div>
       <div class="demo-input-suffix">
         <label class="la" for="">房 号 :</label>
         <el-input-number
-          v-model="num3"
+          v-model="formdata.roomStart"
           controls-position="right"
           :min="1"
-          :max="10"
+          :max="99"
           class="inpsty1"
         ></el-input-number>
         <el-input-number
-          v-model="num5"
+          v-model="formdata.roomEnd"
           class="inpsty1"
           controls-position="right"
           :min="1"
-          :max="10"
+          :max="99"
         ></el-input-number>
-      </div>
-      <div class="ra">
-        <label class="la" for="">房号规则 :</label>
-        <el-checkbox-group v-model="checkList">
-          <el-checkbox label="房号避4"></el-checkbox>
-          <el-checkbox label="房号避7"></el-checkbox>
-          <el-checkbox label="锦江规则"></el-checkbox>
-        </el-checkbox-group>
-      </div>
-      <div class="demo-input-suffix">
-        房间信息 :
-        <el-input v-model="input4" class="inpsty"></el-input>
-      </div>
-      <div class="demo-input-suffix">
-        联网方式 :
-        <el-select v-model="svalue" placeholder="请选择" class="inpsty">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
       </div>
     </div>
     <div slot="footer" class="dialog-footer">
@@ -113,82 +74,98 @@
       @close="handleClose"
     >
       <div class="contents">
-        <el-table :data="tableData" border style="width: 100%">
-          <el-table-column prop="date" label="房号"></el-table-column>
-          <el-table-column prop="" label="楼栋" width="100"></el-table-column>
-          <el-table-column prop="" label="楼层号" width="100"></el-table-column>
-          <el-table-column prop="" label="锁内号" width="100"></el-table-column>
-          <el-table-column
-            prop=""
-            label="默认价格"
-            width="100"
-          ></el-table-column>
-          <el-table-column
-            prop=""
-            label="房间信息"
-            width="100"
-          ></el-table-column>
-          <el-table-column
-            prop=""
-            label="联网方式"
-            width="100"
-          ></el-table-column>
-          <el-table-column label="门锁功能">
-            <el-table-column
-              prop="province"
-              label="卡片"
-              width="100"
-            ></el-table-column>
-            <el-table-column
-              prop="city"
-              label="密码"
-              width="100"
-            ></el-table-column>
-            <el-table-column
-              prop="address"
-              label="蓝牙"
-              width="100"
-            ></el-table-column>
-            <el-table-column
-              prop="address"
-              label="套房"
-              width="100"
-            ></el-table-column>
-            <el-table-column
-              prop="address"
-              label="指纹"
-              width="100"
-            ></el-table-column>
+        <el-table
+          highlight-current-row
+          class="tb-edit"
+          :data="batchdata"
+          style="width: 100%"
+          @row-click="handleCurrentChange"
+        >
+          <el-table-column prop="roomNO" label="房间编号">
+            <template slot-scope="scope">
+              <el-input
+                v-model="scope.row.roomNO"
+                size="small"
+                placeholder="请输入内容"
+                @change="handleEdit(scope.$index, scope.row)"
+              ></el-input>
+              <span>{{ scope.row.roomNO }}</span>
+            </template>
           </el-table-column>
-          <el-table-column show-overflow-tooltip label="操作" width="190px">
-            <template #default="{ row }">
-              <el-button
-                type="primary"
-                style="margin-right: 10px"
-                size="mini"
-                plain
-                @click="edit(row)"
-              >
-                详情
-              </el-button>
-              <el-button
-                type="primary"
-                style="margin-right: 10px"
-                size="mini"
-                plain
-                @click="del(row)"
-              >
-                删除
+          <el-table-column prop="roomName" label="房间名称">
+            <template slot-scope="scope">
+              <span>{{ scope.row.roomName }}</span>
+              <el-input
+                v-model="scope.row.roomName"
+                size="small"
+                placeholder="请输入内容"
+                @change="handleEdit(scope.$index, scope.row)"
+              ></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column prop="floorKey" label="楼层">
+            <template slot-scope="scope">
+              <span>{{ scope.row.floorKey }}</span>
+              <el-input-number
+                v-model="scope.row.floorKey"
+                :min="1"
+                :max="40"
+                controls-position="right"
+                @change="handleEdit(scope.$index, scope.row)"
+              ></el-input-number>
+            </template>
+          </el-table-column>
+          <el-table-column prop="lockKey" label="钥匙数">
+            <template slot-scope="scope">
+              <el-button type="success" plain @click="setKey(row)">
+                {{ scope.row.lockKey }}
               </el-button>
             </template>
           </el-table-column>
+          <el-table-column prop="roomType" label="房型">
+            <template slot-scope="scope">
+              <span>{{ scope.row.roomType }}</span>
+              <el-input
+                v-model="scope.row.roomType"
+                size="small"
+                placeholder="请输入内容"
+                @change="handleEdit(scope.$index, scope.row)"
+              ></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column prop="iotTag" label="门锁编号">
+            <template slot-scope="scope">
+              <span>{{ scope.row.iotTag }}</span>
+              <el-input
+                v-model="scope.row.iotTag"
+                size="small"
+                placeholder="请输入内容"
+                @change="handleEdit(scope.$index, scope.row)"
+              ></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column prop="roomInfo" label="房间信息">
+            <template slot-scope="scope">
+              <span>{{ scope.row.roomInfo }}</span>
+              <el-input
+                v-model="scope.row.roomInfo"
+                size="small"
+                placeholder="请输入内容"
+                @change="handleEdit(scope.$index, scope.row)"
+              ></el-input>
+            </template>
+          </el-table-column>
+          1
+          <!-- <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button size="small" class="btn bg_green" @click="handleEdit(scope.$index, scope.row)">{{scope.row.showEdit?'保存':"修改"}}</el-button>
+            </template>
+          </el-table-column> -->
         </el-table>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="linshidialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="linshidialogVisible = false">
-          确 定
-        </el-button>
+        <el-button type="primary" @click="close">确 定</el-button>
       </span>
     </el-dialog>
   </el-dialog>
@@ -196,6 +173,13 @@
 
 <script>
   import veditBath from './veditBath.vue'
+  import {
+    addSingleRoom,
+    listRoom,
+    addBatchRoom,
+    delRoom,
+    updateRoom,
+  } from '@/api/api'
   export default {
     name: 'TableEdit2',
     components: {
@@ -208,53 +192,73 @@
         title: '',
         tableData: [{ date: 1 }],
         dialogFormVisible: false,
-        input1: '',
-        input2: '',
-        input4: '',
-        num: '',
-        num2: '',
-        num3: '',
-        num4: '',
-        num5: '',
-        svalue: '2',
-        options: [
-          {
-            value: '选项1',
-            label: '不联网',
-          },
-          {
-            value: '选项2',
-            label: '蓝牙网关',
-          },
-          {
-            value: '1',
-            label: 'NB',
-          },
-          {
-            value: '2',
-            label: 'WiFi',
-          },
-        ],
+        formdata: {
+          buildId: '',
+          prefix: '',
+          sceneType: '',
+          floorStart: '',
+          floorEnd: '',
+          roomStart: '',
+          roomEnd: '',
+        },
         createVisible: false,
+        batchdata: [],
       }
     },
     mounted() {
       // this.getlistSection()
     },
     methods: {
-      showEdit(row, Builddata) {
+      showEdit(buildId) {
         this.title = '批量创建房间'
         this.dialogFormVisible = true
+        this.formdata.buildId = buildId
       },
       edit(row) {
         this.$refs['editbath'].showEdit(row)
       },
-      del(row) {},
       close() {
         this.dialogFormVisible = false
+        this.createVisible = false
+        this.formdata = {
+          buildId: '',
+          prefix: '',
+          sceneType: '',
+          floorStart: '',
+          floorEnd: '',
+          roomStart: '',
+          roomEnd: '',
+        }
+        this.$emit('fetchData')
       },
-      save() {
+      async save() {
         this.createVisible = true
+        let data = this.formdata
+        let res = await addBatchRoom(data)
+        this.batchdata = res.data
+        console.log(res, this.batchdata, 'success')
+        // if (res.resultCode == 0) {
+        //   this.$message('批量创建成功')
+        // }
+      },
+      async handleEdit(index, row) {
+        console.log(index, row)
+        console.log('提交')
+        let data = {
+          floorKey: row.floorKey,
+          roomId: row.roomId,
+          roomInfo: row.roomInfo,
+          roomNO: row.roomNO,
+          roomName: row.roomName,
+          roomType: row.roomType,
+        }
+        let res = await updateRoom(data)
+        if (res.resultCode == 0) {
+          this.$message('修改成功')
+        }
+      },
+      handleCurrentChange(row, event, column) {
+        console.log(row, event, column)
       },
       handleClose() {
         this.linshidialogVisible = false
@@ -292,5 +296,15 @@
   .la {
     float: left;
     margin-right: 20px;
+    line-height: 30px;
+  }
+  .tb-edit .el-input {
+    display: none;
+  }
+  .tb-edit .current-row .el-input {
+    display: block;
+  }
+  .tb-edit .current-row .el-input + span {
+    display: none;
   }
 </style>

@@ -8,82 +8,63 @@
     @close="close"
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-      <el-form-item label="园区:" prop="customerName">
-        <el-select
-          v-model.trim="form.customerName"
-          autocomplete="off"
-          placeholder="请选择园区"
-          style="width: 450px"
-        ></el-select>
-      </el-form-item>
-      <el-form-item label="楼栋" prop="content">
-        <el-select
-          v-model.trim="form.content"
-          multiple
-          placeholder="请选择楼栋"
-          style="width: 450px"
-        >
-          <el-option
-            v-for="item in Builddata"
-            :key="item.sectionId"
-            :label="item.sectionName"
-            :value="item.sectionName"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="楼层" prop="idCard">
-        <el-select
-          v-model.trim="form.content"
-          multiple
-          placeholder="请选择楼层"
-          style="width: 450px"
-        >
-          <el-option
-            v-for="item in Builddata"
-            :key="item.sectionId"
-            :label="item.sectionName"
-            :value="item.sectionName"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="房间名称" prop="roomname">
+      <el-form-item label="房间编号">
         <el-input
-          v-model.trim="form.roomname"
+          v-model.trim="form.roomNO"
+          autocomplete="off"
+          placeholder="请输入房间编号"
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="房间名称">
+        <el-input
+          v-model.trim="form.roomName"
           autocomplete="off"
           placeholder="请输入房间名称"
         ></el-input>
       </el-form-item>
-      <el-form-item label="房间类别" prop="rentDoorPass">
+      <el-form-item label="房间场景">
         <el-select
-          v-model.trim="form.content"
-          multiple
+          v-model.trim="form.sceneType"
           placeholder="请选择房间类别"
           style="width: 450px"
         >
-          <el-option
-            v-for="item in Builddata"
-            :key="item.sectionId"
-            :label="item.sectionName"
-            :value="item.sectionName"
-          ></el-option>
+          <el-option label="办公室" value="办公室"></el-option>
+          <el-option label="宿舍" value="宿舍"></el-option>
+          <el-option label="预约" value="预约"></el-option>
         </el-select>
       </el-form-item>
-
-      <el-form-item label="房型" prop="rentCardnoHex">
+      <el-form-item label="房型">
         <el-input
-          v-model.trim="form.rentCardnoHex"
+          v-model.trim="form.roomType"
           autocomplete="off"
           placeholder="请输入房型"
         ></el-input>
       </el-form-item>
+      <el-form-item label="楼层">
+        <el-input-number
+          v-model="form.floorKey"
+          style="width: 450px"
+          controls-position="right"
+          :min="1"
+          :max="40"
+          @change="handlenumChange"
+        ></el-input-number>
+      </el-form-item>
       <el-form-item label="门锁标识">
         <el-input
-          v-model.trim="form.rentCardnoHex"
+          v-model.trim="form.iotTag"
           autocomplete="off"
           placeholder="请输入门锁编号"
         ></el-input>
       </el-form-item>
-      <el-form-item label="电表标识">
+      <el-form-item label="房间信息">
+        <el-input
+          v-model.trim="form.roomInfo"
+          autocomplete="off"
+          placeholder="请输入门锁编号"
+        ></el-input>
+      </el-form-item>
+      <!-- <el-form-item label="电表标识">
         <el-input
           v-model.trim="form.rentCardnoHex"
           autocomplete="off"
@@ -96,46 +77,12 @@
           autocomplete="off"
           placeholder="请输入水表编号"
         ></el-input>
-      </el-form-item>
+      </el-form-item> -->
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="close">取 消</el-button>
       <el-button type="primary" @click="save">确 定</el-button>
     </div>
-    <el-dialog
-      title="录入指纹"
-      size="small"
-      :visible.sync="printdialogVisible"
-      width="25%"
-      :before-close="handleClose"
-      append-to-body
-    >
-      <div class="contents">
-        <div class="right">
-          <img v-if="imgShow1" src="../../../../assets/print/1.png" />
-          <img v-if="imgShow2" src="../../../../assets/print/2.png" />
-          <img v-if="imgShow3" src="../../../../assets/print/3.png" />
-          <img v-if="imgShow4" src="../../../../assets/print/4.png" />
-          <img v-if="imgShow5" src="../../../../assets/print/5.png" />
-        </div>
-        <el-timeline class="left">
-          <el-timeline-item
-            v-for="(activity, index) in activities"
-            :key="index"
-            size="large"
-            :color="activity.color"
-          >
-            {{ activity.message }}
-          </el-timeline-item>
-        </el-timeline>
-      </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="printdialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="printdialogVisible = false">
-          确 定
-        </el-button>
-      </span>
-    </el-dialog>
   </el-dialog>
 </template>
 
@@ -146,29 +93,31 @@
     addKeyFinger,
     listSection,
   } from '@/api/table'
+  import {
+    addSingleRoom,
+    listRoom,
+    addBatchRoom,
+    delRoom,
+    updateRoom,
+  } from '@/api/api'
 
   export default {
     name: 'TableEdit',
     data() {
       return {
         form: {
-          customerName: '',
-          rentCardnoHex: '',
-          content: '',
-          idCard: '',
-          mobile: '',
-          rentDoorPass: '',
-          remark: '',
-          roomname: '',
+          floorKey: '',
+          roomNO: '',
+          roomName: '',
+          roomType: '',
+          roomInfo: '',
+          iotTag: '',
+          sceneType: '',
+          buildId: '',
         },
-        imgShow1: true,
-        imgShow2: false,
-        imgShow3: false,
-        imgShow4: false,
-        imgShow5: false,
-        printdialogVisible: false,
-        buildObjs: [],
+
         Builddata: [],
+        num: 1,
         rules: {
           roomname: [
             { required: true, trigger: 'blur', message: '请输入房间名称' },
@@ -192,6 +141,7 @@
         this.Builddata = data.data
         console.log(data, 'data')
       },
+      handlenumChange() {},
       handleClose(done) {
         this.$confirm('确认关闭？')
           .then((_) => {
@@ -200,137 +150,13 @@
           })
           .catch((_) => {})
       },
-      handleFree(row) {
-        // 生成一个6位数的随机密码
-        var password = Math.floor(Math.random() * 900000 + 100000)
-        this.form.pwd = password
-        console.log(password, row, 'password')
-      },
-      handleRead(row) {
-        console.log(row, 'row')
-        let data = {
-          command: 'ReadCardId', //指令
-          message: '',
-          data: '',
-        }
-        this.$ws.send(JSON.stringify(data))
-        this.$ws.addEventListener('message', (event) => {
-          const result = JSON.parse(event.data)
-          if (
-            result.command === 'ReadCardId' &&
-            result.message === '读卡成功'
-          ) {
-            this.form.cardno = result.data
-            console.log(this.form.cardno, 'ReadCardId')
-          }
-          console.log(result, 'result')
-        })
-      },
-      handlePrint(row) {
-        console.log(row, 'row')
-        let data = {
-          command: 'GetFingerprint', //指令
-          message: '',
-          data: '',
-        }
-        this.$ws.send(JSON.stringify(data))
-        this.$ws.addEventListener('message', (event) => {
-          const result = JSON.parse(event.data)
-          if (result.message === '录入指纹:请放手指') {
-            this.printdialogVisible = true
-            this.activities.push({ message: result.message, color: '#e98f36' })
-            console.log(
-              this.imgShow1,
-              this.imgShow2,
-              this.imgShow3,
-              this.imgShow4,
-              this.imgShow5,
-              this.activities,
-              'this.imgShow1'
-            )
-          }
-          if (result.message === '录入指纹:第1次特征录入成功') {
-            this.activities.push({ message: result.message })
-            this.imgShow2 = true
-            this.imgShow1 = false
-            this.imgShow5 = false
-            this.imgShow4 = false
-            this.imgShow3 = false
-            console.log(
-              this.imgShow1,
-              this.imgShow2,
-              this.imgShow3,
-              this.imgShow4,
-              this.imgShow5,
-              this.activities,
-              'this.imgShow2'
-            )
-          }
-          if (result.message === '录入指纹:第2次特征录入成功') {
-            this.activities.push({ message: result.message })
-            this.imgShow3 = true
-            this.imgShow2 = false
-            this.imgShow1 = false
-            this.imgShow5 = false
-            this.imgShow4 = false
-            console.log(
-              this.imgShow1,
-              this.imgShow2,
-              this.imgShow3,
-              this.imgShow4,
-              this.imgShow5,
-              this.activities,
-              'this.imgShow3'
-            )
-          }
-          if (result.message === '录入指纹:第3次特征录入成功') {
-            this.imgShow4 = true
-            this.imgShow3 = false
-            this.imgShow2 = false
-            this.imgShow1 = false
-            this.imgShow5 = false
-            console.log(
-              this.imgShow1,
-              this.imgShow2,
-              this.imgShow3,
-              this.imgShow4,
-              this.imgShow5,
-              this.activities,
-              'this.imgShow4'
-            )
-            this.activities.push({ message: result.message })
-          }
-          if (result.message === '录入指纹:指纹模板保存成功') {
-            this.activities.push({ message: result.message })
-          }
-          if (result.command === 'GetFingerprint') {
-            this.Fingerprint.overdata = result.data
-            this.imgShow5 = true
-            this.imgShow4 = false
-            this.imgShow3 = false
-            this.imgShow2 = false
-            this.imgShow1 = false
-            this.activities.push({ message: result.message })
-            console.log(
-              this.imgShow1,
-              this.imgShow2,
-              this.imgShow3,
-              this.imgShow4,
-              this.imgShow15,
-              this.activities,
-              'this.imgShow5'
-            )
-          }
-          console.log(result, 'result')
-        })
-      },
-      handleClear(row) {
-        console.log(row, 'row')
-      },
-      showEdit(row, Builddata) {
-        if (!row) {
+
+      showEdit(row) {
+        console.log(typeof row === 'object', 'row')
+        if ((typeof row === 'object') == false) {
           this.title = '添加房间和设备'
           this.Edit = false
+          this.form.buildId = row
         } else {
           this.title = '编辑房间和设备'
           this.Edit = true
@@ -352,25 +178,16 @@
         this.$refs['form'].validate(async (valid) => {
           if (valid) {
             if (this.Edit == false) {
-              let contents = this.form.content.join(',')
-              console.log(contents, 'contents')
-
+              console.log(this.form, 'form')
+              let data = await addSingleRoom(this.form)
               if (data.resultCode == 0) {
                 this.$message('添加成功')
               }
             } else {
-              // let formdata = {
-              //   customername: this.form.customerName,
-              //   cardno:this.form.cardno,
-              //   content:this.form.content,
-              //   idcard:this.form.idcard,
-              //   mobile:this.form.mobile,
-              //   pwd:this.form.pwd,
-              //   remark:this.form.remark,
-              // }
-              // if (data.resultCode == 0) {
-              //   this.$message('修改成功')
-              // }
+              let data = await updateRoom(this.form)
+              if (data.resultCode == 0) {
+                this.$message('修改成功')
+              }
             }
 
             this.$refs['form'].resetFields()

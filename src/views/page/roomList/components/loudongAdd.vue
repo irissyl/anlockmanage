@@ -9,14 +9,21 @@
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
       <el-form-item label="选择园区:" prop="title">
         <el-select
-          v-model.trim="form.title"
+          v-model.trim="form.areaId"
           autocomplete="off"
           style="width: 300px"
-        ></el-select>
+        >
+          <el-option
+            v-for="item in Campuslistdata"
+            :key="item.areaId"
+            :label="item.areaName"
+            :value="item.areaId"
+          ></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="楼栋名称" prop="name">
         <el-input
-          v-model.trim="form.buildName"
+          v-model.trim="form.name"
           autocomplete="off"
           placeholder="请输入楼栋名称"
           style="width: 300px"
@@ -31,32 +38,41 @@
 </template>
 
 <script>
-  import { updateBuild, addBuild } from '@/api/table'
+  import { addBuild, getCampusList } from '@/api/api'
 
   export default {
     name: 'TableEdit',
     data() {
       return {
         form: {
-          buildName: '',
+          name: '',
+          areaId: '',
         },
         buildObjs: [],
         Builddata: '',
         rules: {
-          buildName: [
+          name: [
             { required: true, trigger: 'blur', message: '请输入楼栋名称' },
           ],
         },
         title: '',
         dialogFormVisible: false,
         Edit: false,
+        Campuslistdata: [],
       }
     },
-    mounted() {},
+    mounted() {
+      this.getdepartmemtData()
+    },
     methods: {
       showEdit(row, Builddata) {
         this.title = '添加楼栋'
         this.dialogFormVisible = true
+      },
+      async getdepartmemtData() {
+        const Campuslist = await getCampusList()
+        this.Campuslistdata = Campuslist.data
+        console.log(Campuslist, 'Campus')
       },
       close() {
         this.$refs['form'].resetFields()
@@ -69,10 +85,8 @@
           if (valid) {
             console.log(this.form, 'valid')
             if (this.Edit == false) {
-              let formdata = {
-                name: this.form.buildName,
-              }
-              let data = await addBuild(formdata)
+              console.log(this.form, 'this.form')
+              let data = await addBuild(this.form)
               console.log(data, 'success')
               if (data.resultCode == 0) {
                 this.$message('添加成功')
@@ -82,11 +96,11 @@
                 name: this.form.buildName,
                 buildid: this.form.buildId,
               }
-              let data = await updateBuild(formdata)
-              console.log(data, 'success')
-              if (data.resultCode == 0) {
-                this.$message('修改成功')
-              }
+              // let data = await updateBuild(formdata)
+              // console.log(data, 'success')
+              // if (data.resultCode == 0) {
+              //   this.$message('修改成功')
+              // }
             }
 
             this.$refs['form'].resetFields()
