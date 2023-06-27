@@ -1,6 +1,6 @@
 /**
- * @author https://vue-admin-beautiful.com （不想保留author可删除）
- * @description router全局配置，如有必要可分文件抽离，其中asyncRoutes只有在intelligence模式下才会用到，vip文档中已提供路由的基础图标与小清新图标的配置方案，请仔细阅读
+ * ..author https://vue-admin-beautiful.com （不想保留author可删除）
+ * ..description router全局配置，如有必要可分文件抽离，其中asyncRoutes只有在intelligence模式下才会用到，vip文档中已提供路由的基础图标与小清新图标的配置方案，请仔细阅读
  */
 
 import Vue from 'vue'
@@ -58,417 +58,505 @@ export const constantRoutes = [
     component: Layout,
     redirect: 'noRedirect',
     meta: {
-      title: '基础信息',
-      icon: 'info',
+      title: '主菜单',
+      icon: 'bars',
       premissions: ['info'],
     },
     children: [
       {
+        path: 'buildManage',
+        name: 'buildManage',
+        component: () => import('@/views/main/buildManage/index.vue'),
+        meta: {
+          title: '建筑管理',
+          premissions: ['buildManage/index'],
+          // badge: 'New',
+        },
+      },
+      {
         path: 'roomList',
         name: 'roomList',
-        component: () => import('@/views/page/roomList/index'),
+        component: () => import('@/views/main/roomList/index'),
         meta: {
-          title: '房间建档',
+          title: '房间管理',
           premissions: ['roomList/index'],
           // badge: 'New',
         },
       },
       {
-        path: '/Personnel',
-        name: 'Personnel',
-        component: () => import('@/views/NewPage/PersonnelFiling/index'),
+        path: 'householdManage',
+        name: 'householdManage',
+        component: () => import('@/views/main/householdManage/index.vue'),
         meta: {
-          title: '人员建档',
-          premissions: ['PersonnelFiling/index'],
+          title: '住户管理',
+          premissions: ['householdManage/index'],
         },
       },
       {
-        path: 'operator',
-        name: 'operator',
-        component: () => import('@/views/page/operatorManagement/index'),
+        path: 'author',
+        name: 'author',
+        component: () => import('@/views/main/author/index.vue'),
         meta: {
-          title: '操作员管理',
-          icon: '',
-          premissions: ['operatorManagement/index'],
+          title: '权限管理',
+          premissions: ['author/index'],
         },
       },
       {
-        path: 'DeviceManagement',
-        name: 'DeviceManagement',
+        path: 'card',
+        name: 'card',
+        component: () => import('@/views/main/card/index.vue'),
+        meta: {
+          title: '门卡管理',
+          premissions: ['card/index'],
+        },
+      },
+      {
+        path: 'DeviceManage',
+        name: 'DeviceManage',
+        component: () => import('@/views/NewPage/DeviceManagement/NB.vue'),
         meta: {
           title: '设备管理',
+          premissions: ['DeviceManagement/NB'],
+        },
+      },
+      {
+        path: 'queryManage',
+        name: 'queryManage',
+        component: () => import('@/views/main/queryManage/index.vue'),
+        meta: {
+          title: '查询管理',
           icon: '',
-          premissions: ['DeviceManagement'],
-        },
-        component: {
-          template: '<router-view/>',
-        },
-        children: [
-          {
-            path: '/NB',
-            name: 'NB',
-            component: () => import('@/views/NewPage/DeviceManagement/NB.vue'),
-            meta: {
-              title: 'NB门锁',
-              premissions: ['DeviceManagement/NB'],
-            },
-          },
-          {
-            path: '/WIFI',
-            name: 'WIFI',
-            component: () =>
-              import('@/views/NewPage/DeviceManagement/WIFI.vue'),
-            meta: {
-              title: 'WIFI门锁',
-              premissions: ['DeviceManagement/WIFI'],
-            },
-          },
-          {
-            path: '/Lora',
-            name: 'Lora',
-            component: () =>
-              import('@/views/NewPage/DeviceManagement/Lora.vue'),
-            meta: {
-              title: 'Lora门锁',
-              premissions: ['DeviceManagement/Lora'],
-            },
-          },
-          {
-            path: '/GatewayDevices',
-            name: 'GatewayDevices',
-            component: () =>
-              import('@/views/NewPage/DeviceManagement/GatewayDevice.vue'),
-            meta: {
-              title: '网关信息',
-              premissions: ['DeviceManagement/GatewayDevice'],
-            },
-          },
-          {
-            path: '/GatewayMatching',
-            name: 'GatewayMatching',
-            component: () =>
-              import('@/views/NewPage/DeviceManagement/GatewayMatching.vue'),
-            meta: {
-              title: '网关匹配',
-              premissions: ['DeviceManagement/GatewayMatching'],
-            },
-          },
-        ],
-      },
-    ],
-  },
-  {
-    path: '/AlarmInformation',
-    name: 'AlarmInformation',
-    component: Layout,
-    redirect: 'noRedirect',
-    meta: {
-      title: '报警信息',
-      icon: 'bell',
-      premissions: ['AlarmInformation'],
-    },
-    children: [
-      {
-        path: 'Lowpressure',
-        name: 'Lowpressure',
-        component: () =>
-          import('@/views/NewPage/AlarmInformation/Lowpressure.vue'),
-        meta: {
-          title: '低压报警',
-          premissions: ['AlarmInformation/Lowpressure'],
-          // badge: 'New',
+          premissions: ['queryManage/index'],
         },
       },
       {
-        path: 'Keylock',
-        name: 'Keylock',
-        component: () => import('@/views/NewPage/AlarmInformation/Keylock.vue'),
+        path: 'PatrolManage',
+        name: 'PatrolManage',
+        component: () => import('@/views/main/PatrolManage/index.vue'),
         meta: {
-          title: '按键锁定',
-          premissions: ['AlarmInformation/Keylock'],
-          // badge: 'New',
+          title: '巡更管理',
+          icon: '',
+          premissions: ['PatrolManage/index'],
         },
       },
       {
-        path: 'Abnormal',
-        name: 'Abnormal',
-        component: () =>
-          import('@/views/NewPage/AlarmInformation/Abnormal.vue'),
+        path: 'RepairManagement',
+        name: 'RepairManagement',
+        component: () => import('@/views/main/RepairManagement/index.vue'),
         meta: {
-          title: '进出异常',
-          premissions: ['AlarmInformation/Abnormal'],
-          // badge: 'New',
+          title: '报修管理',
+          icon: '',
+          premissions: ['RepairManagement/index'],
         },
       },
       {
-        path: 'Antiprying',
-        name: 'Antiprying',
-        component: () =>
-          import('@/views/NewPage/AlarmInformation/Antiprying.vue'),
+        path: 'InstructionManagement',
+        name: 'InstructionManagement',
+        component: () => import('@/views/main/InstructionManagement/index'),
         meta: {
-          title: '防撬报警',
-          premissions: ['AlarmInformation/Antiprying'],
-          // badge: 'New',
+          title: '指令管理',
+          icon: '',
+          premissions: ['InstructionManagement/index'],
         },
       },
       {
-        path: 'VirtualShutdown',
-        name: 'VirtualShutdown',
-        component: () =>
-          import('@/views/NewPage/AlarmInformation/VirtualShutdown.vue'),
+        path: 'analysisManage',
+        name: 'analysisManage',
+        component: () => import('@/views/main/analysisManage/index.vue'),
         meta: {
-          title: '虚关报警',
-          premissions: ['AlarmInformation/VirtualShutdown'],
-          // badge: 'New',
+          title: '统计分析',
+          icon: '',
+          premissions: ['analysisManage/index'],
         },
       },
       {
-        path: 'Offline',
-        name: 'Offline',
-        component: () => import('@/views/NewPage/AlarmInformation/Offline.vue'),
+        path: 'configurationManage',
+        name: 'configurationManage',
+        component: () => import('@/views/main/configurationManage/index.vue'),
         meta: {
-          title: '离线报警',
-          premissions: ['AlarmInformation/Offline'],
-          // badge: 'New',
+          title: '配置管理',
+          icon: '',
+          premissions: ['configurationManage/index'],
         },
       },
-      {
-        path: 'Dooropen',
-        name: 'Dooropen',
-        component: () =>
-          import('@/views/NewPage/AlarmInformation/Dooropen.vue'),
-        meta: {
-          title: '门锁常开',
-          premissions: ['AlarmInformation/Dooropen'],
-          // badge: 'New',
-        },
-      },
-      {
-        path: 'Doorlock',
-        name: 'Doorlock',
-        component: () =>
-          import('@/views/NewPage/AlarmInformation/Doorlock.vue'),
-        meta: {
-          title: '门开报警',
-          premissions: ['AlarmInformation/Doorlock'],
-          // badge: 'New',
-        },
-      },
-      {
-        path: 'Hightemperature',
-        name: 'Hightemperature',
-        component: () =>
-          import('@/views/NewPage/AlarmInformation/Hightemperature.vue'),
-        meta: {
-          title: '高温报警',
-          premissions: ['AlarmInformation/Hightemperature'],
-          // badge: 'New',
-        },
-      },
-    ],
-  },
-  {
-    path: '/RecordQuery',
-    name: 'RecordQuery',
-    component: Layout,
-    redirect: 'noRedirect',
-    meta: {
-      title: '记录查询',
-      icon: 'search',
-      premissions: ['RecordQuery'],
-    },
-    children: [
+
       // {
-      //   path: '/OperatorOperationrecords',
-      //   name: 'OperatorOperationrecords',
-      //   component: () =>
-      //     import('@/views/NewPage/RecordQuery/OperatorOperationrecords.vue'),
+      //   path: 'DeviceManagement',
+      //   name: 'DeviceManagement',
       //   meta: {
-      //     title: '操作员操作记录',
-      //     premissions: ['RecordQuery/OperatorOperationrecords'],
+      //     title: '设备管理',
+      //     icon: '',
+      //     premissions: ['DeviceManagement'],
       //   },
-      // },
-      // {
-      //   path: '/BatteryReplacementRecord',
-      //   name: 'BatteryReplacementRecord',
-      //   component: () =>
-      //     import('@/views/NewPage/RecordQuery/BatteryReplacementRecord.vue'),
-      //   meta: {
-      //     title: '换电池记录',
-      //     premissions: ['RecordQuery/BatteryReplacementRecord'],
+      //   component: {
+      //     template: '<router-view/>',
       //   },
+      //   children: [
+      //     {
+      //       path: '/NB',
+      //       name: 'NB',
+      //       component: () => import('@/views/NewPage/DeviceManagement/NB.vue'),
+      //       meta: {
+      //         title: '设备管理',
+      //         premissions: ['DeviceManagement/NB'],
+      //       },
+      //     },
+      //     {
+      //       path: '/WIFI',
+      //       name: 'WIFI',
+      //       component: () =>
+      //         import('@/views/NewPage/DeviceManagement/WIFI.vue'),
+      //       meta: {
+      //         title: 'WIFI门锁',
+      //         premissions: ['DeviceManagement/WIFI'],
+      //       },
+      //     },
+      //     {
+      //       path: '/Lora',
+      //       name: 'Lora',
+      //       component: () =>
+      //         import('@/views/NewPage/DeviceManagement/Lora.vue'),
+      //       meta: {
+      //         title: 'Lora门锁',
+      //         premissions: ['DeviceManagement/Lora'],
+      //       },
+      //     },
+      //     {
+      //       path: '/GatewayDevices',
+      //       name: 'GatewayDevices',
+      //       component: () =>
+      //         import('@/views/NewPage/DeviceManagement/GatewayDevice.vue'),
+      //       meta: {
+      //         title: '网关信息',
+      //         premissions: ['DeviceManagement/GatewayDevice'],
+      //       },
+      //     },
+      //     {
+      //       path: '/GatewayMatching',
+      //       name: 'GatewayMatching',
+      //       component: () =>
+      //         import('@/views/NewPage/DeviceManagement/GatewayMatching.vue'),
+      //       meta: {
+      //         title: '网关匹配',
+      //         premissions: ['DeviceManagement/GatewayMatching'],
+      //       },
+      //     },
+      //   ],
       // },
-      {
-        path: '/DoorLockRecords',
-        name: 'DoorLockRecords',
-        component: {
-          template: '<router-view/>',
-        },
-        meta: {
-          title: '门锁记录',
-          premissions: ['DoorLockRecords'],
-        },
-        children: [
-          {
-            path: '/Heartbeat',
-            name: 'Heartbeat',
-            component: () =>
-              import('@/views/NewPage/RecordQuery/heartbeats.vue'),
-            meta: {
-              title: '心跳记录',
-              premissions: ['RecordQuery/Heartbeat'],
-            },
-          },
-          {
-            path: '/openDoorRecord',
-            name: 'openDoorRecord',
-            component: () =>
-              import('@/views/NewPage/RecordQuery/openDoorRecord.vue'),
-            meta: {
-              title: '开门记录',
-              premissions: ['RecordQuery/openDoorRecord'],
-            },
-          },
-          {
-            path: '/voltagechanges',
-            name: 'voltagechanges',
-            component: () =>
-              import('@/views/NewPage/RecordQuery/voltagechanges.vue'),
-            meta: {
-              title: '电压变化记录',
-              premissions: ['RecordQuery/voltagechanges'],
-            },
-          },
-          {
-            path: '/Commandcommunication',
-            name: 'Commandcommunication',
-            component: () =>
-              import('@/views/NewPage/RecordQuery/Commandcommunication.vue'),
-            meta: {
-              title: '指令通讯记录',
-              premissions: ['RecordQuery/Commandcommunication'],
-            },
-          },
-        ],
-      },
-      {
-        path: '/LockChange',
-        name: 'LockChange',
-        component: () => import('@/views/NewPage/RecordQuery/LockChange.vue'),
-        meta: {
-          title: '换锁记录',
-          premissions: ['RecordQuery/LockChange'],
-        },
-      },
-      {
-        path: '/Electricity',
-        name: 'Electricity',
-        component: () => import('@/views/NewPage/RecordQuery/Electricity.vue'),
-        meta: {
-          title: '电表记录',
-          premissions: ['RecordQuery/Electricity'],
-        },
-      },
-      {
-        path: '/Watermeter',
-        name: 'Watermeter',
-        component: () => import('@/views/NewPage/RecordQuery/Watermeter.vue'),
-        meta: {
-          title: '水表记录',
-          premissions: ['RecordQuery/Watermeter'],
-        },
-      },
     ],
   },
-  {
-    path: '/BatchOperations',
-    name: 'BatchOperations',
-    component: Layout,
-    redirect: 'noRedirect',
-    meta: {
-      title: '批量操作',
-      icon: 'bars',
-      premissions: ['BatchOperations'],
-    },
-    children: [
-      {
-        path: '/CardTermination',
-        name: 'CardTermination',
-        component: () =>
-          import('@/views/NewPage/BatchOperations/CardTermination.vue'),
-        meta: {
-          title: '卡片终止',
-          premissions: ['BatchOperations/CardTermination'],
-        },
-      },
-      {
-        path: '/PersonnelTermination',
-        name: 'PersonnelTermination',
-        component: () =>
-          import('@/views/NewPage/BatchOperations/PersonnelTermination.vue'),
-        meta: {
-          title: '人员终止',
-          premissions: ['BatchOperations/PersonnelTermination'],
-        },
-      },
-      {
-        path: '/RoomTermination',
-        name: 'RoomTermination',
-        component: () =>
-          import('@/views/NewPage/BatchOperations/RoomTermination.vue'),
-        meta: {
-          title: '房间终止',
-          premissions: ['BatchOperations/RoomTermination'],
-        },
-      },
-    ],
-  },
-  {
-    path: '/fintRoom',
-    name: 'fintRoom',
-    component: Layout,
-    redirect: 'noRedirect',
-    meta: {
-      title: '人找房',
-      icon: 'city',
-      premissions: ['fintRoom'],
-    },
-    children: [
-      {
-        path: '/Room',
-        name: 'Room',
-        component: () => import('@/views/NewPage/fintRoom/index.vue'),
-        meta: {
-          title: '人找房',
-          icon: 'city',
-          premissions: ['fintRoom/index'],
-        },
-      },
-    ],
-  },
-  {
-    path: '/findPeople',
-    name: 'findPeople',
-    component: Layout,
-    redirect: 'noRedirect',
-    meta: {
-      title: '房找人',
-      icon: 'child',
-      premissions: ['findPeople'],
-    },
-    children: [
-      {
-        path: '/People',
-        name: 'People',
-        component: () => import('@/views/NewPage/findPeople/index.vue'),
-        meta: {
-          title: '房找人',
-          icon: 'child',
-          premissions: ['findPeople/index'],
-        },
-      },
-    ],
-  },
+  // {
+  //   path: '/AlarmInformation',
+  //   name: 'AlarmInformation',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   meta: {
+  //     title: '报警信息',
+  //     icon: 'bell',
+  //     premissions: ['AlarmInformation'],
+  //   },
+  //   children: [
+  //     {
+  //       path: 'Lowpressure',
+  //       name: 'Lowpressure',
+  //       component: () =>
+  //         import('@/views/NewPage/AlarmInformation/Lowpressure.vue'),
+  //       meta: {
+  //         title: '低压报警',
+  //         premissions: ['AlarmInformation/Lowpressure'],
+  //         // badge: 'New',
+  //       },
+  //     },
+  //     {
+  //       path: 'Keylock',
+  //       name: 'Keylock',
+  //       component: () => import('@/views/NewPage/AlarmInformation/Keylock.vue'),
+  //       meta: {
+  //         title: '按键锁定',
+  //         premissions: ['AlarmInformation/Keylock'],
+  //         // badge: 'New',
+  //       },
+  //     },
+  //     {
+  //       path: 'Abnormal',
+  //       name: 'Abnormal',
+  //       component: () =>
+  //         import('@/views/NewPage/AlarmInformation/Abnormal.vue'),
+  //       meta: {
+  //         title: '进出异常',
+  //         premissions: ['AlarmInformation/Abnormal'],
+  //         // badge: 'New',
+  //       },
+  //     },
+  //     {
+  //       path: 'Antiprying',
+  //       name: 'Antiprying',
+  //       component: () =>
+  //         import('@/views/NewPage/AlarmInformation/Antiprying.vue'),
+  //       meta: {
+  //         title: '防撬报警',
+  //         premissions: ['AlarmInformation/Antiprying'],
+  //         // badge: 'New',
+  //       },
+  //     },
+  //     {
+  //       path: 'VirtualShutdown',
+  //       name: 'VirtualShutdown',
+  //       component: () =>
+  //         import('@/views/NewPage/AlarmInformation/VirtualShutdown.vue'),
+  //       meta: {
+  //         title: '虚关报警',
+  //         premissions: ['AlarmInformation/VirtualShutdown'],
+  //         // badge: 'New',
+  //       },
+  //     },
+  //     {
+  //       path: 'Offline',
+  //       name: 'Offline',
+  //       component: () => import('@/views/NewPage/AlarmInformation/Offline.vue'),
+  //       meta: {
+  //         title: '离线报警',
+  //         premissions: ['AlarmInformation/Offline'],
+  //         // badge: 'New',
+  //       },
+  //     },
+  //     {
+  //       path: 'Dooropen',
+  //       name: 'Dooropen',
+  //       component: () =>
+  //         import('@/views/NewPage/AlarmInformation/Dooropen.vue'),
+  //       meta: {
+  //         title: '门锁常开',
+  //         premissions: ['AlarmInformation/Dooropen'],
+  //         // badge: 'New',
+  //       },
+  //     },
+  //     {
+  //       path: 'Doorlock',
+  //       name: 'Doorlock',
+  //       component: () =>
+  //         import('@/views/NewPage/AlarmInformation/Doorlock.vue'),
+  //       meta: {
+  //         title: '门开报警',
+  //         premissions: ['AlarmInformation/Doorlock'],
+  //         // badge: 'New',
+  //       },
+  //     },
+  //     {
+  //       path: 'Hightemperature',
+  //       name: 'Hightemperature',
+  //       component: () =>
+  //         import('@/views/NewPage/AlarmInformation/Hightemperature.vue'),
+  //       meta: {
+  //         title: '高温报警',
+  //         premissions: ['AlarmInformation/Hightemperature'],
+  //         // badge: 'New',
+  //       },
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: '/RecordQuery',
+  //   name: 'RecordQuery',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   meta: {
+  //     title: '记录查询',
+  //     icon: 'search',
+  //     premissions: ['RecordQuery'],
+  //   },
+  //   children: [
+  //     // {
+  //     //   path: '/OperatorOperationrecords',
+  //     //   name: 'OperatorOperationrecords',
+  //     //   component: () =>
+  //     //     import('@/views/NewPage/RecordQuery/OperatorOperationrecords.vue'),
+  //     //   meta: {
+  //     //     title: '操作员操作记录',
+  //     //     premissions: ['RecordQuery/OperatorOperationrecords'],
+  //     //   },
+  //     // },
+  //     // {
+  //     //   path: '/BatteryReplacementRecord',
+  //     //   name: 'BatteryReplacementRecord',
+  //     //   component: () =>
+  //     //     import('@/views/NewPage/RecordQuery/BatteryReplacementRecord.vue'),
+  //     //   meta: {
+  //     //     title: '换电池记录',
+  //     //     premissions: ['RecordQuery/BatteryReplacementRecord'],
+  //     //   },
+  //     // },
+  //     {
+  //       path: '/DoorLockRecords',
+  //       name: 'DoorLockRecords',
+  //       component: {
+  //         template: '<router-view/>',
+  //       },
+  //       meta: {
+  //         title: '门锁记录',
+  //         premissions: ['DoorLockRecords'],
+  //       },
+  //       children: [
+  //         {
+  //           path: '/Heartbeat',
+  //           name: 'Heartbeat',
+  //           component: () =>
+  //             import('@/views/NewPage/RecordQuery/heartbeats.vue'),
+  //           meta: {
+  //             title: '心跳记录',
+  //             premissions: ['RecordQuery/Heartbeat'],
+  //           },
+  //         },
+  //         {
+  //           path: '/openDoorRecord',
+  //           name: 'openDoorRecord',
+  //           component: () =>
+  //             import('@/views/NewPage/RecordQuery/openDoorRecord.vue'),
+  //           meta: {
+  //             title: '开门记录',
+  //             premissions: ['RecordQuery/openDoorRecord'],
+  //           },
+  //         },
+  //         {
+  //           path: '/voltagechanges',
+  //           name: 'voltagechanges',
+  //           component: () =>
+  //             import('@/views/NewPage/RecordQuery/voltagechanges.vue'),
+  //           meta: {
+  //             title: '电压变化记录',
+  //             premissions: ['RecordQuery/voltagechanges'],
+  //           },
+  //         },
+  //         {
+  //           path: '/Commandcommunication',
+  //           name: 'Commandcommunication',
+  //           component: () =>
+  //             import('@/views/NewPage/RecordQuery/Commandcommunication.vue'),
+  //           meta: {
+  //             title: '指令通讯记录',
+  //             premissions: ['RecordQuery/Commandcommunication'],
+  //           },
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       path: '/LockChange',
+  //       name: 'LockChange',
+  //       component: () => import('@/views/NewPage/RecordQuery/LockChange.vue'),
+  //       meta: {
+  //         title: '换锁记录',
+  //         premissions: ['RecordQuery/LockChange'],
+  //       },
+  //     },
+  //     {
+  //       path: '/Electricity',
+  //       name: 'Electricity',
+  //       component: () => import('@/views/NewPage/RecordQuery/Electricity.vue'),
+  //       meta: {
+  //         title: '电表记录',
+  //         premissions: ['RecordQuery/Electricity'],
+  //       },
+  //     },
+  //     {
+  //       path: '/Watermeter',
+  //       name: 'Watermeter',
+  //       component: () => import('@/views/NewPage/RecordQuery/Watermeter.vue'),
+  //       meta: {
+  //         title: '水表记录',
+  //         premissions: ['RecordQuery/Watermeter'],
+  //       },
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: '/BatchOperations',
+  //   name: 'BatchOperations',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   meta: {
+  //     title: '批量操作',
+  //     icon: 'c',
+  //     premissions: ['BatchOperations'],
+  //   },
+  //   children: [
+  //     {
+  //       path: '/CardTermination',
+  //       name: 'CardTermination',
+  //       component: () =>
+  //         import('@/views/NewPage/BatchOperations/CardTermination.vue'),
+  //       meta: {
+  //         title: '卡片终止',
+  //         premissions: ['BatchOperations/CardTermination'],
+  //       },
+  //     },
+  //     {
+  //       path: '/PersonnelTermination',
+  //       name: 'PersonnelTermination',
+  //       component: () =>
+  //         import('@/views/NewPage/BatchOperations/PersonnelTermination.vue'),
+  //       meta: {
+  //         title: '人员终止',
+  //         premissions: ['BatchOperations/PersonnelTermination'],
+  //       },
+  //     },
+  //     {
+  //       path: '/RoomTermination',
+  //       name: 'RoomTermination',
+  //       component: () =>
+  //         import('@/views/NewPage/BatchOperations/RoomTermination.vue'),
+  //       meta: {
+  //         title: '房间终止',
+  //         premissions: ['BatchOperations/RoomTermination'],
+  //       },
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: '/fintRoom',
+  //   name: 'fintRoom',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   meta: {
+  //     title: '人找房',
+  //     icon: 'city',
+  //     premissions: ['fintRoom'],
+  //   },
+  //   children: [
+  //     {
+  //       path: '/Room',
+  //       name: 'Room',
+  //       component: () => import('@/views/NewPage/fintRoom/index.vue'),
+  //       meta: {
+  //         title: '人找房',
+  //         icon: 'city',
+  //         premissions: ['fintRoom/index'],
+  //       },
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: '/findPeople',
+  //   name: 'findPeople',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   meta: {
+  //     title: '房找人',
+  //     icon: 'child',
+  //     premissions: ['findPeople'],
+  //   },
+  //   children: [
+  //     {
+  //       path: '/People',
+  //       name: 'People',
+  //       component: () => import('@/views/NewPage/findPeople/index.vue'),
+  //       meta: {
+  //         title: '房找人',
+  //         icon: 'child',
+  //         premissions: ['findPeople/index'],
+  //       },
+  //     },
+  //   ],
+  // },
 
   // {
   //   path: '/PersonnelFiling',

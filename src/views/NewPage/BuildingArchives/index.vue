@@ -8,7 +8,7 @@
         添加楼栋
       </el-button>
       <el-button icon="el-icon-plus" type="primary" @click="handlefangjian">
-        添加房间
+        添加楼层
       </el-button>
       <el-button icon="el-icon-plus" type="primary">导入表格</el-button>
     </div>
