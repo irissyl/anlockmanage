@@ -1,33 +1,26 @@
 <template>
   <div class="table-container">
     <div class="lefttree">
-      <div style="padding-left: 14px" class="btns">
-        <el-button type="text" size="big" icon="el-icon-circle-plus-outline" @click="() => addappend(data)"></el-button>
-        <el-button type="text" size="big" icon="el-icon-delete" @click="() => deleteappend(data)"></el-button>
-      </div>
-      <!-- <label for="">建筑列表：</label> -->
       <el-tree class="tree" :data="treedata" :props="defaultProps" node-key="id" :default-expanded-keys="[1, 2, 3]" @node-click="handleNodeClick">
-        <span slot-scope="{ node, data }">
+        <span slot-scope="{ node, data }" class="nodeslot">
           <i :class="data.icon" :style="`color: ${data.color}`"></i>
-          <span style="padding-left: 4px">{{ node.label }}</span>
+          <span style="padding-left: 4px;line-height:40px">{{ node.label }}</span>
+          <span class="btns" ><el-button type="text" size="big" icon="el-icon-delete" @click="() => deleteappend(data)"></el-button></span>
         </span>
       </el-tree>
     </div>
     <div class="righttable">
       <div class="btntotal">
-        <el-button icon="el-icon-plus" type="primary" @click="handleAdd">
-          添加房间
-        </el-button>
-        <el-button icon="el-icon-plus" type="primary">导入表格</el-button>
+        <el-button icon="el-icon-plus" type="primary" @click="handleAdd" >添加</el-button>
       </div>
       <el-table ref="tableSort" v-loading="listLoading"  :data="lists" :element-loading-text="elementLoadingText" :header-cell-style="{ 'text-align': 'center'}" :cell-style="{ 'text-align': 'center' }"
          @selection-change="setSelectRows" @sort-change="tableSortChange">
         <el-table-column show-overflow-tooltip prop="areaName" label="名称"></el-table-column>
         <el-table-column show-overflow-tooltip prop="" label="编号"></el-table-column>
-        <el-table-column show-overflow-tooltip prop="" label="别名"></el-table-column>
-        <el-table-column show-overflow-tooltip prop="" label="入住情况"></el-table-column>
-        <el-table-column show-overflow-tooltip prop="" label="入住性别"></el-table-column>
-        <el-table-column show-overflow-tooltip prop="" label="建筑类型"></el-table-column>
+        <el-table-column show-overflow-tooltip prop="" label="区域类型"></el-table-column>
+        <el-table-column show-overflow-tooltip prop="" label="办公地点"></el-table-column>
+        <el-table-column show-overflow-tooltip prop="" label="联系方式"></el-table-column>
+        <el-table-column show-overflow-tooltip prop="" label="描述"></el-table-column>
         <el-table-column show-overflow-tooltip label="操作" fixed="right">
           <template #default="{ row }">
             <el-button type="text" icon="el-icon-edit" @click="handleEdit(row)"></el-button>
@@ -37,27 +30,21 @@
       </el-table>
     </div>
     <table-edit ref="edit" @fetchData="fetchData"></table-edit>
-    <fj-table-edit ref="fangjian" @fetchData="fetchData"></fj-table-edit>
-    <jianzhuDialog ref="jianzhu" @fetchData="fetchData"></jianzhuDialog>
   </div>
 </template>
 
 <script>
-import { getCampusList, deleteCampus } from '@/api/table'
 import TableEdit from './components/TableEdit'
-import FjTableEdit from './components/fjTableEdit.vue'
-import jianzhuDialog from './components/jianzhuDialog.vue'
+import { getCampusList, deleteCampus } from '@/api/table'
 export default {
   name: 'VueAdminBetterIndex',
   components: {
-    TableEdit,
-    FjTableEdit,
-    jianzhuDialog,
+    TableEdit
   },
   data () {
     return {
       list: [],
-      lists: [{ areaName: '呼呼' }],
+      lists: [{ areaName: '研发部' }],
       imageList: [],
       form: {
         appld: '',
@@ -82,36 +69,42 @@ export default {
       treedata: [
         {
           id: 1,
-          label: '狐狸园区',
+          label: 'anlock公司',
           children: [
             {
               id: 3,
-              label: 'anlock办公楼',
+              label: 'anlock东莞区',
               children: [
                 {
                   id: 4,
-                  label: '1层',
+                  label: '人事部',
+                  children: [
+                    {
+                      id: 6,
+                      label: '招聘组',
+                    },
+                    {
+                      id: 7,
+                      label: '面试组',
+                      disabled: true,
+                    },
+                  ],
                 },
                 {
                   id: 5,
-                  label: '2层',
-                  disabled: true,
-                },
-              ],
-            },
-            {
-              id: 2,
-              label: 'anlock研发楼',
-              disabled: true,
-              children: [
-                {
-                  id: 6,
-                  label: '1层',
-                },
-                {
-                  id: 7,
-                  label: '2层',
-                  disabled: true,
+                  label: '研发部',
+                  // disabled: true,
+                  children: [
+                    {
+                      id: 6,
+                      label: '小程序组',
+                    },
+                    {
+                      id: 7,
+                      label: '移动端组',
+                      disabled: true,
+                    },
+                  ],
                 },
               ],
             },
@@ -167,7 +160,7 @@ export default {
       this.ckVisible = true
     },
     handleAdd () {
-      this.$refs['fangjian'].showEdit()
+      this.$refs['edit'].showEdit()
     },
     handleEdit (row) {
       console.log(row, 'row')
@@ -196,18 +189,18 @@ export default {
 
 <style lang="scss">
 .btntotal {
-  float: right;
-  margin-bottom: 10px;
-
+  width: 100%;
+  
   button{
-    margin-right: 20px;
+    float: right;
+    margin-bottom: 20px;
   }
 }
 
 .lefttree {
   width: 19%;
   float: left;
-  margin-top: 10px;
+  margin-top: 39px;
 }
 .righttable{
     width: 80%;
@@ -216,20 +209,26 @@ export default {
 
 .tree {
   .btns {
+    float: right;
+    width: 20px;
     font-size: 20px;
-
+  }
+  .nodeslot{
+    text-align: left;
+    width: 100%;
   }
   .el-tree-node__content {
     padding: 0 !important;
     border-radius: 5px;
     border: 1px rgb(161, 160, 160) dashed;
     margin-top: 15px;
-    text-align: left;
     font-size: 17px;
+    text-align: right;
+    width: 180px;
     height: 40px;
   }
   .el-tree-node__content:hover {
-    border: 1px #f26a4f dashed;
+    border: 1px #F2934F dashed;
   }
   .el-tree-node {
     position: relative;
@@ -315,7 +314,7 @@ export default {
   }
   /* //高亮字体颜色 */
   .el-tree-node.is-current > .el-tree-node__content {
-    background-color: #f7ff063c;
+    background-color: #F1F4DB;
     color: #000000 !important;
     font-size: 15px;
   }

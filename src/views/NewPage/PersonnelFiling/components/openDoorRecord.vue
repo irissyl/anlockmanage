@@ -41,7 +41,7 @@
         ref="tableSort"
         border
         :data="[]"
-        :header-cell-style="{ 'text-align': 'left', background: '#f5f7fa' }"
+        :header-cell-style="{ 'text-align': 'left'}"
         :cell-style="{ 'text-align': 'left' }"
         style="width: 100%"
       >

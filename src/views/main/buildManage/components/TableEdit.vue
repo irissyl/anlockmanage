@@ -7,33 +7,41 @@
     @close="close"
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-      <el-form-item label="选择园区:" prop="title">
-        <el-select
-          v-model.trim="form.title"
-          autocomplete="off"
-          placeholder="请选择园区"
-        ></el-select>
+      <el-form-item label="名称:" prop="title">
+        <el-input v-model.trim="form.roomname" autocomplete="off" placeholder="请输入房间名称"></el-input>
       </el-form-item>
-      <el-form-item label="选择楼栋" prop="name">
-        <el-select
-          v-model.trim="form.buildName"
-          autocomplete="off"
-          placeholder="请选择楼栋"
-        ></el-select>
-      </el-form-item>
-      <el-form-item label="房间编号" prop="name">
+      <el-form-item label="编号" prop="roomNo">
         <el-input
-          v-model.trim="form.sectionName"
+          v-model.trim="form.roomNo"
           autocomplete="off"
           placeholder="请输入房间编号"
         ></el-input>
       </el-form-item>
-      <el-form-item label="房间名称" prop="name">
+      <el-form-item label="别名" prop="sectionName">
         <el-input
           v-model.trim="form.sectionName"
           autocomplete="off"
-          placeholder="请输入房间名称"
+          placeholder="请输入房间别名"
         ></el-input>
+      </el-form-item>
+      <el-form-item label="入住情况:" prop="room">
+        <el-input v-model.trim="form.room" autocomplete="off" placeholder="请输入房间名称"></el-input>
+      </el-form-item>
+      <el-form-item label="入住性别:" prop="sex">
+        <el-radio-group v-model.trim="form.sex">
+          <el-radio :label="1">男</el-radio>
+          <el-radio :label="2">女</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="建筑类型:" prop="title">
+        <el-select
+          v-model.trim="form.sceneType"
+          placeholder="请选择建筑类型"
+        >
+          <el-option label="房间" value="房间"></el-option>
+          <el-option label="楼层" value="楼层"></el-option>
+          <el-option label="宿舍楼" value="宿舍楼"></el-option>
+        </el-select>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -51,8 +59,14 @@
     data() {
       return {
         form: {
-          title: '',
-          author: '',
+          roomname:'',
+          sex: 1,
+          sectionName: '',
+          sceneType: '',
+          num: 1,
+          room: '',
+          roomNo: '',
+
         },
         rules: {},
         title: '',

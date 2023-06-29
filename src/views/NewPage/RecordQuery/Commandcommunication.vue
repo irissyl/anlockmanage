@@ -34,7 +34,7 @@
       border
       :data="list"
       :element-loading-text="elementLoadingText"
-      :header-cell-style="{ 'text-align': 'center', background: '#f5f7fa' }"
+      :header-cell-style="{ 'text-align': 'center'}"
       :cell-style="{ 'text-align': 'center' }"
       style="width: 100%"
     >

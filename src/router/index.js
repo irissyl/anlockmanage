@@ -74,23 +74,100 @@ export const constantRoutes = [
         },
       },
       {
-        path: 'roomList',
-        name: 'roomList',
-        component: () => import('@/views/main/roomList/index'),
+        path: 'Organization',
+        name: 'Organization',
+        component: () => import('@/views/main/OrganizationManage/index.vue'),
         meta: {
-          title: '房间管理',
-          premissions: ['roomList/index'],
+          title: '组织机构管理',
+          premissions: ['OrganizationManage/index'],
           // badge: 'New',
         },
       },
       {
+        path: 'roomList',
+        name: 'roomList',
+        meta: {
+          title: '房间管理',
+          premissions: ['/roomList'],
+        }, 
+        component: {
+          template: '<router-view/>',
+        },
+        children: [
+          {
+            path: 'Lowpressure',
+            name: 'Lowpressure',
+            component: () => import('@/views/main/roomList/index'),
+            meta: {
+              title: '房间调整',
+              premissions: ['roomList/index'],
+              // badge: 'New',
+            },
+          },
+          {
+            path: 'BrowseRoom',
+            name: 'BrowseRoom',
+            component: () => import('../views/main/roomList/components/BrowseRoom.vue'),
+            meta: {
+              title: '浏览房间情况',
+              premissions: ['BrowseRoom/index'],
+              // badge: 'New',
+            },
+          },
+        ]
+      },
+      {
         path: 'householdManage',
         name: 'householdManage',
-        component: () => import('@/views/main/householdManage/index.vue'),
         meta: {
-          title: '住户管理',
+          title: '人员管理',
           premissions: ['householdManage/index'],
         },
+        component: {
+          template: '<router-view/>',
+        },
+        children: [
+          {
+            path: 'Lowpressure',
+            name: 'Lowpressure',
+               component: () => import('@/views/main/householdManage/index.vue'),
+            meta: {
+              title: '人员管理',
+              premissions: ['householdManage'],
+              // badge: 'New',
+            },
+          },
+         {
+           path: 'remote',
+           name: 'remote',
+           component: () => import('../views/main/householdManage/components/remote.vue'),
+           meta: {
+             title: '远程权限管理',
+             premissions: ['householdManage/remote'],
+             // badge: 'New',
+           },
+         },
+         {
+           path: 'printfinger',
+           name: 'printfinger',
+           component: () => import('../views/main/householdManage/components/printfinger.vue'),
+           meta: {
+             title: '指纹管理',
+             premissions: ['householdManage/printfinger'],
+             // badge: 'New',
+           },
+         },
+         {
+           path: 'bacth',
+           name: 'bacth',
+           component: () => import('../views/main/householdManage/components/bacth.vue'),
+           meta: {
+             title: '批量分配',
+             premissions: ['householdManage/bacth'],
+             // badge: 'New',
+           },
+         },
+       ]
       },
       {
         path: 'author',

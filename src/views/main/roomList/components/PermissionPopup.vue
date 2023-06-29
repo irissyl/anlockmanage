@@ -2,11 +2,10 @@
   <div>
     <el-dialog
       v-dialogDrag
-      title="授权人员"
+      title="批量入宿"
       :visible.sync="dialogVisible"
-      width="70%"
+      width="60%"
       destroy-on-close
-      append-to-body
       @close="handleClose"
     >
       <div class="trans">
@@ -14,7 +13,7 @@
           ref="treeTransfer"
           class="transtransfer"
           :titles="['未分配:', '已分配:']"
-          :button-texts="['取消人员', '添加人员']"
+          :button-texts="['删除', '入宿']"
           :data-source.sync="dataSource"
           :default-checked-keys="defaultValue"
           :is-radio="false"
@@ -24,68 +23,11 @@
           @right-check-change="handleRightCheckChange"
           @change="handleChange"
         ></tree-transfer>
-      </div>
-      <div class="botm">
-        <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <i class="el-icon-info fon"></i>
-            <span class="fon" style="font-size: 15px">授权房间：</span>
-          </div>
-          <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-            <el-form-item label="房名:" prop="customerName">
-              <el-input
-                v-model.trim="form.customerName"
-                autocomplete="off"
-                disabled
-                style="width: 190px"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="设备标识:" prop="customerName">
-              <el-input
-                v-model.trim="form.customerName"
-                autocomplete="off"
-                disabled
-                style="width: 190px"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="所属楼栋:" prop="customerName">
-              <el-input
-                v-model.trim="form.customerName"
-                autocomplete="off"
-                disabled
-                style="width: 190px"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="钥匙数量:" prop="customerName">
-              <el-input
-                v-model.trim="form.customerName"
-                autocomplete="off"
-                disabled
-                style="width: 190px"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="授权开始:" prop="customerName">
-              <el-date-picker
-                v-model="form.rentCardnoHex"
-                type="datetime"
-                placeholder="选择日期时间"
-                style="width: 190px"
-              ></el-date-picker>
-            </el-form-item>
-            <el-form-item label="授权结束:" prop="customerName">
-              <el-date-picker
-                v-model="form.mobile"
-                type="datetime"
-                placeholder="选择日期时间"
-                style="width: 190px"
-              ></el-date-picker>
-            </el-form-item>
-          </el-form>
-        </el-card>
+        <!-- <el-transfer class="trans" v-model="generatevalue" :titles="['未分配:', '已分配:']" :button-texts="['删除', '添加人员']" filterable :filter-method="filterMethod" filter-placeholder="请输入人员信息" :data="generateData"></el-transfer> -->
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="handleClose">取消退出</el-button>
-        <el-button type="primary" @click="handleClose">确定授权</el-button>
+        <el-button @click="handleClose">取 消</el-button>
+        <el-button type="primary" @click="handleClose">入 宿</el-button>
       </div>
     </el-dialog>
   </div>
@@ -95,47 +37,80 @@
   import { getCampusList } from '@/api/table'
   import treeTransfer from '@/components/tree-transfer.vue'
   const tree = [
-    {
-      label: '人事部',
-      id: '1',
-      children: [
         {
-          label: '雷诗云',
-          id: '1-1',
-          children: [],
+          id: 1,
+          label: '狐狸园区',
+          children: [
+            {
+              id: 3,
+              label: 'anlock办公楼',
+              children: [
+                {
+                  id: 4,
+                  label: '1层',
+                  children: [
+                    {
+                      id: 8,
+                      label: '101房间',
+                    },
+                    {
+                      id: 9,
+                      label: '102房间',
+                    //   disabled: true,
+                    },
+                  ],
+                },
+                {
+                  id: 5,
+                  label: '2层',
+                //   disabled: true,
+                },
+              ],
+            },
+            {
+              id: 2,
+              label: 'anlock研发楼',
+            //   disabled: true,
+              children: [
+                {
+                  id: 6,
+                  label: '1层',
+                },
+                {
+                  id: 7,
+                  label: '2层',
+                //   disabled: true,
+                },
+              ],
+            },
+          ],
         },
-      ],
-    },
-    {
-      label: '行政部',
-      id: '2',
-      children: [
-        {
-          label: '李工',
-          id: '2-1',
-          children: [],
-        },
-      ],
-    },
-  ]
+      ]
   export default {
     name: 'AnlockmanagePermissionPopup',
     components: {
       treeTransfer,
     },
     data() {
+      const generateData = (_) => {
+        const data = []
+        const cities = ['张三', '李四', '王五']
+        const pinyin = ['zhangsan', 'lisi', 'wangwu']
+        cities.forEach((city, index) => {
+          data.push({
+            label: city,
+            key: index,
+            pinyin: pinyin[index],
+          })
+        })
+        return data
+      }
       return {
-        form: {
-          customerName: '',
-          rentCardnoHex: '',
-          content: [],
-          idCard: '',
-          mobile: '',
-          rentDoorPass: '',
-          remark: '',
+        generateData: generateData(),
+        generatevalue: [],
+        filterMethod(query, item) {
+          return item.pinyin.indexOf(query) > -1
         },
-        rules: {},
-
         areaId: '',
         departdatalist: [],
         departname: '',
@@ -211,27 +186,5 @@
     .transfer-center {
       // width: 270px;
     }
-  }
-  .botm {
-    width: 90%;
-    height: 150px;
-    margin: 0 auto;
-    margin-top: 20px;
-    .el-card__header {
-      padding: 9px 20px;
-      border-bottom: 1px solid #ebeef5;
-      box-sizing: border-box;
-    }
-    .el-form-item {
-      width: 32%;
-      float: left;
-    }
-    // label{
-    //   float: left;
-
-    // }
-    // input{
-    //   float: left;
-    // }
   }
 </style>

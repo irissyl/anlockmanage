@@ -10,13 +10,13 @@
       <el-tab-pane label="园区" name="first">
         <el-form ref="form" :model="form" :rules="rules" label-width="120px">
           <el-form-item label="园区名称:" prop="title">
-            <el-input v-model.trim="form.title" autocomplete="off"></el-input>
+            <el-input v-model.trim="form.roomname" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="编号:" prop="title">
-            <el-input v-model.trim="form.title" autocomplete="off"></el-input>
+            <el-input v-model.trim="form.num" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="排序:" prop="title">
-            <el-input v-model.trim="form.title" autocomplete="off"></el-input>
+            <el-input v-model.trim="form.sort" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item prop="title">
             <el-button type="primary" @click="save">确 定</el-button>
@@ -26,7 +26,7 @@
       <el-tab-pane label="楼栋" name="second">
         <el-form ref="form" :model="form" :rules="rules" label-width="120px">
           <el-form-item label="楼栋名称:" prop="title">
-            <el-input v-model.trim="form.title" autocomplete="off"></el-input>
+            <el-input v-model.trim="form.roomname" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="入住性别:" prop="title">
             <el-radio-group v-model.trim="form.sex">
@@ -45,10 +45,10 @@
             </el-select>
           </el-form-item>
           <el-form-item label="编号:" prop="title">
-            <el-input v-model.trim="form.title" autocomplete="off"></el-input>
+            <el-input v-model.trim="form.num" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="排序:" prop="title">
-            <el-input v-model.trim="form.title" autocomplete="off"></el-input>
+            <el-input v-model.trim="form.sort" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item prop="title">
             <el-button type="primary" @click="save">确 定</el-button>
@@ -70,7 +70,7 @@
             >
               <el-form-item label="楼栋名称:" prop="title">
                 <el-input
-                  v-model.trim="form.title"
+                  v-model.trim="form.roomname"
                   autocomplete="off"
                 ></el-input>
               </el-form-item>
@@ -82,19 +82,19 @@
               </el-form-item>
               <el-form-item label="楼层模型:" prop="title">
                 <el-input
-                  v-model.trim="form.title"
+                  v-model.trim="form.sceneType"
                   autocomplete="off"
                 ></el-input>
               </el-form-item>
               <el-form-item label="编号:" prop="title">
                 <el-input
-                  v-model.trim="form.title"
+                  v-model.trim="form.num"
                   autocomplete="off"
                 ></el-input>
               </el-form-item>
               <el-form-item label="排序:" prop="title">
                 <el-input
-                  v-model.trim="form.title"
+                  v-model.trim="form.sort"
                   autocomplete="off"
                   placeholder="请输入整数"
                 ></el-input>
@@ -113,19 +113,19 @@
             >
               <el-form-item label="楼层开始名称:" prop="title">
                 <el-input
-                  v-model.trim="form.title"
+                  v-model.trim="form.startname"
                   autocomplete="off"
                 ></el-input>
               </el-form-item>
               <el-form-item label="楼层个数:" prop="title">
                 <el-input
-                  v-model.trim="form.title"
+                  v-model.trim="form.num"
                   autocomplete="off"
                 ></el-input>
               </el-form-item>
               <el-form-item label="楼层模型:" prop="title">
                 <el-input
-                  v-model.trim="form.title"
+                  v-model.trim="form.sceneType"
                   autocomplete="off"
                 ></el-input>
               </el-form-item>
@@ -137,7 +137,7 @@
               </el-form-item>
               <el-form-item label="排序:" prop="title">
                 <el-input
-                  v-model.trim="form.title"
+                  v-model.trim="form.sort"
                   autocomplete="off"
                 ></el-input>
               </el-form-item>
@@ -164,8 +164,11 @@
     data() {
       return {
         form: {
+          roomname:'',
+          sort:'',
           sex: 1,
           sceneType: '',
+          startname:''
         },
         rules: {},
         title: '',
@@ -189,6 +192,7 @@
       },
       handleClick(tab, event) {
         console.log(tab, event)
+        this.form = {}
         // if (tab.label == "楼层") {
         //   this.activeName = 'first'
         // }

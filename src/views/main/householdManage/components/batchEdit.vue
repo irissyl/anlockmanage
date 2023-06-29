@@ -2,7 +2,7 @@
   <div>
     <el-dialog
       v-dialogDrag
-      title="人员匹配"
+      title="批量入宿"
       :visible.sync="dialogVisible"
       width="60%"
       destroy-on-close
@@ -13,7 +13,7 @@
           ref="treeTransfer"
           class="transtransfer"
           :titles="['未分配:', '已分配:']"
-          :button-texts="['删除', '添加人员']"
+          :button-texts="['删除', '入宿']"
           :data-source.sync="dataSource"
           :default-checked-keys="defaultValue"
           :is-radio="false"
@@ -23,10 +23,11 @@
           @right-check-change="handleRightCheckChange"
           @change="handleChange"
         ></tree-transfer>
+        <!-- <el-transfer class="trans" v-model="generatevalue" :titles="['未分配:', '已分配:']" :button-texts="['删除', '添加人员']" filterable :filter-method="filterMethod" filter-placeholder="请输入人员信息" :data="generateData"></el-transfer> -->
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="handleClose">取 消</el-button>
-        <el-button type="primary" @click="handleClose">确 定</el-button>
+        <el-button type="primary" @click="handleClose">入 宿</el-button>
       </div>
     </el-dialog>
   </div>
@@ -36,49 +37,44 @@
   import { getCampusList } from '@/api/table'
   import treeTransfer from '@/components/tree-transfer.vue'
   const tree = [
-    {
-      label: 'A部门',
-      id: '1',
-      children: [
         {
-          label: '小明',
-          children: [],
-          id: '1-1',
+          id: 1,
+          label: '狐狸园区',
+          children: [
+            {
+              id: 3,
+              label: 'anlock办公楼',
+              children: [
+                {
+                  id: 4,
+                  label: '1层',
+                },
+                {
+                  id: 5,
+                  label: '2层',
+                //   disabled: true,
+                },
+              ],
+            },
+            {
+              id: 2,
+              label: 'anlock研发楼',
+            //   disabled: true,
+              children: [
+                {
+                  id: 6,
+                  label: '1层',
+                },
+                {
+                  id: 7,
+                  label: '2层',
+                //   disabled: true,
+                },
+              ],
+            },
+          ],
         },
-        {
-          label: '小红',
-          children: [],
-          id: '1-2',
-        },
-        {
-          label: '小刚',
-          children: [],
-          id: '1-3',
-        },
-      ],
-    },
-    {
-      label: 'B部门',
-      id: '2',
-      children: [
-        {
-          label: '小王',
-          children: [],
-          id: '2-1',
-        },
-        {
-          label: '小李',
-          children: [],
-          id: '2-2',
-        },
-        {
-          label: '小朱',
-          children: [],
-          id: '2-3',
-        },
-      ],
-    },
-  ]
+      ]
   export default {
     name: 'AnlockmanagePermissionPopup',
     components: {
