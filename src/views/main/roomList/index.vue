@@ -15,15 +15,6 @@
         <el-card class="all1" shadow="never" style="height: 800px">
           <div class="grid-content bg-purple">
             <div class="right">
-              <!-- <div class="btntotal">
-                <el-button icon="el-icon-plus" type="primary" @click="handleAdd">
-                  添加房间
-                </el-button>
-                <el-button icon="el-icon-plus" type="primary" @click="batchAdd">
-                  批量创建房间
-                </el-button>
-              </div> -->
-
               <div class="inputtotal">
                 <el-form ref="form" :model="queryForm" :inline="true">
                   <el-form-item>
