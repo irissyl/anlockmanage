@@ -292,14 +292,14 @@ export default {
     async getdepartmemtData () {
       const departdatalist = await getCampusList()
 
-      this.data.map((item) => {
+      this.treedata.map((item) => {
         if (item.areaId === 1) {
           // 找到要合并的元素
           item.children = item.children.concat(departdatalist.data) // 将s数组合并到该元素的children属性中
         }
         return item
       })
-      console.log(departdatalist.data, this.data, 'getCampusList')
+      console.log(departdatalist.data, this.treedata, 'getCampusList')
     },
     async fetchData () {
       // this.listLoading = true
