@@ -238,36 +238,43 @@
     computed: {
       // 左侧数据
       treeFromData() {
+        console.log("treeFromData");
         let fromArray = JSON.parse(JSON.stringify(this.dataSource))
         return fromArray
       },
       // 左侧菜单名
       treeTitle() {
+        console.log("treeTitle");
         let [text] = this.titles
         return text
       },
       // 右侧菜单名
       listTitle() {
+        console.log("listTitle");
         let [, text] = this.titles
         return text
       },
       // 左侧按钮名
       leftButtonText() {
+        console.log("leftButtonText");
         let [text] = this.buttonTexts
         return text
       },
       // 右侧侧按钮名
       rightButtonText() {
+        console.log("rightButtonText");
         let [, text] = this.buttonTexts
         return text
       },
       // 右侧列表是否半选
       listIndeterminate() {
+        console.log("listIndeterminate");
         const checkedLength = this.listCheckKey.length
         return checkedLength > 0 && checkedLength < this.rightList.length
       },
       // 树穿梭按钮是否禁用
       transferDisabled() {
+        console.log("transferDisabled");
         let rightKeys = this.rightList.map((item) => item[this.nodeKey])
         let result =
           this.treeCheckKeys.length > 0 &&
@@ -279,6 +286,7 @@
       },
       // 右侧树中的数据是根据rightList中的key，从treeFromData中的子节点中筛选出来的，同时要保留树的结构
       rightTreeData() {
+        console.log("rightTreeData");
         const rightList = JSON.parse(JSON.stringify(this.rightList))
         console.log(rightList, 'rightList')
 
@@ -288,34 +296,19 @@
         let rightKeys = rightList.map((item) => item[this.nodeKey])
         console.log(rightKeys, 'rightKeys')
 
-        let result = treeFromData.filter((item) => {
-          if (
-            item[this.nodeKey] &&
-            rightKeys.indexOf(item[this.nodeKey]) > -1
-          ) {
-            return true
-          } else if (item.children && item.children.length > 0) {
-            item.children = item.children.filter((child) => {
-              if (
-                child[this.nodeKey] &&
-                rightKeys.indexOf(child[this.nodeKey]) > -1
-              ) {
-                return true
-              } else if (child.children && child.children.length > 0) {
-                child.children = child.children.filter((grandchild) => {
-                  if (
-                    grandchild[this.nodeKey] &&
-                    rightKeys.indexOf(grandchild[this.nodeKey]) > -1
-                  ) {
-                    return true
-                  }
-                })
-                return child.children.length > 0
-              }
-            })
-            return item.children.length > 0
-          }
-        })
+        function filterTree(tree, nodeKey, rightKeys) {
+          return tree.filter((item) => {
+            if (item[nodeKey] && rightKeys.indexOf(item[nodeKey]) > -1) {
+              return true;
+            } else if (item.children && item.children.length > 0) {
+              item.children = filterTree(item.children, nodeKey, rightKeys);
+              return item.children.length > 0;
+            }
+            return false;
+          });
+        }
+
+        let result = filterTree(treeFromData, this.nodeKey, rightKeys);
         console.log(result, 'result')
 
         // 将所有节点的disabled置为false
@@ -334,6 +327,7 @@
     watch: {
       // 左侧树选中的key
       treeCheckKeys(val) {
+        console.log("treeCheckKeys");
         if (val.length > 0) {
           // 总半选是否开启
           this.treeIndeterminate = true
@@ -352,6 +346,7 @@
       },
       // 右侧列表选中的key
       listCheckKey(val, oldVal) {
+        console.log("listCheckKey");
         const movedKeys = [...val, ...oldVal].filter(
           (v) => val.indexOf(v) === -1 || oldVal.indexOf(v) === -1
         )
@@ -360,10 +355,12 @@
       },
       // 左侧 数据筛选
       filterTree(val) {
+        console.log("filterTree");
         this.$refs['from-tree'].filter(val)
       },
       // 右侧 筛选
       filterList(newval, oldval) {
+        console.log("filterList");
         if (oldval == '') {
           this.archiveFirst = this.rightList
         }
@@ -379,6 +376,7 @@
 
       // 监视默认选中
       defaultCheckedKeys(val) {
+        console.log("defaultCheckedKeys");
         this.treeCheckKeys = val
         this.findItem(this.treeFromData)
         if (this.isRadio && this.rightList.length > 0) {
@@ -392,6 +390,7 @@
       // 监视默认展开
       defaultExpandedKeys: {
         handler(val) {
+          console.log("defaultExpandedKeys");
           let _form = new Set(this.treeExpandedKeys.concat(val))
           this.treeExpandedKeys = [..._form]
         },
@@ -405,6 +404,7 @@
     methods: {
       // 左侧树选中事件
       fromTreeChecked(nodeObj) {
+        console.log("fromTreeChecked");
         this.treeCheckKeys = this.$refs['from-tree'].getCheckedKeys(
           !this.fatherChoose
         )
@@ -425,6 +425,7 @@
 
       // 右侧树选中事件
       toTreeChecked(nodeObj) {
+        console.log("toTreeChecked");
         console.log(nodeObj, 'nodeObj')
         this.listCheckKey = this.$refs['from-tree-right'].getCheckedKeys(
           !this.fatherChoose
@@ -445,6 +446,7 @@
 
       // 左侧树总全选checkbox
       treeAllBoxChange(val) {
+        console.log("treeAllBoxChange");
         if (this.treeFromData.length == 0) {
           return
         }
@@ -461,6 +463,7 @@
 
       // 左侧树筛选
       filterNodeFrom(value, data) {
+        console.log("filterNodeFrom");
         if (this.filterNode) {
           return this.filterNode(value, data, 'form')
         }
@@ -470,6 +473,7 @@
 
       // 右侧树筛选
       filterRightNodeFrom(value, data) {
+        console.log("filterRightNodeFrom");
         if (this.filterNode) {
           return this.filterNode(value, data, 'to')
         }
@@ -479,6 +483,7 @@
 
       // 穿梭操作
       treeToList() {
+        console.log("treeToList");
         // 选中节点数据
         let arrayCheckedNodes = this.$refs['from-tree'].getCheckedNodes(
           !this.fatherChoose
@@ -501,6 +506,7 @@
             return item
           }
         })
+        console.log("arrayDeWeighting", arrayDeWeighting);
         this.rightList = [...this.rightList, ...arrayDeWeighting]
         if (this.isRadio) {
           this.setDisable(this.treeFromData)
@@ -517,6 +523,7 @@
 
       // 右侧列表数据 总全选checkbox
       listAllBoxChange(val) {
+        console.log("listAllBoxChange");
         if (val) {
           this.listCheckKey = this.rightList.map((item) => item[this.nodeKey])
         } else {
@@ -537,6 +544,7 @@
 
       // 右侧列表全选状态更新
       updateListAllChecked() {
+        console.log("updateListAllChecked");
         const keys = this.rightList.map((item) => item[this.nodeKey])
         this.listCheckAll =
           keys.length > 0 &&
@@ -545,6 +553,7 @@
 
       // 右侧列表选中的数据回穿
       listToTree() {
+        console.log("listToTree");
         //树选中节点和列表选中节点的并集,筛选出移动的key
         const movedKeys = [...new Set(this.treeCheckKeys)].filter((item) =>
           new Set(this.listCheckKey).has(item)
@@ -571,6 +580,7 @@
 
       //获取树所有节点key和数量,处理原始数据
       setTreeMsg(arr) {
+        console.log("setTreeMsg");
         for (const item of arr) {
           this.treeLength++
           this.treeKeys.push(item[this.nodeKey])
@@ -582,11 +592,13 @@
 
       // 设置选中数据
       setChecked(leftKeys = []) {
+        console.log("setChecked");
         this.$refs['from-tree'].setCheckedKeys(leftKeys)
       },
 
       //根据key找节点
       findItem(arr) {
+        console.log("findItem");
         for (const item of arr) {
           if (this.defaultCheckedKeys.includes(item[this.nodeKey])) {
             this.rightList.push(item)
@@ -599,8 +611,9 @@
 
       //找出子节点的key
       findChildKey(arr, result = []) {
+        console.log("findChildKey");
         for (const item of arr) {
-          if (item.children.length == 0) {
+          if (item.children && item.children.length == 0) {
             result.push(item[this.nodeKey])
           }
           if (item.children) {
@@ -612,6 +625,7 @@
 
       //使移动到右边的数据在左侧树下不可编辑
       chooseDisable(value, arr) {
+        console.log("chooseDisable");
         for (const item of arr) {
           let choose = value.includes(item[this.nodeKey])
           if (choose) {
@@ -630,6 +644,7 @@
 
       //单选模式禁用左边的树选项
       setDisable(arr) {
+        console.log("setDisable");
         for (const item of arr) {
           this.$set(item, 'disabled', true)
           if (item.children) {
@@ -640,6 +655,7 @@
 
       // 获取左侧树选择信息
       getTreeChecked() {
+        console.log("getTreeChecked");
         let leftKeys = this.$refs['from-tree'].getCheckedKeys()
         let leftHarfKeys = this.$refs['from-tree'].getHalfCheckedKeys()
         let leftNodes = this.$refs['from-tree'].getCheckedNodes()
@@ -654,6 +670,7 @@
 
       // 清除搜索条件
       clearQuery(type = 'all') {
+        console.log("clearQuery");
         switch (type) {
           case 'all':
             this.filterTree = ''
