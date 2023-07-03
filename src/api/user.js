@@ -37,6 +37,7 @@ export function register() {
   })
 }
 
+// // 获取菜单
 export function listMenuItem() {
   return request({
     url: '/api/account/listMenuItem',

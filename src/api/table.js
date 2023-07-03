@@ -308,11 +308,10 @@ export function analyseCount() {
 }
 
 // 获取菜单
-export function listMenuItem(data) {
+export function listMenuItem () {
   return request({
     url: '/api/account/listMenuItem',
     method: 'post',
-    data,
   })
 }
 

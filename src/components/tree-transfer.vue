@@ -10,7 +10,7 @@
           @change="treeAllBoxChange"
         ></el-checkbox>
         <span>{{ treeTitle }}</span>
-        <span class="total">{{ treeLength }}</span>
+        <!-- <span class="total">{{ treeLength }}</span> -->
       </div>
       <div class="transfer-main">
         <el-input
@@ -74,9 +74,9 @@
           @change="listAllBoxChange"
         ></el-checkbox>
         <span>{{ listTitle }}</span>
-        <span class="total">
+        <!-- <span class="total">
           {{ rightList.length }}
-        </span>
+        </span> -->
       </div>
       <div class="transfer-main">
         <el-input

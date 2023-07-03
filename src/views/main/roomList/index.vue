@@ -3,7 +3,7 @@
     <el-row :gutter="20">
       <el-col :xs="24" :sm="24" :md="10" :lg="4" :xl="4">
         <el-card class="all1" shadow="never">
-          <el-tree class="tree" :data="treedata" :props="defaultProps" node-key="id" :default-expanded-keys="[1, 2, 3]" @node-click="handleNodeClick">
+          <el-tree class="tree" :data="treedata" :props="defaultProps" node-key="id" :default-expanded-keys="[1, 2, 3]" :default-checked-keys="[1]" @node-click="handleNodeClick">
             <span slot-scope="{ node, data }">
               <i :class="data.icon" :style="`color: ${data.color}`"></i>
               <span style="padding-left: 4px">{{ node.label }}</span>
@@ -48,7 +48,7 @@
                 <el-table-column min-width="110px" show-overflow-tooltip prop="roomName" label="房间名称"></el-table-column>
                 <el-table-column show-overflow-tooltip prop="lockKey" label="钥匙数">
                   <template #default="{ row }">
-                    <el-button type="warning" plain @click="setKey(row)">
+                    <el-button type="warning" plain @click="setKey(row)" v-if="row.lockKey">
                       {{ row.lockKey }}
                     </el-button>
                   </template>
@@ -61,8 +61,8 @@
                   <template #default="{ row }">
                     <el-button type="text" icon="el-icon-edit" @click="handleEdit(row)"></el-button>
                     <el-button type="text" icon="el-icon-delete" @click="del(row)"></el-button>
-                    <el-button type="primary" style="margin-right: 10px" size="mini" plain @click="handlehold(row)">
-                      房间住户管理
+                    <el-button type="text" style="margin-right: 10px" size="mini"  @click="handlehold(row)">
+                      住户管理
                     </el-button>
                   </template>
                 </el-table-column>
@@ -76,90 +76,6 @@
     <table-edit ref="edit" @fetchData="fetchData"></table-edit>
     <open-door-record ref="record" @fetchData="fetchData"></open-door-record>
     <batch-build ref="batch" @fetchData="fetchData"></batch-build>
-    <el-dialog v-dialogDrag title="取临时密码" size="small" :visible.sync="linshidialogVisible" width="35%" append-to-body @close="handleClose">
-      <div class="contents">
-        <div class="top">4818662</div>
-        <div class="botm">
-          <ul>
-            <li class="room">
-              <i class="el-icon-s-home" style="color: #409eff"></i>
-              &nbsp;房间: &nbsp;11
-            </li>
-            <li class="room2">
-              <i class="el-icon-time" style="color: green"></i>
-              &nbsp;密码有效时间(开始): &nbsp;2023-06-1009:50:00
-            </li>
-            <li class="room2">
-              <i class="el-icon-time" style="color: green"></i>
-              &nbsp;密码有效时间(结束): &nbsp;2023-06-1010:20:00
-            </li>
-            <li class="room2">
-              <i class="el-icon-key" style="color: #66b1ff; font-size: 20px"></i>
-              &nbsp;密码多次有效
-            </li>
-          </ul>
-        </div>
-      </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="linshidialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="linshidialogVisible = false">
-          确 定
-        </el-button>
-      </span>
-    </el-dialog>
-    <el-dialog append-to-body title="常开设置" width="500px" :visible.sync="ckVisible">
-      <el-form :model="form">
-        <el-form-item label-width="44px">
-          <el-checkbox v-model="lockchecked" @change="lockcheckedChange">
-            开启门锁常开功能
-          </el-checkbox>
-        </el-form-item>
-
-        <el-form-item v-show="lockshow" label-width="120px" label="时间段1：">
-          <el-time-select v-model="startTime" placeholder="起始时间" style="width: 140px; margin-right: 5px" :picker-options="{
-              start: '08:30',
-              step: '00:15',
-              end: '18:30',
-            }"></el-time-select>
-          <el-time-select v-model="endTime" placeholder="结束时间" style="width: 140px" :picker-options="{
-              start: '08:30',
-              step: '00:15',
-              end: '18:30',
-              minTime: startTime,
-            }"></el-time-select>
-        </el-form-item>
-        <el-form-item v-show="lockshow" label-width="120px" label="时间段2：">
-          <el-time-select v-model="startTime" placeholder="起始时间" style="width: 140px; margin-right: 5px" :picker-options="{
-              start: '08:30',
-              step: '00:15',
-              end: '18:30',
-            }"></el-time-select>
-          <el-time-select v-model="endTime" placeholder="结束时间" style="width: 140px" :picker-options="{
-              start: '08:30',
-              step: '00:15',
-              end: '18:30',
-              minTime: startTime,
-            }"></el-time-select>
-        </el-form-item>
-        <el-form-item v-show="lockshow" label-width="120px" label="时间段3：">
-          <el-time-select v-model="startTime" placeholder="起始时间" style="width: 140px; margin-right: 5px" :picker-options="{
-              start: '08:30',
-              step: '00:15',
-              end: '18:30',
-            }"></el-time-select>
-          <el-time-select v-model="endTime" placeholder="结束时间" style="width: 140px" :picker-options="{
-              start: '08:30',
-              step: '00:15',
-              end: '18:30',
-              minTime: startTime,
-            }"></el-time-select>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="ckVisible = false">取 消</el-button>
-        <el-button type="primary" @click="ckconfirm">确认下发指令</el-button>
-      </div>
-    </el-dialog>
     <keys ref="keys" @fetchData="fetchData"></keys>
     <yuanquAdd ref="yuanqu" @fetchData="fetchData"></yuanquAdd>
     <loudongAdd ref="loudong" @fetchData="fetchData"></loudongAdd>
@@ -199,7 +115,7 @@ export default {
   },
   data () {
     return {
-      list: [],
+      list: [{roomName:'111房'}],
       imageList: [],
       form: {
         appld: '',
@@ -229,15 +145,46 @@ export default {
       buildObjs: [],
       treedata: [
         {
-          areaId: 1,
-          areaName: '办公区房间列表',
-          icon: 'el-icon-s-data',
-          children: [],
+          id: 1,
+          label: '狐狸园区',
+          children: [
+            {
+              id: 3,
+              label: 'anlock办公楼',
+              children: [
+                {
+                  id: 4,
+                  label: '1层',
+                },
+                {
+                  id: 5,
+                  label: '2层',
+                  disabled: true,
+                },
+              ],
+            },
+            {
+              id: 2,
+              label: 'anlock研发楼',
+              disabled: true,
+              children: [
+                {
+                  id: 6,
+                  label: '1层',
+                },
+                {
+                  id: 7,
+                  label: '2层',
+                  disabled: true,
+                },
+              ],
+            },
+          ],
         },
       ],
       defaultProps: {
         children: 'children',
-        label: 'areaName',
+        label: 'label',
       },
       section: '',
     }
@@ -283,13 +230,13 @@ export default {
     async getdepartmemtData () {
       const departdatalist = await getCampusList()
 
-      this.treedata.map((item) => {
-        if (item.areaId === 1) {
-          // 找到要合并的元素
-          item.children = item.children.concat(departdatalist.data) // 将s数组合并到该元素的children属性中
-        }
-        return item
-      })
+      // this.treedata.map((item) => {
+      //   if (item.areaId === 1) {
+      //     // 找到要合并的元素
+      //     item.children = item.children.concat(departdatalist.data) // 将s数组合并到该元素的children属性中
+      //   }
+      //   return item
+      // })
       console.log(departdatalist.data, this.treedata, 'getCampusList')
     },
     async fetchData () {
@@ -549,7 +496,7 @@ export default {
   }
   /* //高亮字体颜色 */
   .el-tree-node.is-current > .el-tree-node__content {
-    background-color: #f7ff063c;
+    background-color: #ff06061d;
     color: #000000 !important;
     font-size: 15px;
   }

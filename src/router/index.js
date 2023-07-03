@@ -1,6 +1,6 @@
 /**
- * ..author https://vue-admin-beautiful.com （不想保留author可删除）
- * ..description router全局配置，如有必要可分文件抽离，其中asyncRoutes只有在intelligence模式下才会用到，vip文档中已提供路由的基础图标与小清新图标的配置方案，请仔细阅读
+ * @author https://vue-admin-beautiful.com （不想保留author可删除）
+ * @description router全局配置，如有必要可分文件抽离，其中asyncRoutes只有在intelligence模式下才会用到，vip文档中已提供路由的基础图标与小清新图标的配置方案，请仔细阅读
  */
 
 import Vue from 'vue'
@@ -107,7 +107,7 @@ export const constantRoutes = [
           {
             path: 'BrowseRoom',
             name: 'BrowseRoom',
-            component: () => import('../views/main/roomList/components/BrowseRoom.vue'),
+            component: () => import('@/views/main/roomList/components/BrowseRoom.vue'),
             meta: {
               title: '浏览房间情况',
               premissions: ['BrowseRoom/index'],
@@ -140,7 +140,7 @@ export const constantRoutes = [
          {
            path: 'remote',
            name: 'remote',
-           component: () => import('../views/main/householdManage/components/remote.vue'),
+           component: () => import('@/views/main/householdManage/components/remote.vue'),
            meta: {
              title: '远程权限管理',
              premissions: ['householdManage/remote'],
@@ -150,7 +150,7 @@ export const constantRoutes = [
          {
            path: 'printfinger',
            name: 'printfinger',
-           component: () => import('../views/main/householdManage/components/printfinger.vue'),
+           component: () => import('@/views/main/householdManage/components/printfinger.vue'),
            meta: {
              title: '指纹管理',
              premissions: ['householdManage/printfinger'],
@@ -160,7 +160,7 @@ export const constantRoutes = [
          {
            path: 'bacth',
            name: 'bacth',
-           component: () => import('../views/main/householdManage/components/bacth.vue'),
+           component: () => import('@/views/main/householdManage/components/bacth.vue'),
            meta: {
              title: '批量分配',
              premissions: ['householdManage/bacth'],
@@ -179,13 +179,47 @@ export const constantRoutes = [
         },
       },
       {
-        path: 'card',
-        name: 'card',
-        component: () => import('@/views/main/card/index.vue'),
+        path: 'cardManage',
+        name: 'cardManage',
         meta: {
           title: '门卡管理',
           premissions: ['card/index'],
         },
+        component: {
+          template: '<router-view/>',
+        },
+        children: [
+          {
+            path: 'card',
+            name: 'card',
+            component: () => import('@/views/main/card/index.vue'),
+            meta: {
+              title: '门卡信息编辑',
+              premissions: ['card/cardEdit'],
+              // badge: 'New',
+            },
+          },
+          {
+            path: 'lossCard',
+            name: 'lossCard',
+            component: () => import('@/views/main/card/components/lossCard.vue'),
+            meta: {
+              title: '门卡挂失',
+              premissions: ['card/lossCard'],
+              // badge: 'New',
+            },
+          },
+          {
+            path: 'CardReplacement',
+            name: 'CardReplacement',
+            component: () => import('@/views/main/card/components/CardReplacement.vue'),
+            meta: {
+              title: '补卡状态',
+              premissions: ['card/CardReplacement'],
+              // badge: 'New',
+            },
+          },
+        ]
       },
       {
         path: 'DeviceManage',

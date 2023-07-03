@@ -454,7 +454,7 @@ export default {
   }
   /* //高亮字体颜色 */
   .el-tree-node.is-current > .el-tree-node__content {
-    background-color: #f7ff063c;
+    background-color: #ff06061d;
     color: #000000 !important;
     font-size: 15px;
   }

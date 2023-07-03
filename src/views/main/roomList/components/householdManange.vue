@@ -21,7 +21,21 @@
             </el-table-column>
           </el-table>
         </el-tab-pane>
-        <el-tab-pane label="退宿处理" name="third">退宿处理</el-tab-pane>
+        <el-tab-pane label="退宿处理" name="third">
+          <el-table :data="tableData" style="width: 100%">
+            <el-table-column prop="date" label="编号" width="180"></el-table-column>
+            <el-table-column prop="name" label="姓名" width="180"></el-table-column>
+            <el-table-column prop="address" label="性别"></el-table-column>
+            <el-table-column prop="address" label="类型"></el-table-column>
+            <el-table-column prop="address" label="操作">
+              <template slot-scope="scope">
+                <el-button type="text" size="small" @click="handleChangeroom(scope.row)">配置指纹/卡片</el-button>
+                <el-button type="text" size="small" @click="handleChangeroom(scope.row)">办理退宿</el-button>
+                <el-button type="text" size="small" @click="handleChangeroom(scope.row)">下发密码</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
         <el-tab-pane label="名单状态" name="fourth">
           <el-divider content-position="left">未生效白名单</el-divider>
           <el-table :data="tableData" style="width: 100%">
@@ -157,7 +171,8 @@ export default {
       defaultValue: [],
       tableData: [{ name: '雷诗云' }],
       checked: false,
-      timeval: ''
+      timeval: '',
+      queryForm:{}
     };
   },
 
@@ -169,6 +184,7 @@ export default {
     showEdit (row, Builddata) {
       this.dialogVisible = true
     },
+    handleQuery(){},
     succeed (row) {
 
     },
