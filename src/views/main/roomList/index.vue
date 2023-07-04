@@ -315,11 +315,12 @@ export default {
     },
     handleAdd () {
       let buildId = this.buildId
-      if (buildId) {
-        this.$refs['edit'].showEdit(buildId)
-      } else {
-        this.$message('请先选择左边的办公区房间列表')
-      }
+      this.$refs['edit'].showEdit(buildId)
+      // if (buildId) {
+      //   this.$refs['edit'].showEdit(buildId)
+      // } else {
+      //   this.$message('请先选择左边的办公区房间列表')
+      // }
     },
     handleImport (row) {
       console.log(row, 'row')

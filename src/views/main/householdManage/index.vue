@@ -136,14 +136,26 @@ export default {
       treedata: [
         {
           areaId: 1,
-          areaName: '部门列表',
-          // icon: 'el-icon-s-data',
-          children: [],
+          label: '部门列表',
+          children: [
+            {
+              id: 4,
+              label: '人事部',
+              children: [
+              ],
+            },
+            {
+              id: 5,
+              label: '研发部',
+              children: [
+              ],
+            },
+          ],
         },
       ],
       defaultProps: {
         children: 'children',
-        label: 'areaName',
+        label: 'label',
       },
       section: '',
     }
@@ -191,13 +203,13 @@ export default {
     async getdepartmemtData () {
       const departdatalist = await getCampusList()
 
-      this.treedata.map((item) => {
-        if (item.areaId === 1) {
-          // 找到要合并的元素
-          item.children = item.children.concat(departdatalist.data) // 将s数组合并到该元素的children属性中
-        }
-        return item
-      })
+      // this.treedata.map((item) => {
+      //   if (item.areaId === 1) {
+      //     // 找到要合并的元素
+      //     item.children = item.children.concat(departdatalist.data) // 将s数组合并到该元素的children属性中
+      //   }
+      //   return item
+      // })
       console.log(departdatalist.data, this.treedata, 'getCampusList')
     },
     async fetchData () {
@@ -275,12 +287,13 @@ export default {
       this.$refs['batch'].showEdit(buildId)
     },
     handleAdd () {
-      let buildId = this.buildId
-      if (buildId) {
-        this.$refs['edit'].showEdit(buildId)
-      } else {
-        this.$message('请先选择左边的办公区房间列表')
-      }
+        this.$refs['edit'].showEdit()
+      // let buildId = this.buildId
+      // if (buildId) {
+      //   this.$refs['edit'].showEdit(buildId)
+      // } else {
+      //   this.$message('请先选择左边的办公区房间列表')
+      // }
     },
     handleImport (row) {
       console.log(row, 'row')

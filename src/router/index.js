@@ -66,12 +66,36 @@ export const constantRoutes = [
       {
         path: 'buildManage',
         name: 'buildManage',
-        component: () => import('@/views/main/buildManage/index.vue'),
         meta: {
-          title: '建筑管理',
+          title: '房屋管理',
           premissions: ['buildManage/index'],
           // badge: 'New',
         },
+        component: {
+          template: '<router-view/>',
+        },
+        children: [
+          {
+            path: 'level',
+            name: 'level',
+            component: () => import('../views/main/buildManage/components/level.vue'),
+            meta: {
+              title: '层级管理',
+              premissions: ['level'],
+              // badge: 'New',
+            },
+          },
+          {
+            path: 'build',
+            name: 'build',
+            component: () => import('@/views/main/buildManage/index.vue'),
+            meta: {
+              title: '建筑管理',
+              premissions: ['build/index'],
+              // badge: 'New',
+            },
+          },
+        ]
       },
       {
         path: 'Organization',

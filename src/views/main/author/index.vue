@@ -25,7 +25,7 @@
           </el-table-column>
         </el-table>
       </el-tab-pane>
-      <el-tab-pane class="">
+      <el-tab-pane class="caidan">
         <span slot="label" class="pans6">
           <img src="../../../assets/caidan.png" v-if="changeshow == false" class="gateway" alt="" srcset="">
           <img src="../../../assets/caidan1.png" v-if="changeshow == true" class="gateway" alt="" srcset="">
@@ -258,5 +258,10 @@ export default {
     margin-bottom: 20px;
     margin-right: 10px;
   }
+}
+.caidan{
+  height: 1000px;
+  overflow-y: scroll
+  ;
 }
 </style>

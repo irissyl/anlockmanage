@@ -24,7 +24,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="房间">
-        <el-button type="success" plain  style="width: 450px">点击选择...</el-button>
+        <el-button type="success" plain  style="width: 450px" @click="chooseRoom">点击选择...</el-button>
       </el-form-item>
       <el-form-item label="电话">
         <el-input v-model.trim="form.roomType" autocomplete="off" placeholder="请输入电话号码"></el-input>
@@ -55,6 +55,7 @@
       <el-button @click="close">取 消</el-button>
       <el-button type="primary" @click="save">确 定</el-button>
     </div>
+    <permission-popup ref="findroom"></permission-popup>
   </el-dialog>
 </template>
 
@@ -72,8 +73,10 @@ import {
   delRoom,
   updateRoom,
 } from '@/api/api'
+import PermissionPopup from './PermissionPopup.vue'
 
 export default {
+  components: { PermissionPopup },
   name: 'TableEdit',
   data () {
     return {
@@ -133,7 +136,9 @@ export default {
         })
         .catch((_) => { })
     },
-
+    chooseRoom() {
+      this.$refs['findroom'].showEdit()
+    },
     showEdit (row) {
       console.log(typeof row === 'object', 'row')
       if ((typeof row === 'object') == false) {

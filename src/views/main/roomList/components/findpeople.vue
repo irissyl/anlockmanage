@@ -12,7 +12,7 @@
         <tree-transfer
           ref="treeTransfer"
           class="transtransfer"
-          :titles="['未分配:', '已分配:']"
+          :titles="['未入住:', '已入住:']"
           :button-texts="['删除', '添加人员']"
           :data-source.sync="dataSource"
           :default-checked-keys="defaultValue"

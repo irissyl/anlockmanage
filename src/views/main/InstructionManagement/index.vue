@@ -38,16 +38,23 @@
         <div class="inputtotal centerform">
           <el-form ref="form" :model="queryForm" :inline="true" class="forms">
             <el-form-item>
-              <label class="lb">权限控制:</label>
+              <label class="lb">网络号:</label>
+              <el-select v-model="quyuvalue6" placeholder="请选择权限" style="width: 160px;margin: 0 10px 0 0;">
+                <el-option v-for="item in net" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+             <el-form-item>
+              <label class="lb">信道号:</label>
               <el-select v-model="quyuvalue6" placeholder="请选择权限" style="width: 160px;margin: 0 10px 0 0;">
                 <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value">
                 </el-option>
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-checkbox v-model="checked" class="lb checked" @change="checkchange">区域设置</el-checkbox>
+              <el-checkbox v-model="checked" class="lb checked" @change="checkchange">区域下发</el-checkbox>
               <el-button type="danger" v-show="setshow" native-type="submit" size="mini" plain>
-                设置
+                下发指令  
               </el-button>
             </el-form-item>
           </el-form>
@@ -55,31 +62,39 @@
         <el-table ref="tableSort" :data="tablelist" :element-loading-text="elementLoadingText" :header-cell-style="{'text-align': 'left'
               }" :cell-style="{ 'text-align': 'left' }" style="width: 100%" @selection-change="setSelectRows" @sort-change="tableSortChange">
           <el-table-column type="selection" width="55"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="roomNO" label="住户ID"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="roomName" label="住户姓名"></el-table-column>
-          <el-table-column show-overflow-tooltip prop="sex" label="性别"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="dan" label="所属单位"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="远程开门权限">
-            <template #default="{ row }">
-              <i class="el-icon-success" v-if="row"></i>
-              <i class="el-icon-error" v-if="!row"></i>
-            </template>
-          </el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="自助录入指纹权限">
-            <template #default="{ row }">
-              <i class="el-icon-success" v-if="row"></i>
-              <i class="el-icon-error" v-if="!row"></i>
-            </template>
-          </el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="临时密码权限">
-            <template #default="{ row }">
-              <i class="el-icon-success" v-if="row"></i>
-              <i class="el-icon-error" v-if="!row"></i>
-            </template>
-          </el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="roomNO" label="中继器名称"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="roomName" label="IP地址"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="sex" label="中继器位置"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="dan" label="网络地址"></el-table-column>
         </el-table>
       </el-tab-pane>
-      <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
+      <el-tab-pane label="配置管理" name="second">
+        <div class="inputtotal centerform">
+          <el-form ref="form" :model="queryForm" :inline="true" class="forms">
+            <el-form-item>
+              <label class="lb">指令:</label>
+              <el-select v-model="quyuvalue6" placeholder="请选择权限" style="width: 160px;margin: 0 10px 0 0;">
+                <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox v-model="checked" class="lb checked" @change="checkchange">区域下发</el-checkbox>
+              <el-button type="danger" v-show="setshow" native-type="submit" size="mini" plain>
+                下发指令  
+              </el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+        <el-table ref="tableSort" :data="tablelist" :element-loading-text="elementLoadingText" :header-cell-style="{'text-align': 'left'
+              }" :cell-style="{ 'text-align': 'left' }" style="width: 100%" @selection-change="setSelectRows" @sort-change="tableSortChange">
+          <el-table-column type="selection" width="55"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="roomNO" label="门锁位置"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="roomName" label="网络地址"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="sex" label="是否休眠"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="dan" label="状态"></el-table-column>
+        </el-table>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -113,26 +128,27 @@ export default {
         value: '选项1',
         label: '101宿舍'
       }],
+      net:[],
       options2: [{
         value: '1',
-        label: '开启远程开门'
+        label: '常闭'
       }, {
         value: '2',
-        label: '关闭远程开门'
+        label: '远程开锁'
       }, {
         value: '3',
-        label: '开启自助录入指纹'
+        label: '删除密码'
       }, {
         value: '4',
-        label: '关闭自助录入指纹'
+        label: '下发用户密码'
       }, {
         value: '5',
-        label: '开启临时密码'
+        label: '设置心跳时间间隔'
       }, {
         value: '6',
-        label: '关闭临时密码'
+        label: '设置是否休眠'
       },],
-      tablelist: [{ roomNO: 2321, roomName: '雷诗云', sex: '女', dan: 'anlock有限公司' }],
+      tablelist: [{ roomNO: 2321}],
       quyuvalue1: '',
       quyuvalue2: '',
       quyuvalue3: '',
@@ -176,6 +192,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.lb{
+  margin-right: 20px;
 
+}
+.checked{
+  margin-left: 10px;
+  margin-right: 20px;
+}
 
 </style>

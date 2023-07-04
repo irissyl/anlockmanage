@@ -5,22 +5,21 @@
         <span slot-scope="{ node, data }" class="nodeslot">
           <i :class="data.icon" :style="`color: ${data.color}`"></i>
           <span style="padding-left: 4px;line-height:40px">{{ node.label }}</span>
-          <span class="btns" ><el-button type="text" size="big" icon="el-icon-delete" @click="() => deleteappend(data)"></el-button></span>
+          <span class="btns"><el-button type="text" size="big" icon="el-icon-delete" @click="() => deleteappend(data)"></el-button></span>
         </span>
       </el-tree>
     </div>
     <div class="righttable">
       <div class="btntotal">
-        <el-button icon="el-icon-plus" type="primary" @click="handleAdd" >添加</el-button>
+        <el-button icon="el-icon-plus" type="primary" @click="handleAdd">添加</el-button>
       </div>
-      <el-table ref="tableSort" v-loading="listLoading"  :data="lists" :element-loading-text="elementLoadingText" :header-cell-style="{ 'text-align': 'center'}" :cell-style="{ 'text-align': 'center' }"
-         @selection-change="setSelectRows" @sort-change="tableSortChange">
-        <el-table-column show-overflow-tooltip prop="areaName" label="名称"></el-table-column>
-        <el-table-column show-overflow-tooltip prop="" label="编号"></el-table-column>
-        <el-table-column show-overflow-tooltip prop="" label="区域类型"></el-table-column>
+      <el-table ref="tableSort" v-loading="listLoading" :data="lists" :element-loading-text="elementLoadingText" :header-cell-style="{ 'text-align': 'center'}" :cell-style="{ 'text-align': 'center' }" @selection-change="setSelectRows"
+        @sort-change="tableSortChange">
+        <el-table-column show-overflow-tooltip prop="" label="部门编号"></el-table-column>
+        <el-table-column show-overflow-tooltip prop="areaName" label="部门名称"></el-table-column>
+        <el-table-column show-overflow-tooltip prop="" label="部门类型"></el-table-column>
         <el-table-column show-overflow-tooltip prop="" label="办公地点"></el-table-column>
-        <el-table-column show-overflow-tooltip prop="" label="联系方式"></el-table-column>
-        <el-table-column show-overflow-tooltip prop="" label="描述"></el-table-column>
+        <el-table-column show-overflow-tooltip prop="" label="部门描述"></el-table-column>
         <el-table-column show-overflow-tooltip label="操作" fixed="right">
           <template #default="{ row }">
             <el-button type="text" icon="el-icon-edit" @click="handleEdit(row)"></el-button>
@@ -69,43 +68,18 @@ export default {
       treedata: [
         {
           id: 1,
-          label: 'anlock公司',
+          label: '部门列表',
           children: [
             {
-              id: 3,
-              label: 'anlock东莞区',
+              id: 4,
+              label: '人事部',
               children: [
-                {
-                  id: 4,
-                  label: '人事部',
-                  children: [
-                    {
-                      id: 6,
-                      label: '招聘组',
-                    },
-                    {
-                      id: 7,
-                      label: '面试组',
-                      disabled: true,
-                    },
-                  ],
-                },
-                {
-                  id: 5,
-                  label: '研发部',
-                  // disabled: true,
-                  children: [
-                    {
-                      id: 6,
-                      label: '小程序组',
-                    },
-                    {
-                      id: 7,
-                      label: '移动端组',
-                      disabled: true,
-                    },
-                  ],
-                },
+              ],
+            },
+            {
+              id: 5,
+              label: '研发部',
+              children: [
               ],
             },
           ],
@@ -190,8 +164,8 @@ export default {
 <style lang="scss">
 .btntotal {
   width: 100%;
-  
-  button{
+
+  button {
     float: right;
     margin-bottom: 20px;
   }
@@ -202,9 +176,9 @@ export default {
   float: left;
   margin-top: 39px;
 }
-.righttable{
-    width: 80%;
-    float: right;
+.righttable {
+  width: 80%;
+  float: right;
 }
 
 .tree {
@@ -213,7 +187,7 @@ export default {
     width: 20px;
     font-size: 20px;
   }
-  .nodeslot{
+  .nodeslot {
     text-align: left;
     width: 100%;
   }
@@ -228,7 +202,7 @@ export default {
     height: 40px;
   }
   .el-tree-node__content:hover {
-    border: 1px #F2934F dashed;
+    border: 1px #f2934f dashed;
   }
   .el-tree-node {
     position: relative;

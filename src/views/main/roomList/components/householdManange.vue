@@ -4,7 +4,7 @@
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="办理入住" name="first">
           <div class="trans">
-            <tree-transfer ref="treeTransfer" class="transtransfer" :titles="['未分配:', '已分配:']" :button-texts="['删除', '添加人员']" :data-source.sync="dataSource" :default-checked-keys="defaultValue" :is-radio="false" :filterable="true"
+            <tree-transfer ref="treeTransfer" class="transtransfer" :titles="['未入住:', '已入住:']" :button-texts="['删除', '添加人员']" :data-source.sync="dataSource" :default-checked-keys="defaultValue" :is-radio="false" :filterable="true"
               :father-choose="false" @left-check-change="handleLeftCheckChange" @right-check-change="handleRightCheckChange" @change="handleChange"></tree-transfer>
           </div>
         </el-tab-pane>
