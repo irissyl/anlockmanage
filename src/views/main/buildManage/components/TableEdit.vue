@@ -24,25 +24,22 @@
           placeholder="请输入房间别名"
         ></el-input>
       </el-form-item>
-      <el-form-item label="入住情况:" prop="room">
-        <el-input v-model.trim="form.room" autocomplete="off" placeholder="请输入房间名称"></el-input>
+      <el-form-item label="门锁:" prop="room">
+        <el-input v-model.trim="form.room" autocomplete="off" placeholder="请输入门锁编号"></el-input>
       </el-form-item>
-      <el-form-item label="入住性别:" prop="sex">
+      <el-form-item label="水表:" prop="water">
+        <el-input v-model.trim="form.water" autocomplete="off" placeholder="请输入"></el-input>
+      </el-form-item>
+      <el-form-item label="电表:" prop="electricity">
+        <el-input v-model.trim="form.electricity" autocomplete="off" placeholder="请输入"></el-input>
+      </el-form-item>
+      <!-- <el-form-item label="入住性别:" prop="sex">
         <el-radio-group v-model.trim="form.sex">
           <el-radio :label="1">男</el-radio>
           <el-radio :label="2">女</el-radio>
+          <el-radio :label="3">中性</el-radio>
         </el-radio-group>
-      </el-form-item>
-      <el-form-item label="建筑类型:" prop="title">
-        <el-select
-          v-model.trim="form.sceneType"
-          placeholder="请选择建筑类型"
-        >
-          <el-option label="房间" value="房间"></el-option>
-          <el-option label="楼层" value="楼层"></el-option>
-          <el-option label="宿舍楼" value="宿舍楼"></el-option>
-        </el-select>
-      </el-form-item>
+      </el-form-item> -->
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="close">取 消</el-button>
@@ -66,7 +63,8 @@
           num: 1,
           room: '',
           roomNo: '',
-
+          water:'',
+          electricity:''
         },
         rules: {},
         title: '',
@@ -79,9 +77,9 @@
     methods: {
       showEdit(row) {
         if (!row) {
-          this.title = '添加'
+          this.title = '添加建筑'
         } else {
-          this.title = '编辑'
+          this.title = '编辑建筑'
           this.form = Object.assign({}, row)
         }
         this.dialogFormVisible = true

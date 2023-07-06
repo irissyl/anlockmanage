@@ -24,7 +24,7 @@ export function doDelete(data) {
   })
 }
 
-// 园区列表
+// 片区列表
 export function getCampusList() {
   return request({
     url: '/api/build/listAllArea',

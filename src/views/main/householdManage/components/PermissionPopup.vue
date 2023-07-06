@@ -19,7 +19,7 @@ import treeTransfer from '@/components/tree-transfer.vue'
 const tree = [
   {
     id: 1,
-    label: '狐狸园区',
+    label: '狐狸片区',
     children: [
       {
         id: 3,

@@ -7,11 +7,11 @@
     @close="close"
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-      <el-form-item label="选择园区:" prop="title">
+      <el-form-item label="选择片区:" prop="title">
         <el-select
           v-model.trim="form.title"
           autocomplete="off"
-          placeholder="请选择园区"
+          placeholder="请选择片区"
         ></el-select>
       </el-form-item>
       <el-form-item label="选择楼栋" prop="name">

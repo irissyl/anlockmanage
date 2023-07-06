@@ -1,22 +1,13 @@
 <template>
   <div class="table-container">
-    <div class="lefttree">
-      <el-tree class="tree" :data="treedata" :props="defaultProps" node-key="id" :default-expanded-keys="[1, 2, 3]" @node-click="handleNodeClick">
-        <span slot-scope="{ node, data }" class="nodeslot">
-          <i :class="data.icon" :style="`color: ${data.color}`"></i>
-          <span style="padding-left: 4px;line-height:40px">{{ node.label }}</span>
-          <span class="btns"><el-button type="text" size="big" icon="el-icon-delete" @click="() => deleteappend(data)"></el-button></span>
-        </span>
-      </el-tree>
-    </div>
     <div class="righttable">
       <div class="btntotal">
         <el-button icon="el-icon-plus" type="primary" @click="handleAdd">添加</el-button>
       </div>
-      <el-table ref="tableSort" v-loading="listLoading" :data="lists" :element-loading-text="elementLoadingText" :header-cell-style="{ 'text-align': 'center'}" :cell-style="{ 'text-align': 'center' }" @selection-change="setSelectRows"
-        @sort-change="tableSortChange">
-        <el-table-column show-overflow-tooltip prop="" label="部门编号"></el-table-column>
-        <el-table-column show-overflow-tooltip prop="areaName" label="部门名称"></el-table-column>
+      <el-table ref="tableSort" v-loading="listLoading" :data="lists" :element-loading-text="elementLoadingText" row-key="id" border :tree-props="{children: 'children'}" max-height="300px" :header-cell-style="{ 'text-align': 'center'}"
+        :cell-style="{ 'text-align': 'center' }" @selection-change="setSelectRows" @sort-change="tableSortChange">
+        <el-table-column show-overflow-tooltip prop="id" label="部门编号"></el-table-column>
+        <el-table-column show-overflow-tooltip prop="label" label="部门名称"></el-table-column>
         <el-table-column show-overflow-tooltip prop="" label="部门类型"></el-table-column>
         <el-table-column show-overflow-tooltip prop="" label="办公地点"></el-table-column>
         <el-table-column show-overflow-tooltip prop="" label="部门描述"></el-table-column>
@@ -43,14 +34,13 @@ export default {
   data () {
     return {
       list: [],
-      lists: [{ areaName: '研发部' }],
       imageList: [],
       form: {
         appld: '',
         appSecret: '',
         builds: '',
       },
-      nodetitle: '添加园区',
+      nodetitle: '添加片区',
       ckVisible: false,
       startTime: '',
       endTime: '',
@@ -65,7 +55,7 @@ export default {
       elementLoadingText: '正在加载...',
       Builddata: [],
       buildObjs: [],
-      treedata: [
+      lists: [
         {
           id: 1,
           label: '部门列表',
@@ -73,14 +63,12 @@ export default {
             {
               id: 4,
               label: '人事部',
-              children: [
-              ],
+              children: [],
             },
             {
               id: 5,
               label: '研发部',
-              children: [
-              ],
+              children: [],
             },
           ],
         },
@@ -171,13 +159,8 @@ export default {
   }
 }
 
-.lefttree {
-  width: 19%;
-  float: left;
-  margin-top: 39px;
-}
 .righttable {
-  width: 80%;
+  width: 100%;
   float: right;
 }
 

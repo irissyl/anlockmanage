@@ -6,7 +6,7 @@
           <el-form ref="form" :model="queryForm" :inline="true" class="forms">
             <el-form-item>
               <label class="lb">区域:</label>
-              <el-select v-model="quyuvalue1" placeholder="请选择园区" style="width: 160px;margin: 0 10px 0 0;">
+              <el-select v-model="quyuvalue1" placeholder="请选择片区" style="width: 160px;margin: 0 10px 0 0;">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                 </el-option>
               </el-select>
@@ -30,7 +30,6 @@
             </el-form-item>
           </el-form>
         </div>
-
       </div>
     </div>
     <el-tabs class="tabs" v-model="activeName" type="card" @tab-click="handleClick">
@@ -114,7 +113,7 @@ export default {
       checked: false,
       options: [{
         value: '选项1',
-        label: 'anlock园区'
+        label: 'anlock片区'
       }],
       options3: [{
         value: '选项2',
@@ -192,6 +191,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .lb{
   margin-right: 20px;
 

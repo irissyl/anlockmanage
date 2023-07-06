@@ -145,7 +145,7 @@ export default {
 }
 
 .topform {
-  background-color: rgb(238, 238, 238);
+  background-color: #ffffff;
 
   .forms {
     padding-top: 20px;

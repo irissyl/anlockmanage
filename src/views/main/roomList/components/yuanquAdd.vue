@@ -8,7 +8,7 @@
     @close="close"
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-      <el-form-item label="园区名称:" prop="title">
+      <el-form-item label="片区名称:" prop="title">
         <el-input
           v-model.trim="form.title"
           autocomplete="off"
@@ -45,9 +45,9 @@
     methods: {
       showEdit(row) {
         if (!row) {
-          this.title = '添加园区'
+          this.title = '添加片区'
         } else {
-          this.title = '编辑园区'
+          this.title = '编辑片区'
           this.form = Object.assign({}, row)
         }
         this.dialogFormVisible = true

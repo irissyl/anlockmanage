@@ -1,7 +1,7 @@
 <template>
   <div class="index-container">
     <el-row :gutter="20">
-      <el-col :xs="24" :sm="24" :md="10" :lg="4" :xl="4">
+      <el-col :xs="24" :sm="24" :md="24" :lg="6" :xl="4">
         <el-card class="all1" shadow="never">
           <el-tree class="tree" :data="treedata" :props="defaultProps" node-key="id" :default-checked-keys="[1]" :default-expanded-keys="[1, 2, 3]" @node-click="handleNodeClick">
             <span slot-scope="{ node, data }">
@@ -11,9 +11,9 @@
           </el-tree>
         </el-card>
       </el-col>
-      <el-col :xs="24" :sm="24" :md="20" :lg="20" :xl="20">
+      <el-col :xs="24" :sm="24" :md="24" :lg="18" :xl="20">
         <div>
-          <el-table  :data="tableData" style="width: 100%;max-height: 150px;overflow-y: scroll;" >
+          <el-table  :data="tableData" style="width: 100%;max-height: 200px;overflow-y: scroll;" >
             <el-table-column prop="address" label="房间名称"></el-table-column>
             <el-table-column prop="date" label="住户编号" width="180"></el-table-column>
             <el-table-column prop="name" label="住户姓名" width="180"></el-table-column>
@@ -56,7 +56,7 @@ export default {
       treedata: [
         {
           id: 1,
-          label: '狐狸园区',
+          label: '狐狸片区',
           children: [
             {
               id: 3,

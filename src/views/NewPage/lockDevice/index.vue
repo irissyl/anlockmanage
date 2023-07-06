@@ -15,7 +15,7 @@
       @submit.native.prevent
     >
       <el-form-item>
-        <label class="lb">园区:</label>
+        <label class="lb">片区:</label>
         <el-input
           v-model="queryForm.title"
           class="ei"

@@ -2,7 +2,7 @@
   <div class="table-container">
     <div class="btntotal">
       <el-button icon="el-icon-plus" type="primary" @click="handleAdd">
-        添加园区
+        添加片区
       </el-button>
       <el-button icon="el-icon-plus" type="primary" @click="handleloudong">
         添加楼栋
@@ -27,7 +27,7 @@
       <el-table-column
         show-overflow-tooltip
         prop="areaName"
-        label="园区"
+        label="片区"
       ></el-table-column>
       <el-table-column
         show-overflow-tooltip

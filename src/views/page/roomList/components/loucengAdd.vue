@@ -8,7 +8,7 @@
     @close="close"
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-      <el-form-item label="选择园区:" prop="title">
+      <el-form-item label="选择片区:" prop="title">
         <el-select
           v-model.trim="form.title"
           autocomplete="off"

@@ -6,18 +6,18 @@
     @close="close"
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-      <el-form-item label="园区名称" prop="name">
+      <el-form-item label="片区名称" prop="name">
         <el-input
           v-model.trim="form.areaName"
           autocomplete="off"
-          placeholder="请输入园区名称"
+          placeholder="请输入片区名称"
         ></el-input>
       </el-form-item>
-      <el-form-item label="园区地址" prop="address">
+      <el-form-item label="片区地址" prop="address">
         <el-input
           v-model.trim="form.areaAddress"
           autocomplete="off"
-          placeholder="请输入园区地址"
+          placeholder="请输入片区地址"
         ></el-input>
       </el-form-item>
       <el-form-item label="选择楼栋" prop="builds">
@@ -60,10 +60,10 @@
         Builddata: '',
         rules: {
           areaName: [
-            { required: true, trigger: 'blur', message: '请输入园区名称' },
+            { required: true, trigger: 'blur', message: '请输入片区名称' },
           ],
           areaAddress: [
-            { required: true, trigger: 'blur', message: '请输入园区地址' },
+            { required: true, trigger: 'blur', message: '请输入片区地址' },
           ],
           buildName: [
             { required: true, trigger: 'blur', message: '请选择楼栋' },
@@ -85,10 +85,10 @@
       },
       showEdit(row, Builddata) {
         if (!row) {
-          this.title = '添加园区'
+          this.title = '添加片区'
           this.Edit = false
         } else {
-          this.title = '编辑园区'
+          this.title = '编辑片区'
           this.Edit = true
 
           this.form = Object.assign({}, row)

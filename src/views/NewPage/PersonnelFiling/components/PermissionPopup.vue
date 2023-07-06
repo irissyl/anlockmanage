@@ -101,7 +101,7 @@
   import treeTransfer from '@/components/tree-transfer.vue'
   const tree = [
     {
-      label: 'A园区',
+      label: 'A片区',
       id: '1',
       children: [
         {
@@ -128,7 +128,7 @@
       ],
     },
     {
-      label: 'B园区',
+      label: 'B片区',
       id: '2',
       children: [
         {

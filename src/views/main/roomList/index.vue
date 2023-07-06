@@ -1,7 +1,7 @@
 <template>
-  <div class="index-container">
+  <div class="roomcontainer">
     <el-row :gutter="20">
-      <el-col :xs="24" :sm="24" :md="10" :lg="4" :xl="4">
+      <el-col :xs="24" :sm="24" :md="24" :lg="6" :xl="4">
         <el-card class="all1" shadow="never">
           <el-tree class="tree" :data="treedata" :props="defaultProps" node-key="id" :default-expanded-keys="[1, 2, 3]" :default-checked-keys="[1]" @node-click="handleNodeClick">
             <span slot-scope="{ node, data }">
@@ -11,7 +11,7 @@
           </el-tree>
         </el-card>
       </el-col>
-      <el-col :xs="24" :sm="24" :md="20" :lg="20" :xl="20">
+      <el-col :xs="24" :sm="24" :md="24" :lg="18" :xl="20">
         <el-card class="all1" shadow="never" style="height: 800px">
           <div class="grid-content bg-purple">
             <div class="right">
@@ -146,7 +146,7 @@ export default {
       treedata: [
         {
           id: 1,
-          label: '狐狸园区',
+          label: '狐狸片区',
           children: [
             {
               id: 3,
@@ -345,7 +345,14 @@ export default {
 </script>
 
 <style lang="scss" >
-.btntotal {
+
+
+.roomcontainer {
+  padding: 0 !important;
+  margin: 0 !important;
+  background: #f5f7f8 !important;
+
+  .btntotal {
   float: right;
   margin-bottom: 20px;
 }
@@ -502,12 +509,6 @@ export default {
     font-size: 15px;
   }
 }
-
-.index-container {
-  padding: 0 !important;
-  margin: 0 !important;
-  background: #f5f7f8 !important;
-
   ::v-deep {
     .el-alert {
       padding: $base-padding;

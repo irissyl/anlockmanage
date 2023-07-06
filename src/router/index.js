@@ -75,22 +75,13 @@ export const constantRoutes = [
           template: '<router-view/>',
         },
         children: [
-          {
-            path: 'level',
-            name: 'level',
-            component: () => import('../views/main/buildManage/components/level.vue'),
-            meta: {
-              title: '层级管理',
-              premissions: ['level'],
-              // badge: 'New',
-            },
-          },
+
           {
             path: 'build',
             name: 'build',
             component: () => import('@/views/main/buildManage/index.vue'),
             meta: {
-              title: '建筑管理',
+              title: '房屋管理',
               premissions: ['build/index'],
               // badge: 'New',
             },
@@ -784,7 +775,7 @@ export const constantRoutes = [
   //       path: 'Campus',
   //       name: 'Campus',
   //       component: () => import('@/views/page/contentSettings/Campus/index'),
-  //       meta: { title: '园区设置', premissions: ['Campus/index'] },
+  //       meta: { title: '片区设置', premissions: ['Campus/index'] },
   //     },
   //     {
   //       path: 'Building',

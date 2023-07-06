@@ -52,7 +52,7 @@ export default {
       Builddata: '',
       rules: {
         areaName: [
-          { required: true, trigger: 'blur', message: '请输入园区名称' },
+          { required: true, trigger: 'blur', message: '请输入片区名称' },
         ],
       },
       title: '',

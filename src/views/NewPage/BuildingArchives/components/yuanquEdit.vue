@@ -7,7 +7,7 @@
     @close="close"
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-      <el-form-item label="园区名称:" prop="title">
+      <el-form-item label="片区名称:" prop="title">
         <el-input v-model.trim="form.title" autocomplete="off"></el-input>
       </el-form-item>
     </el-form>

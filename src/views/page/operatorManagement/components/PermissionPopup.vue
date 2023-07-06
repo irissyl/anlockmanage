@@ -17,7 +17,7 @@
         >
           <el-card class="box-card2">
             <div slot="header" class="clearfix">
-              <span>选择园区</span>
+              <span>选择片区</span>
             </div>
             <div class="grid-content bg-purple-light">
               <el-tree
@@ -171,7 +171,7 @@
         data: [
           {
             areaId: 1,
-            areaName: '园区',
+            areaName: '片区',
             children: [],
           },
         ],

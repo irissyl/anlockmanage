@@ -13,7 +13,7 @@
               <el-input v-model="formInline.user" placeholder="姓名" style="width: 150px;"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-select v-model="quyuvalue1" placeholder="园区" style="width: 160px;margin: 0 10px 0 0;">
+              <el-select v-model="quyuvalue1" placeholder="片区" style="width: 160px;margin: 0 10px 0 0;">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                 </el-option>
               </el-select>
@@ -105,7 +105,7 @@
         <div class="formbtn">
           <el-form :inline="true" :model="formInline" class="demo-form-inline">
             <el-form-item>
-              <el-select v-model="quyuvalue1" placeholder="请选择园区" style="width: 160px;margin: 0 10px 0 0;">
+              <el-select v-model="quyuvalue1" placeholder="请选择片区" style="width: 160px;margin: 0 10px 0 0;">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                 </el-option>
               </el-select>
@@ -200,7 +200,7 @@ export default {
       gateway3: false,
       options: [{
         value: '选项1',
-        label: 'anlock园区'
+        label: 'anlock片区'
       }],
       options3: [{
         value: '选项2',

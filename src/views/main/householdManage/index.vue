@@ -1,8 +1,8 @@
 <template>
-  <div class="index-container">
+  <div class="housecontainer">
     <el-row :gutter="20">
       <el-col :xs="24" :sm="24" :md="10" :lg="4" :xl="4">
-        <el-card class="all1" shadow="never">
+        <el-card class="treeall1" shadow="never">
           <el-tree class="tree" :data="treedata" :props="defaultProps" node-key="id" :default-expanded-keys="[1, 2, 3]" @node-click="handleNodeClick">
             <span slot-scope="{ node, data }">
               <i :class="data.icon" :style="`color: ${data.color}`"></i>
@@ -19,7 +19,7 @@
                 <el-form ref="form" :model="queryForm" :inline="true">
                   <el-form-item>
                     <label class="lb">住户类型:</label>
-                    <el-select   v-model.trim="form.sceneType"  placeholder="请选择住户类型" class="ei">
+                    <el-select v-model.trim="form.sceneType" placeholder="请选择住户类型" class="ei">
                       <el-option label="本科" value="本科"></el-option>
                       <el-option label="专科" value="专科"></el-option>
                       <el-option label="研究生" value="研究生"></el-option>
@@ -53,7 +53,7 @@
                   </el-form-item>
                 </el-form>
               </div>
-              <el-table ref="tableSort"  :data="list" :element-loading-text="elementLoadingText" :header-cell-style="{'text-align': 'left'
+              <el-table ref="tableSort" :data="list" :element-loading-text="elementLoadingText" :header-cell-style="{'text-align': 'left'
                 }" :cell-style="{ 'text-align': 'left' }" style="width: 100%" @selection-change="setSelectRows" @sort-change="tableSortChange">
                 <el-table-column min-width="110px" show-overflow-tooltip prop="roomNO" label="住户ID"></el-table-column>
                 <el-table-column min-width="110px" show-overflow-tooltip prop="roomName" label="住户姓名"></el-table-column>
@@ -72,7 +72,7 @@
                     <el-button type="danger" plain style="margin-right: 10px" size="mini" @click="del(row)">
                       删除
                     </el-button>
-                    <el-button type="success" plain style="margin-right: 10px" size="mini" >
+                    <el-button type="success" plain style="margin-right: 10px" size="mini">
                       人脸信息
                     </el-button>
                   </template>
@@ -85,7 +85,7 @@
       </el-col>
     </el-row>
     <table-edit ref="edit" @fetchData="fetchData"></table-edit>
-    <uploadfile ref="uploads"  @fetchData="fetchData"></uploadfile>
+    <uploadfile ref="uploads" @fetchData="fetchData"></uploadfile>
   </div>
 </template>
 
@@ -179,7 +179,7 @@ export default {
       this.buildId = data.builds
       this.fetchData()
     },
-    uploads() {
+    uploads () {
       this.$refs['uploads'].showEdit()
     },
     async ckconfirm () {
@@ -287,7 +287,7 @@ export default {
       this.$refs['batch'].showEdit(buildId)
     },
     handleAdd () {
-        this.$refs['edit'].showEdit()
+      this.$refs['edit'].showEdit()
       // let buildId = this.buildId
       // if (buildId) {
       //   this.$refs['edit'].showEdit(buildId)
@@ -315,168 +315,168 @@ export default {
 </script>
 
 <style lang="scss" >
-.btntotal {
-  float: right;
-  margin-bottom: 20px;
-}
-.inputtotal {
-  width: 85%;
-  float: left;
-  // border: 1px solid saddlebrown;
-
-  .ei {
-    float: right;
-    width: 200px;
-  }
-  .lb {
-    // border: 1px solid saddlebrown;
-    float: left;
-    margin-right: 10px;
-  }
-}
-
-.left {
-  width: 100%;
-  height: 200px;
-  float: left;
-  margin-top: 5px;
-}
-
-.right {
-  width: 100%;
-  float: right;
-}
-.top {
-  font-size: 40px;
-  color: green;
-  text-align: center;
-}
-.botm {
-  ul li {
-    list-style: none;
-    font-size: 15px;
-    color: #000;
-    font-family: '微软雅黑';
-  }
-  .room {
-    line-height: 40px;
-    font-size: 20px;
-  }
-  .room2 {
-    font-size: 17px;
-    line-height: 40px;
-  }
-}
-.tree {
-  .btns {
-    font-size: 20px;
-  }
-  .el-tree-node__content {
-    padding: 0 !important;
-    border-radius: 5px;
-    border: 1px rgb(161, 160, 160) dashed;
-    margin-top: 15px;
-    text-align: left;
-    font-size: 17px;
-    height: 40px;
-  }
-  .el-tree-node__content:hover {
-    border: 1px #f26a4f dashed;
-  }
-  .el-tree-node {
-    position: relative;
-    padding-left: 15px;
-  }
-  .el-tree-node__children {
-    padding-left: 15px;
-  }
-
-  // 竖线
-  .el-tree-node::before {
-    content: '';
-    height: 100%;
-    width: 1px;
-    position: absolute;
-    left: -3px;
-    top: -26px;
-    border-width: 1px;
-    border-left: 1px dashed #a9aeb6;
-  }
-
-  .el-tree-node:last-child::before {
-    height: 38px;
-  }
-
-  // 横线
-  .el-tree-node::after {
-    content: '';
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    left: -3px;
-    top: 12px;
-    border-width: 1px;
-    border-top: 1px dashed #848d9c;
-  }
-
-  & > .el-tree-node::after {
-    border-top: none;
-  }
-  & > .el-tree-node::before {
-    border-left: none;
-  }
-
-  .el-tree-node__expand-icon {
-    font-size: 16px;
-  }
-  .el-tree-node__expand-icon.expanded {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  .el-tree-node__expand-icon.expanded {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  /* //有子节点 且未展开 */
-  .el-icon-caret-right:before {
-    content: url('../../../assets/erji.png');
-    display: block;
-    width: 20px;
-    height: 20px;
-    font-size: 16px;
-    background-size: 16px;
-  }
-  /* //有子节点 且已展开 */
-  .el-tree-node__expand-icon.expanded.el-icon-caret-right:before {
-    content: url('../../../assets/yiji.png');
-    display: block;
-    width: 20px;
-    height: 20px;
-    font-size: 16px;
-    background-size: 16px;
-  }
-  /* //没有子节点 */
-  .el-tree-node__expand-icon.is-leaf::before {
-    background: #fff;
-    content: '';
-    display: block;
-    width: 0px;
-    height: 0px;
-    font-size: 16px;
-    background-size: 16px;
-  }
-  /* //高亮字体颜色 */
-  .el-tree-node.is-current > .el-tree-node__content {
-    background-color: #ff06061d;
-    color: #000000 !important;
-    font-size: 15px;
-  }
-}
-
-.index-container {
+.housecontainer {
   padding: 0 !important;
   margin: 0 !important;
   background: #f5f7f8 !important;
+
+  .btntotal {
+    float: right;
+    margin-bottom: 20px;
+  }
+  .inputtotal {
+    width: 85%;
+    float: left;
+    // border: 1px solid saddlebrown;
+
+    .ei {
+      float: right;
+      width: 200px;
+    }
+    .lb {
+      // border: 1px solid saddlebrown;
+      float: left;
+      margin-right: 10px;
+    }
+  }
+
+  .left {
+    width: 100%;
+    height: 200px;
+    float: left;
+    margin-top: 5px;
+  }
+
+  .right {
+    width: 100%;
+    float: right;
+  }
+  .top {
+    font-size: 40px;
+    color: green;
+    text-align: center;
+  }
+  .botm {
+    ul li {
+      list-style: none;
+      font-size: 15px;
+      color: #000;
+      font-family: '微软雅黑';
+    }
+    .room {
+      line-height: 40px;
+      font-size: 20px;
+    }
+    .room2 {
+      font-size: 17px;
+      line-height: 40px;
+    }
+  }
+  .tree {
+    .btns {
+      font-size: 20px;
+    }
+    .el-tree-node__content {
+      padding: 0 !important;
+      border-radius: 5px;
+      border: 1px rgb(161, 160, 160) dashed;
+      margin-top: 15px;
+      text-align: left;
+      font-size: 17px;
+      height: 40px;
+    }
+    .el-tree-node__content:hover {
+      border: 1px #f26a4f dashed;
+    }
+    .el-tree-node {
+      position: relative;
+      padding-left: 15px;
+    }
+    .el-tree-node__children {
+      padding-left: 15px;
+    }
+
+    // 竖线
+    .el-tree-node::before {
+      content: '';
+      height: 100%;
+      width: 1px;
+      position: absolute;
+      left: -3px;
+      top: -26px;
+      border-width: 1px;
+      border-left: 1px dashed #a9aeb6;
+    }
+
+    .el-tree-node:last-child::before {
+      height: 38px;
+    }
+
+    // 横线
+    .el-tree-node::after {
+      content: '';
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      left: -3px;
+      top: 12px;
+      border-width: 1px;
+      border-top: 1px dashed #848d9c;
+    }
+
+    & > .el-tree-node::after {
+      border-top: none;
+    }
+    & > .el-tree-node::before {
+      border-left: none;
+    }
+
+    .el-tree-node__expand-icon {
+      font-size: 16px;
+    }
+    .el-tree-node__expand-icon.expanded {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    .el-tree-node__expand-icon.expanded {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    /* //有子节点 且未展开 */
+    .el-icon-caret-right:before {
+      content: url('../../../assets/erji.png');
+      display: block;
+      width: 20px;
+      height: 20px;
+      font-size: 16px;
+      background-size: 16px;
+    }
+    /* //有子节点 且已展开 */
+    .el-tree-node__expand-icon.expanded.el-icon-caret-right:before {
+      content: url('../../../assets/yiji.png');
+      display: block;
+      width: 20px;
+      height: 20px;
+      font-size: 16px;
+      background-size: 16px;
+    }
+    /* //没有子节点 */
+    .el-tree-node__expand-icon.is-leaf::before {
+      background: #fff;
+      content: '';
+      display: block;
+      width: 0px;
+      height: 0px;
+      font-size: 16px;
+      background-size: 16px;
+    }
+    /* //高亮字体颜色 */
+    .el-tree-node.is-current > .el-tree-node__content {
+      background-color: #ff06061d;
+      color: #000000 !important;
+      font-size: 15px;
+    }
+  }
 
   ::v-deep {
     .el-alert {

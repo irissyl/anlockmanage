@@ -57,7 +57,7 @@ export default {
           { required: true, trigger: 'blur', message: '请输入ID' },
         ],
         areaAddress: [
-          { required: true, trigger: 'blur', message: '请输入园区地址' },
+          { required: true, trigger: 'blur', message: '请输入片区地址' },
         ],
         buildName: [
           { required: true, trigger: 'blur', message: '请选择楼栋' },
