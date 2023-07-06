@@ -1,13 +1,16 @@
 <template>
   <el-dialog v-dialogDrag :title="title" :visible.sync="dialogFormVisible" width="500px" @close="close">
     <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-      <el-form-item label="部门编号:" prop="roomNO">
+      <el-form-item label="编号:" prop="roomNO">
         <el-input v-model.trim="form.roomNO" autocomplete="off" placeholder="请输入部门编号"></el-input>
       </el-form-item>
-      <el-form-item label="部门名称:" prop="roomname">
+      <el-form-item label="名称:" prop="roomname">
         <el-input v-model.trim="form.roomname" autocomplete="off" placeholder="请输入部门名称"></el-input>
       </el-form-item>
-      <el-form-item label="部门类型:" prop="sceneType">
+      <el-form-item label="结构类型:" prop="title">
+        <el-input v-model.trim="form.sceneType" autocomplete="off" placeholder="请输入类型"></el-input>
+      </el-form-item>
+      <!-- <el-form-item label="类型:" prop="sceneType">
         <el-select v-model.trim="form.sceneType" placeholder="请选择部门类型">
           <el-option label="人力资源部" value="3"></el-option>
           <el-option label="行政部" value="1"></el-option>
@@ -20,8 +23,8 @@
           <el-option label="客户服务部" value="6"></el-option>
           <el-option label="无" value="10"></el-option>
         </el-select>
-      </el-form-item>
-      <el-form-item label="层级类型:" prop="title">
+      </el-form-item> -->
+      <!-- <el-form-item label="层级类型:" prop="title">
         <el-select v-model.trim="form.cengjiType" placeholder="请选择层级类型">
           <el-option label="二级" value="1"></el-option>
           <el-option label="三级" value="2"></el-option>
@@ -32,11 +35,11 @@
           <el-option label="八级" value="7"></el-option>
           <el-option label="九级" value="8"></el-option>
         </el-select>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="办公地点:" prop="address">
         <el-input v-model.trim="form.address" autocomplete="off" placeholder="请输入办公地点"></el-input>
       </el-form-item>
-      <el-form-item label="部门描述:" prop="room">
+      <el-form-item label="描述:" prop="room">
         <el-input type="textarea" v-model.trim="form.room" autocomplete="off" placeholder="请输入部门描述"></el-input>
       </el-form-item>
       <el-form-item label="是否可显示" prop="isShow">

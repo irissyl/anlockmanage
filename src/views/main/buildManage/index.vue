@@ -13,7 +13,7 @@
       </el-col>
       <el-col :xs="24" :sm="24" :md="24" :lg="18" :xl="20">
         <div class="righttable1">
-          <div class="btntotal">
+          <div class="btntotal21">
             <el-button icon="el-icon-circle-plus-outline" type="primary" @click="handleAdd">添加房间</el-button>
             <el-button type="primary" icon="el-icon-circle-plus-outline" @click="addappend">添加建筑</el-button>
             <el-button icon="el-icon-plus" type="primary">导入表格</el-button>
@@ -177,7 +177,7 @@ export default {
 </script>
 
 <style lang="scss">
-.btntotal {
+.btntotal21 {
   float: right;
   margin-bottom: 10px;
 

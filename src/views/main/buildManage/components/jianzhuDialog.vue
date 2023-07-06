@@ -73,7 +73,7 @@
       </span>
     </el-dialog>
     <el-dialog title="添加楼层" :visible.sync="loucengdialogVisible" width="30%" :before-close="handleClose" append-to-body>
-      <el-tabs v-model="activeName2" style="width: 750px; margin: 0 auto" @tab-click="handleClick">
+      <el-tabs v-model="activeName2">
         <el-tab-pane label="单个添加" name="first1">
           <el-form ref="form" :model="form" :rules="rules" label-width="120px">
             <el-form-item label="楼层编号:" prop="title">
@@ -184,14 +184,19 @@ export default {
     handleDelete () { },
 
     handleClick (row) {
-      // 点击最高级别的父级显示新增层级弹窗
-      this.cengjidialogVisible = true
-      // 点击片区级别的父级显示新增片区弹窗
-      this.pianqudialogVisible = true
-      // 点击楼栋级别的父级显示新增楼栋弹窗
-      this.loudongdialogVisible = true
-      // 点击楼层级别的父级显示新增楼层弹窗
-      this.loucengdialogVisible = true
+      console.log(this.tableData[0].id,row.id,'tableData')
+      if(row.label == '片区' && row.label != '楼栋' && row.label == '楼层' && this.tableData[0].id == row.id){
+        this.pianqudialogVisible = true
+      }
+       if(row.label == '楼栋'){
+        this.loudongdialogVisible = true
+      }
+       if(row.label == '楼层'){
+        this.loucengdialogVisible = true
+      }
+      if(this.tableData[0].id == row.id){
+       this.cengjidialogVisible = true
+      }
     },
     handleChange () { },
     handleClose () { },
