@@ -116,11 +116,11 @@ export default {
     showEdit (row) {
       console.log(typeof row === 'object', 'row')
       if ((typeof row === 'object') == false) {
-        this.title = '添加房间和设备'
+        this.title = '添加房间'
         this.Edit = false
         this.form.buildId = row
       } else {
-        this.title = '编辑房间和设备'
+        this.title = '编辑房间'
         this.Edit = true
         this.form = Object.assign({}, row)
         // this.form.content = row.rentContent.split(',').map((item) => {

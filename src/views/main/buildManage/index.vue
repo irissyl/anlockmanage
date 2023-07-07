@@ -5,7 +5,6 @@
         <div class="lefttree1">
           <el-tree class="tree" :data="treedata" :props="defaultProps" node-key="id" :default-expanded-keys="[1, 2, 3]" @node-click="handleNodeClick">
             <span slot-scope="{ node }" class="nodeslot">
-              <!-- <i :class="data.icon" :style="`color: ${data.color}`"></i> -->
               <span style="padding-left: 4px;line-height:40px">{{ node.label }}</span>
             </span>
           </el-tree>
@@ -14,10 +13,10 @@
       <el-col :xs="24" :sm="24" :md="24" :lg="18" :xl="20">
         <div class="righttable1">
           <div class="btntotal21">
-            <el-button icon="el-icon-circle-plus-outline" type="primary" @click="handleAdd">添加房间</el-button>
-            <el-button type="primary" icon="el-icon-circle-plus-outline" @click="addappend">添加建筑</el-button>
+            <el-button icon="el-icon-circle-plus-outline" type="primary" @click="handleAdd">房间管理</el-button>
+            <el-button type="primary" icon="el-icon-circle-plus-outline" @click="addappend">建筑管理</el-button>
             <el-button icon="el-icon-plus" type="primary">导入表格</el-button>
-          </div>
+          </div> 
           <el-table ref="tableSort" v-loading="listLoading" :data="lists" :element-loading-text="elementLoadingText" :header-cell-style="{ 'text-align': 'center'}" :cell-style="{ 'text-align': 'center' }" @selection-change="setSelectRows"
             @sort-change="tableSortChange">
             <el-table-column show-overflow-tooltip prop="areaName" label="名称"></el-table-column>

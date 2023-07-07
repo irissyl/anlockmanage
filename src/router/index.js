@@ -88,16 +88,16 @@ export const constantRoutes = [
           },
         ]
       },
-      {
-        path: 'Organization',
-        name: 'Organization',
-        component: () => import('@/views/main/OrganizationManage/index.vue'),
-        meta: {
-          title: '组织机构管理',
-          premissions: ['OrganizationManage/index'],
-          // badge: 'New',
-        },
-      },
+      // {
+      //   path: 'Organization',
+      //   name: 'Organization',
+      //   component: () => import('@/views/main/OrganizationManage/index.vue'),
+      //   meta: {
+      //     title: '组织机构管理',
+      //     premissions: ['OrganizationManage/index'],
+      //     // badge: 'New',
+      //   },
+      // },
       {
         path: 'roomList',
         name: 'roomList',

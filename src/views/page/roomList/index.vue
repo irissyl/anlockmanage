@@ -105,7 +105,7 @@
     <table-edit ref="edit" @fetchData="fetchData"></table-edit>
     <open-door-record ref="record" @fetchData="fetchData"></open-door-record>
     <batch-build ref="batch" @fetchData="fetchData"></batch-build>
-    <el-dialog v-dialogDrag title="取临时密 码" size="small" :visible.sync="linshidialogVisible" width="35%" append-to-body @close="handleClose">
+    <el-dialog v-dialogDrag title="取临时密码" size="small" :visible.sync="linshidialogVisible" width="35%" append-to-body @close="handleClose">
       <div class="contents">
         <div class="top">4818662</div>
         <div class="botm">

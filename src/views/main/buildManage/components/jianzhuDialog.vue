@@ -1,11 +1,13 @@
 <template>
   <el-dialog v-dialogDrag :title="title" :visible.sync="dialogFormVisible" width="900px" @close="close">
-    <el-table :data="tableData" style="width: 100%;margin-bottom: 20px;" row-key="id" border :tree-props="{children: 'children'}" max-height="300px">
+    <el-table default-expand-all :data="tableData" style="width: 100%;margin-bottom: 20px;" row-key="id" border :tree-props="{children: 'children'}" max-height="300px">
       <el-table-column prop="id" label="层级编号">
       </el-table-column>
-      <el-table-column prop="label" label="层级名称" sortable>
+      <el-table-column prop="label" label="层级名称" >
       </el-table-column>
-      <el-table-column prop="name" label="建筑名称" sortable>
+      <el-table-column prop="name" label="建筑名称" >
+      </el-table-column>
+      <el-table-column prop="" label="排序" >
       </el-table-column>
       <el-table-column show-overflow-tooltip label="操作" fixed="right">
         <template #default="{ row }">
@@ -34,14 +36,11 @@
     </el-dialog>
     <el-dialog title="新增层级" :visible.sync="cengjidialogVisible" width="30%" :before-close="handleClose" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-        <el-form-item label="层级编号:">
+        <!-- <el-form-item label="层级编号:">
           <el-input v-model.trim="form.num" autocomplete="off" placeholder="请输入层级编号"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="层级名称:">
           <el-input v-model.trim="form.roomname" autocomplete="off" placeholder="请输入层级名称"></el-input>
-        </el-form-item>
-        <el-form-item prop="title">
-          <el-button type="primary" @click="save">确 定</el-button>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">

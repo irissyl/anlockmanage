@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog title="房间住户管理" :visible.sync="dialogVisible" width="50%" @close="handleClose">
+    <el-dialog title="房间住户管理" :visible.sync="dialogVisible" width="60%" @close="handleClose">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="办理入住" name="first">
           <div class="trans">
@@ -29,9 +29,9 @@
             <el-table-column prop="address" label="类型"></el-table-column>
             <el-table-column prop="address" label="操作">
               <template slot-scope="scope">
-                <el-button type="text" size="small" @click="handleChangeroom(scope.row)">配置指纹/卡片</el-button>
-                <el-button type="text" size="small" @click="handleChangeroom(scope.row)">办理退宿</el-button>
-                <el-button type="text" size="small" @click="handleChangeroom(scope.row)">下发密码</el-button>
+                <el-button type="text" size="small" @click="connfig(scope.row)">配置指纹/卡片</el-button>
+                <el-button type="text" size="small" @click="handlecheckout(scope.row)">办理退宿</el-button>
+                <el-button type="text" size="small" @click="IssuePassword(scope.row)">下发密码</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -109,12 +109,16 @@
       </span>
     </el-dialog>
     <permission-popup ref="popup"></permission-popup>
+    <config-card ref="ConfigCard"></config-card>
+    <handling-checkout ref="checkout"></handling-checkout>
   </div>
 </template>
 
 <script>
 import treeTransfer from '@/components/tree-transfer.vue'
 import PermissionPopup from './PermissionPopup.vue';
+import ConfigCard from './ruzhu/ConfigCard.vue';
+import HandlingCheckout from './ruzhu/HandlingCheckout.vue';
 const tree = [
   {
     label: 'A部门',
@@ -160,7 +164,7 @@ const tree = [
   },
 ]
 export default {
-  components: { treeTransfer, PermissionPopup, },
+  components: { treeTransfer, PermissionPopup, ConfigCard, HandlingCheckout, },
   name: 'AnlockmanageHouseholdManange',
 
   data () {
@@ -184,6 +188,9 @@ export default {
     showEdit (row, Builddata) {
       this.dialogVisible = true
     },
+    connfig(row) {
+      this.$refs['ConfigCard'].showEdit(row)
+    },
     handleQuery(){},
     succeed (row) {
 
@@ -202,6 +209,20 @@ export default {
     },
     handleChangeroom (row) {
       this.$refs['popup'].showEdit(row)
+    },
+    handlecheckout (row) {
+      this.$alert('确定要退寝室？', '退宿', {
+          confirmButtonText: '确定',
+          callback: action => {
+            this.$message({
+              type: 'warning',
+              message: `action: ${ action }`
+            });
+          }
+        });
+    },
+    IssuePassword(row){
+      this.$refs['checkout'].showEdit(row)
     },
     handleChange (value, direction, currentKeys) {
       console.log('handleChange', value, direction, currentKeys)

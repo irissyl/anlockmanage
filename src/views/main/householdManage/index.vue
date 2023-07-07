@@ -39,18 +39,23 @@
                     </el-button>
                   </el-form-item>
                   <el-form-item>
-                    <el-button icon="el-icon-plus" type="primary" @click="handleAdd">
-                      创建住户
+                    <el-button icon="el-icon-s-management" type="primary" @click="handleAdd">
+                      人员管理
+                    </el-button>
+                  </el-form-item>
+                  <el-form-item>
+                    <el-button icon="el-icon-s-management" type="primary" @click="handleAddorganization">
+                      组织机构管理
                     </el-button>
                   </el-form-item>
                   <el-form-item>
                     <el-button icon="el-icon-plus" type="primary" @click="uploads">导入</el-button>
                   </el-form-item>
-                  <el-form-item>
+                  <!-- <el-form-item>
                     <el-button icon="el-icon-plus" type="primary" @click="uploads">
-                      导入住户门卡关系
+                      导入门卡
                     </el-button>
-                  </el-form-item>
+                  </el-form-item> -->
                 </el-form>
               </div>
               <el-table ref="tableSort" :data="list" :element-loading-text="elementLoadingText" :header-cell-style="{'text-align': 'left'
@@ -86,6 +91,7 @@
     </el-row>
     <table-edit ref="edit" @fetchData="fetchData"></table-edit>
     <uploadfile ref="uploads" @fetchData="fetchData"></uploadfile>
+    <add-organization ref="organization"></add-organization>
   </div>
 </template>
 
@@ -100,15 +106,17 @@ import {
 } from '@/api/api'
 import TableEdit from './components/TableEdit'
 import Uploadfile from './components/uploadfile.vue'
+import AddOrganization from './components/AddOrganization.vue'
 export default {
   name: '',
   components: {
     TableEdit,
     Uploadfile,
+    AddOrganization,
   },
   data () {
     return {
-      list: [],
+      list: [{roomNO:1,roomName:'狐狸房'}],
       imageList: [],
       form: {
         appld: '',
@@ -294,6 +302,9 @@ export default {
       // } else {
       //   this.$message('请先选择左边的办公区房间列表')
       // }
+    },
+    handleAddorganization() {
+      this.$refs['organization'].showEdit()
     },
     handleImport (row) {
       console.log(row, 'row')

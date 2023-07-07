@@ -14,7 +14,6 @@
         <el-input v-model.trim="form.rentDoorPass" autocomplete="off" placeholder="请输入6位数字密码" class="ie"></el-input>
         <el-button type="primary" @click="handleFree">生成随机密码</el-button>
       </el-form-item>
-
       <el-form-item label="持卡卡号" prop="rentCardnoHex">
         <el-input v-model.trim="form.rentCardnoHex" autocomplete="off" placeholder="请输入持卡卡号" class="ie"></el-input>
         <el-button type="primary" @click="handleRead">读卡器读卡号</el-button>
@@ -47,11 +46,11 @@
     <el-dialog title="录入指纹" size="small" :visible.sync="printdialogVisible" width="25%" :before-close="handleClose" append-to-body :close-on-click-modal="false">
       <div class="contents">
         <div class="right">
-          <img v-if="imgShow1" src="../../../../assets/print/1.png" />
-          <img v-if="imgShow2" src="../../../../assets/print/2.png" />
-          <img v-if="imgShow3" src="../../../../assets/print/3.png" />
-          <img v-if="imgShow4" src="../../../../assets/print/4.png" />
-          <img v-if="imgShow5" src="../../../../assets/print/5.png" />
+          <img v-if="imgShow1" src="../../../../../assets/print/1.png" />
+          <img v-if="imgShow2" src="../../../../../assets/print/2.png" />
+          <img v-if="imgShow3" src="../../../../../assets/print/3.png" />
+          <img v-if="imgShow4" src="../../../../../assets/print/4.png" />
+          <img v-if="imgShow5" src="../../../../../assets/print/5.png" />
         </div>
         <el-timeline class="left">
           <el-timeline-item v-for="(activity, index) in activities" :key="index" size="large" :color="activity.color">
@@ -297,20 +296,20 @@ export default {
     },
     showEdit (row) {
       if (!row) {
-        this.title = '添加办公室名单'
+        this.title = '配置指纹卡片'
         this.Edit = false
       } else {
-        this.title = '编辑办公室名单'
+        this.title = '配置指纹卡片'
         this.Edit = true
         this.form = Object.assign({}, row)
-        this.form.content = row.rentContent.split(',').map((item) => {
-          this.Builddata.forEach((item2) => {
-            if (item2.sectionName == item) {
-              item = item2.sectionId
-            }
-          })
-          return Number(item)
-        })
+        // this.form.content = row.rentContent.split(',').map((item) => {
+        //   this.Builddata.forEach((item2) => {
+        //     if (item2.sectionName == item) {
+        //       item = item2.sectionId
+        //     }
+        //   })
+        //   return Number(item)
+        // })
         console.log(this.form, row, 'row2')
       }
       this.dialogFormVisible = true

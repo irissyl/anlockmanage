@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog :title="title" :visible.sync="dialogVisible" width="60%" :before-close="handleClose" append-to-body>
-      <el-table ref="tableSort" :data="lists" row-key="id" border :tree-props="{children: 'children'}" max-height="500px">
+      <el-table ref="tableSort" default-expand-all :data="lists" row-key="id" border :tree-props="{children: 'children'}" max-height="500px">
         <el-table-column show-overflow-tooltip prop="id" label="编号"></el-table-column>
         <el-table-column show-overflow-tooltip prop="label" label="名称"></el-table-column>
         <el-table-column show-overflow-tooltip prop="" label="类型"></el-table-column>
@@ -21,14 +21,16 @@
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
-    <!-- <cengji-add ref="organization"></cengji-add> -->
+    <cengji-add ref="organization"></cengji-add>
+    <table-edit ref="edit"></table-edit>
   </div>
 </template>
 
 <script>
-// import cengjiAdd from './cengjiAdd.vue';
+import TableEdit from '../../../main/OrganizationManage/components/TableEdit.vue';
+import cengjiAdd from './cengjiAdd.vue';
 export default {
-  // components: { cengjiAdd },
+  components: { cengjiAdd, TableEdit },
   name: 'AnlockmanageAddOrganization',
   data () {
     return {
@@ -72,14 +74,7 @@ export default {
     handleClose () { },
     showEdit (row, tableDataid) {
       this.dialogVisible = true
-      this.title = '新增'
-      // console.log(row, 'orow')
-      // if (tableDataid == row.id) {
-      //   this.title = '新增' + row.label + '的上级'
-      // } else {
-      //   this.title = '新增' + row.label + '的同级'
-      // }
-
+      this.title = '新增组织结构'
     },
     handleClick (row) {
       console.log(this.lists[0].id,row.id,'tableData')

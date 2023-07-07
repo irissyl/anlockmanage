@@ -24,18 +24,6 @@
           <el-option label="无" value="10"></el-option>
         </el-select>
       </el-form-item> -->
-      <!-- <el-form-item label="层级类型:" prop="title">
-        <el-select v-model.trim="form.cengjiType" placeholder="请选择层级类型">
-          <el-option label="二级" value="1"></el-option>
-          <el-option label="三级" value="2"></el-option>
-          <el-option label="四级" value="3"></el-option>
-          <el-option label="五级" value="4"></el-option>
-          <el-option label="六级" value="5"></el-option>
-          <el-option label="七级" value="6"></el-option>
-          <el-option label="八级" value="7"></el-option>
-          <el-option label="九级" value="8"></el-option>
-        </el-select>
-      </el-form-item> -->
       <el-form-item label="办公地点:" prop="address">
         <el-input v-model.trim="form.address" autocomplete="off" placeholder="请输入办公地点"></el-input>
       </el-form-item>

@@ -1,9 +1,6 @@
 <template>
   <div class="table-container">
     <div class="righttable">
-      <!-- <div class="btntotal">
-        <el-button icon="el-icon-plus" type="primary" @click="handleAdd">添加</el-button>
-      </div> -->
       <el-table ref="tableSort" v-loading="listLoading" :data="lists" :element-loading-text="elementLoadingText" row-key="id" border :tree-props="{children: 'children'}" max-height="300px" :header-cell-style="{ 'text-align': 'center'}"
         :cell-style="{ 'text-align': 'center' }" @selection-change="setSelectRows" @sort-change="tableSortChange">
         <el-table-column show-overflow-tooltip prop="id" label="编号"></el-table-column>
@@ -11,6 +8,7 @@
         <el-table-column show-overflow-tooltip prop="" label="类型"></el-table-column>
         <el-table-column show-overflow-tooltip prop="" label="办公地点"></el-table-column>
         <el-table-column show-overflow-tooltip prop="" label="描述"></el-table-column>
+        <el-table-column show-overflow-tooltip prop="" label="排序"></el-table-column>
         <el-table-column show-overflow-tooltip label="操作" fixed="right">
           <template #default="{ row }">
             <el-button type="text" icon="el-icon-circle-plus-outline" @click="handleClick(row)"></el-button>
@@ -44,20 +42,13 @@ export default {
         appSecret: '',
         builds: '',
       },
-      nodetitle: '添加片区',
       ckVisible: false,
-      startTime: '',
-      endTime: '',
-      value1: '',
       listLoading: true,
       lockshow: false,
       lockchecked: false,
-      layout: 'total, sizes, prev, pager, next, jumper',
-      total: 0,
       background: true,
       selectRows: '',
       elementLoadingText: '正在加载...',
-      Builddata: [],
       buildObjs: [],
       lists: [
         {
@@ -72,11 +63,6 @@ export default {
           ],
         },
       ],
-      defaultProps: {
-        children: 'children',
-        label: 'label',
-        icon: 'icon',
-      },
     }
   },
   computed: {
@@ -103,18 +89,6 @@ export default {
     handleClick (row) {
       console.log(this.lists[0].id,row.id,'tableData')
       this.$refs['organization'].showEdit(row,this.lists[0].id)
-      // if(row.label == '片区' && row.label != '楼栋' && row.label == '楼层' && this.tableData[0].id == row.id){
-      //   this.pianqudialogVisible = true
-      // }
-      //  if(row.label == '楼栋'){
-      //   this.loudongdialogVisible = true
-      // }
-      //  if(row.label == '楼层'){
-      //   this.loucengdialogVisible = true
-      // }
-      // if(this.lists[0].id == row.id){
-      //  this.cengjidialogVisible = true
-      // }
     },
     lockcheckedChange (val) {
       if (val == true) {
@@ -143,7 +117,6 @@ export default {
       console.log(row, 'row')
       this.$refs['edit'].showEdit(row)
     },
-
     handlefangjian () {
       this.$refs['fangjian'].showEdit()
     },

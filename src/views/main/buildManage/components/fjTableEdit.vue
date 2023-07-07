@@ -96,7 +96,7 @@ export default {
   data () {
     return {
       form: {
-        sex: 1,
+        sex: 3,
         author: '',
         sceneType: '',
         num: 1,
