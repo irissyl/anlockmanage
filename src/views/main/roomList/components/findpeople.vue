@@ -23,7 +23,6 @@
           @right-check-change="handleRightCheckChange"
           @change="handleChange"
         ></tree-transfer>
-        <!-- <el-transfer class="trans" v-model="generatevalue" :titles="['未分配:', '已分配:']" :button-texts="['删除', '添加人员']" filterable :filter-method="filterMethod" filter-placeholder="请输入人员信息" :data="generateData"></el-transfer> -->
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="handleClose">取 消</el-button>
@@ -55,27 +54,6 @@
           label: '小刚',
           children: [],
           id: '1-3',
-        },
-      ],
-    },
-    {
-      label: 'B部门',
-      id: '2',
-      children: [
-        {
-          label: '小王',
-          children: [],
-          id: '2-1',
-        },
-        {
-          label: '小李',
-          children: [],
-          id: '2-2',
-        },
-        {
-          label: '小朱',
-          children: [],
-          id: '2-3',
         },
       ],
     },

@@ -114,7 +114,7 @@ export const constantRoutes = [
             name: 'Lowpressure',
             component: () => import('@/views/main/roomList/index'),
             meta: {
-              title: '房间调整',
+              title: '入住管理',
               premissions: ['roomList/index'],
               // badge: 'New',
             },
@@ -124,7 +124,7 @@ export const constantRoutes = [
             name: 'BrowseRoom',
             component: () => import('@/views/main/roomList/components/BrowseRoom.vue'),
             meta: {
-              title: '浏览房间情况',
+              title: '在住管理',
               premissions: ['BrowseRoom/index'],
               // badge: 'New',
             },
