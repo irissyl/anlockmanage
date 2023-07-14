@@ -249,7 +249,7 @@ export default {
   }
   /* //没有子节点 */
   .el-tree-node__expand-icon.is-leaf::before {
-    background: #fff;
+    
     content: '';
     display: block;
     width: 0px;

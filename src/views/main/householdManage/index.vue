@@ -1,7 +1,7 @@
 <template>
   <div class="housecontainer">
     <el-row :gutter="20">
-      <el-col :xs="24" :sm="24" :md="10" :lg="4" :xl="4">
+      <el-col :xs="24" :sm="24" :md="10" :lg="5" :xl="5">
         <el-card class="treeall1" shadow="never">
           <el-tree class="tree" :data="treedata" :props="defaultProps" node-key="id" :default-expanded-keys="[1, 2, 3]" @node-click="handleNodeClick">
             <span slot-scope="{ node, data }">
@@ -11,27 +11,27 @@
           </el-tree>
         </el-card>
       </el-col>
-      <el-col :xs="24" :sm="24" :md="20" :lg="20" :xl="20">
+      <el-col :xs="24" :sm="24" :md="20" :lg="19" :xl="19">
         <el-card class="all1" shadow="never" style="height: 800px">
           <div class="grid-content bg-purple">
             <div class="right">
               <div class="inputtotal">
                 <el-form ref="form" :model="queryForm" :inline="true">
                   <el-form-item>
-                    <label class="lb">住户类型:</label>
-                    <el-select v-model.trim="form.sceneType" placeholder="请选择住户类型" class="ei">
-                      <el-option label="本科" value="本科"></el-option>
-                      <el-option label="专科" value="专科"></el-option>
-                      <el-option label="研究生" value="研究生"></el-option>
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item>
-                    <label class="lb">学号:</label>
-                    <el-input v-model="queryForm.roomName" class="ei" placeholder="学号" />
-                  </el-form-item>
-                  <el-form-item>
                     <label class="lb">姓名:</label>
-                    <el-input v-model="queryForm.roomName" class="ei" placeholder="姓名" />
+                    <el-input v-model="queryForm.roomName" class="ei" placeholder="请输入姓名" />
+                  </el-form-item>
+                  <el-form-item>
+                    <label class="lb">手机号:</label>
+                    <el-input v-model="queryForm.roomName" class="ei" placeholder="请输入手机号" />
+                  </el-form-item>
+                  <el-form-item>
+                    <label class="lb">证件号:</label>
+                    <el-input v-model="queryForm.roomName" class="ei" placeholder="请输入证件号" />
+                  </el-form-item>
+                  <el-form-item>
+                    <label class="lb">卡号:</label>
+                    <el-input v-model="queryForm.roomName" class="ei" placeholder="请输入卡号" />
                   </el-form-item>
                   <el-form-item>
                     <el-button icon="el-icon-search" type="info" native-type="submit" @click="handleQuery">
@@ -39,13 +39,13 @@
                     </el-button>
                   </el-form-item>
                   <el-form-item>
-                    <el-button icon="el-icon-s-management" type="primary" @click="handleAdd">
-                      人员管理
+                    <el-button icon="el-icon-s-management" type="primary" @click="handleAddorganization">
+                      组织机构管理
                     </el-button>
                   </el-form-item>
                   <el-form-item>
-                    <el-button icon="el-icon-s-management" type="primary" @click="handleAddorganization">
-                      组织机构管理
+                    <el-button icon="el-icon-s-management" type="primary" @click="handleAdd">
+                      人员管理
                     </el-button>
                   </el-form-item>
                   <el-form-item>
@@ -59,7 +59,7 @@
                 </el-form>
               </div>
               <el-table ref="tableSort" :data="list" :element-loading-text="elementLoadingText" :header-cell-style="{'text-align': 'left'
-                }" :cell-style="{ 'text-align': 'left' }" style="width: 100%" @selection-change="setSelectRows" @sort-change="tableSortChange">
+                }" :cell-style="{ 'text-align': 'left' }" style="width: 99%;margin:0 auto;"  @selection-change="setSelectRows" @sort-change="tableSortChange">
                 <el-table-column min-width="110px" show-overflow-tooltip prop="roomNO" label="住户ID"></el-table-column>
                 <el-table-column min-width="110px" show-overflow-tooltip prop="roomName" label="住户姓名"></el-table-column>
                 <el-table-column show-overflow-tooltip prop="lockKey" label="性别"></el-table-column>
@@ -77,9 +77,9 @@
                     <el-button type="danger" plain style="margin-right: 10px" size="mini" @click="del(row)">
                       删除
                     </el-button>
-                    <el-button type="success" plain style="margin-right: 10px" size="mini">
-                      人脸信息
-                    </el-button>
+                    <!-- <el-button type="success" plain style="margin-right: 10px" size="mini" @click="config(row)">
+                      人员配置
+                    </el-button> -->
                   </template>
                 </el-table-column>
               </el-table>
@@ -92,6 +92,7 @@
     <table-edit ref="edit" @fetchData="fetchData"></table-edit>
     <uploadfile ref="uploads" @fetchData="fetchData"></uploadfile>
     <add-organization ref="organization"></add-organization>
+    <fingerprint-card ref="finger" @fetchData="fetchData"></fingerprint-card>
   </div>
 </template>
 
@@ -107,12 +108,14 @@ import {
 import TableEdit from './components/TableEdit'
 import Uploadfile from './components/uploadfile.vue'
 import AddOrganization from './components/AddOrganization.vue'
+import FingerprintCard from './components/FingerprintCard.vue'
 export default {
   name: '',
   components: {
     TableEdit,
     Uploadfile,
     AddOrganization,
+    FingerprintCard,
   },
   data () {
     return {
@@ -143,7 +146,7 @@ export default {
       buildObjs: [],
       treedata: [
         {
-          areaId: 1,
+          id: 1,
           label: '部门列表',
           children: [
             {
@@ -186,6 +189,9 @@ export default {
 
       this.buildId = data.builds
       this.fetchData()
+    },
+    config(row) {
+      this.$refs['finger'].showEdit(row)
     },
     uploads () {
       this.$refs['uploads'].showEdit()
@@ -473,7 +479,7 @@ export default {
     }
     /* //没有子节点 */
     .el-tree-node__expand-icon.is-leaf::before {
-      background: #fff;
+      
       content: '';
       display: block;
       width: 0px;
@@ -498,7 +504,6 @@ export default {
         padding: $base-padding;
         margin-bottom: 15px;
         color: #909399;
-        background-color: $base-color-white;
         border: 1px solid #ebeef5;
       }
     }

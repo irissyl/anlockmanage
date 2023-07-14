@@ -476,7 +476,6 @@ export default {
 .index-container {
   padding: 0 !important;
   margin: 0 !important;
-  background: #f5f7f8 !important;
 
   ::v-deep {
     .el-alert {
@@ -487,7 +486,6 @@ export default {
         padding: $base-padding;
         margin-bottom: 15px;
         color: #909399;
-        background-color: $base-color-white;
         border: 1px solid #ebeef5;
       }
     }

@@ -4,20 +4,21 @@
         <el-button type="primary" >添加</el-button>
        <el-button type="primary" >批量导出</el-button>
     </div>
-    <el-table ref="tableSort"  :data="list" :element-loading-text="elementLoadingText" :header-cell-style="{ 'text-align': 'center'}" :cell-style="{ 'text-align': 'center' }" style="width: 100%" @selection-change="setSelectRows"
+    <el-table ref="tableSort" :data="list" :element-loading-text="elementLoadingText" :header-cell-style="{ 'text-align': 'center'}" :cell-style="{ 'text-align': 'center' }" style="width: 100%" @selection-change="setSelectRows"
       @sort-change="tableSortChange">
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column show-overflow-tooltip prop="iotTag" label="网关编号"></el-table-column>
-      <el-table-column show-overflow-tooltip prop="" label="网关信道"></el-table-column>
-      <el-table-column show-overflow-tooltip prop="" label="门锁编号"></el-table-column>
-      <el-table-column show-overflow-tooltip prop="" label="门锁信道"></el-table-column>
-      <el-table-column show-overflow-tooltip prop="" label="水表采集器编号"></el-table-column>
-      <el-table-column show-overflow-tooltip prop="" label="水表采集器信道"></el-table-column>
-      <el-table-column show-overflow-tooltip prop="" label="电表编号"></el-table-column>
+      <el-table-column show-overflow-tooltip prop="iotTag" label="门锁编号"></el-table-column>
+      <el-table-column show-overflow-tooltip prop="" label="房间编号"></el-table-column>
+      <el-table-column show-overflow-tooltip prop="" label="电池电压"></el-table-column>
+      <el-table-column show-overflow-tooltip prop="" label="固件版本"></el-table-column>
+      <el-table-column show-overflow-tooltip prop="" label="IMEI"></el-table-column>
+      <el-table-column show-overflow-tooltip prop="" label="NB卡号"></el-table-column>
+      <el-table-column show-overflow-tooltip prop="" label="运营商"></el-table-column>
+      <el-table-column show-overflow-tooltip prop="" label="年费到期日"></el-table-column>
+      <el-table-column show-overflow-tooltip prop="" label="账号"></el-table-column>
       <el-table-column show-overflow-tooltip label="操作" width="180px">
         <template #default="{ row }">
-          <!-- <el-button type="primary" plain>添加</el-button> -->
-          <el-button type="primary" @click="handleEdit(row)" plain>编辑</el-button>                                 
+          <el-button type="primary" @click="handleEdit(row)" plain>编辑</el-button>
           <el-button type="primary" plain>删除</el-button>
         </template>
       </el-table-column>

@@ -4,7 +4,7 @@
       v-dialogDrag
       title="人员入住"
       :visible.sync="dialogVisible"
-      width="60%"
+      width="50%"
       destroy-on-close
       @close="handleClose"
     >
@@ -12,8 +12,8 @@
         <tree-transfer
           ref="treeTransfer"
           class="transtransfer"
-          :titles="['未入住:', '已入住:']"
-          :button-texts="['删除', '添加人员']"
+          :titles="['待入住人员:', '已入住人员:']"
+          :button-texts="['删除', '人员入住']"
           :data-source.sync="dataSource"
           :default-checked-keys="defaultValue"
           :is-radio="false"

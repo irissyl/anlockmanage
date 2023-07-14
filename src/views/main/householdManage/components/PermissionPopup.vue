@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog v-dialogDrag title="房间匹配" append-to-body :visible.sync="dialogVisible" width="60%" destroy-on-close @close="handleClose">
+    <el-dialog v-dialogDrag title="房间匹配" append-to-body :visible.sync="dialogVisible" width="50%"  @close="handleClose">
       <div class="trans">
         <tree-transfer ref="treeTransfer" class="transtransfer" :titles="['未分配:', '已分配:']" :button-texts="['删除', '添加房间']" :data-source.sync="dataSource" :default-checked-keys="defaultValue" :is-radio="false" :filterable="true" :father-choose="false"
           @left-check-change="handleLeftCheckChange" @right-check-change="handleRightCheckChange" @change="handleChange"></tree-transfer>

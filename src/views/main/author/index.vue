@@ -260,8 +260,7 @@ export default {
   }
 }
 .caidan{
-  height: 1000px;
-  overflow-y: scroll
-  ;
+  height: 800px;
+  overflow-y: scroll;
 }
 </style>

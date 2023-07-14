@@ -1,17 +1,34 @@
 <template>
-  <el-dialog v-dialogDrag title="办理入住" :visible.sync="checkindialogVisible" width="900px" destroy-on-close @close="close">
-    <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="长期入住" name="first">
-        <tree-transfer ref="treeTransfer" class="transtransfer" :titles="['未入住:', '已入住:']" :button-texts="['删除', '添加人员']" :data-source.sync="dataSource" :default-checked-keys="defaultValue" :is-radio="false" :filterable="true" :father-choose="false"
+  <el-dialog v-dialogDrag title="办理入住" :visible.sync="checkindialogVisible" width="50%"  @close="close">
+    <el-tabs v-model="activeName" @tab-click="handleClick" style="height:500px">
+      <el-tab-pane label="常规人员" name="first">
+        <tree-transfer ref="treeTransfer" class="transtransfer" :titles="['房间待入住人员:', '房间已入住人员:']" :button-texts="['删除', '添加人员']" :data-source.sync="dataSource" :default-checked-keys="defaultValue" :is-radio="false" :filterable="true" :father-choose="false"
           @left-check-change="handleLeftCheckChange" @right-check-change="handleRightCheckChange" @change="handleChange"></tree-transfer>
       </el-tab-pane>
-      <el-tab-pane label="临时入住" name="second">
-
+      <el-tab-pane label="临时人员" name="second">
+        <el-form  label-width="120px" :model="formLabelAlign">
+          <el-form-item label="住户名称">
+            <el-input v-model="formLabelAlign.name" style="width:400px"></el-input>
+          </el-form-item>
+          <el-form-item label="手机号码">
+            <el-input v-model="formLabelAlign.region" style="width:400px"></el-input>
+          </el-form-item>
+          <el-form-item label="性别">
+            <el-radio-group v-model.trim="formLabelAlign.type">
+              <el-radio :label="1">男</el-radio>
+              <el-radio :label="2">女</el-radio>
+              <el-radio :label="3">中性</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="身份证号码">
+            <el-input v-model="formLabelAlign.idcard" style="width:400px"></el-input>
+          </el-form-item>
+        </el-form>
       </el-tab-pane>
     </el-tabs>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="close">取 消</el-button>
-      <el-button type="primary" @click="save">确 定</el-button>
+      <el-button @click="close">取消入住</el-button>
+      <el-button type="primary" @click="save">确定入住</el-button>
     </div>
   </el-dialog>
 </template>
@@ -53,6 +70,12 @@ export default {
           ],
         },
       ],
+      formLabelAlign: {
+          name: '',
+          region: '',
+          type: 3,
+          idcard:''
+        },
       defaultValue: [],
     }
   },
@@ -79,18 +102,7 @@ export default {
       this.checkindialogVisible = false
     },
     save () {
-      this.$refs['form'].validate(async (valid) => {
-        if (valid) {
-
-          // this.$refs['form'].resetFields()
-          // this.form = this.$options.data().form
-          // this.checkindialogVisible = false
-          // this.$emit('fetchData')
-          // this.$parent.fetchData();
-        } else {
-          return false
-        }
-      })
+      this.checkindialogVisible = false
     },
   },
 }

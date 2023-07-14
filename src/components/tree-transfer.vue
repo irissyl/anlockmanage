@@ -52,7 +52,7 @@
         :disabled="listCheckKey.length == 0"
         @click="listToTree()"
       >
-        <i class="el-icon-arrow-left el-icon--left"></i>
+        <i class="el-icon-delete el-icon--left"></i>
         {{ leftButtonText }}
       </el-button>
 
@@ -60,6 +60,7 @@
         type="primary"
         :disabled="transferDisabled"
         @click="treeToList()"
+        class="rightbtn"
       >
         {{ rightButtonText }}
         <i class="el-icon-arrow-right el-icon--right"></i>
@@ -688,7 +689,7 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .transfer-box {
     position: relative;
     overflow: hidden;
@@ -721,7 +722,7 @@
   .transfer-left,
   .transfer-right {
     border: 1px solid #ebeef5;
-    width: 35%;
+    width: 40%;
     height: 100%;
     box-sizing: border-box;
     border-radius: 5px;
@@ -730,11 +731,21 @@
 
   .transfer-center {
     position: absolute;
-    top: 50%;
-    left: 35%;
-    width: 30%;
+    top: 40%;
+    left: 44%;
+    width: 13%;
     text-align: center;
     vertical-align: center;
+    
+    button{
+      width: 100px;
+      margin-bottom: 20px;
+    }
+
+    .rightbtn{
+      float: left;
+      // margin-right: 10px;
+    }
   }
 
   .right-list-center {
@@ -794,7 +805,7 @@
 
   .slot-footer {
     height: 40px;
-    background: #fff;
+    
     margin: 0;
     padding: 0;
     border-top: 1px solid #ebeef5;

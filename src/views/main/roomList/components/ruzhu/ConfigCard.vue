@@ -21,7 +21,6 @@
       <el-form-item label="指纹">
         <el-button style="width: 320px" type="primary" @click="handlePrint">
           <span v-show="currentFingerprintNum == 0">采集指纹（未采集）</span>
-
           <span v-show="currentFingerprintNum > 0">
             采集指纹 {{ currentFingerprintNum }}
           </span>

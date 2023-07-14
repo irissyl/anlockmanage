@@ -3,17 +3,23 @@
     <el-table default-expand-all :data="tableData" style="width: 100%;margin-bottom: 20px;" row-key="id" border :tree-props="{children: 'children'}" max-height="300px">
       <el-table-column prop="id" label="层级编号">
       </el-table-column>
-      <el-table-column prop="label" label="层级名称" >
+      <el-table-column prop="label" label="层级名称">
       </el-table-column>
-      <el-table-column prop="name" label="建筑名称" >
+      <el-table-column prop="name" label="建筑名称">
       </el-table-column>
-      <el-table-column prop="" label="排序" >
+      <el-table-column prop="" label="排序">
       </el-table-column>
       <el-table-column show-overflow-tooltip label="操作" fixed="right">
         <template #default="{ row }">
-          <el-button type="text" icon="el-icon-circle-plus-outline" @click="handleClick(row)"></el-button>
-          <el-button type="text" icon="el-icon-edit" @click="editlevel(row)"></el-button>
-          <el-button type="text" icon="el-icon-delete" @click="handleDelete(row)"></el-button>
+          <el-tooltip content="添加层级" placement="top" effect="dark">
+            <el-button type="text" icon="el-icon-circle-plus-outline" @click="handleClick(row)"></el-button>
+          </el-tooltip>
+          <el-tooltip content="编辑层级" placement="top" effect="dark">
+            <el-button type="text" icon="el-icon-edit" @click="editlevel(row)"></el-button>
+          </el-tooltip>
+          <el-tooltip content="删除层级" placement="top" effect="dark">
+            <el-button type="text" icon="el-icon-delete" @click="handleDelete(row)"></el-button>
+          </el-tooltip>
         </template>
       </el-table-column>
     </el-table>
@@ -183,18 +189,18 @@ export default {
     handleDelete () { },
 
     handleClick (row) {
-      console.log(this.tableData[0].id,row.id,'tableData')
-      if(row.label == '片区' && row.label != '楼栋' && row.label == '楼层' && this.tableData[0].id == row.id){
+      console.log(this.tableData[0].id, row.id, 'tableData')
+      if (row.label == '片区' && row.label != '楼栋' && row.label == '楼层' && this.tableData[0].id == row.id) {
         this.pianqudialogVisible = true
       }
-       if(row.label == '楼栋'){
+      if (row.label == '楼栋') {
         this.loudongdialogVisible = true
       }
-       if(row.label == '楼层'){
+      if (row.label == '楼层') {
         this.loucengdialogVisible = true
       }
-      if(this.tableData[0].id == row.id){
-       this.cengjidialogVisible = true
+      if (this.tableData[0].id == row.id) {
+        this.cengjidialogVisible = true
       }
     },
     handleChange () { },

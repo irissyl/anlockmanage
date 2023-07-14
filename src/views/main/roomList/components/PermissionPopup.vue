@@ -2,9 +2,9 @@
   <div>
     <el-dialog
       v-dialogDrag
-      title="批量入宿"
+      :title="title"
       :visible.sync="dialogVisible"
-      width="60%"
+      width="50%"
       destroy-on-close
       @close="handleClose"
     >
@@ -12,7 +12,7 @@
         <tree-transfer
           ref="treeTransfer"
           class="transtransfer"
-          :titles="['未分配:', '已分配:']"
+          :titles="['待入住房间:', '已入住房间:']"
           :button-texts="['删除', '入宿']"
           :data-source.sync="dataSource"
           :default-checked-keys="defaultValue"
@@ -129,6 +129,7 @@
         personChoose: false,
         dataSource: tree,
         defaultValue: [],
+        title:'批量入宿'
       }
     },
 
@@ -138,8 +139,9 @@
     },
 
     methods: {
-      showEdit() {
+      showEdit(row,title) {
         this.dialogVisible = true
+        this.title = title
       },
       handleClose() {
         this.dialogVisible = false

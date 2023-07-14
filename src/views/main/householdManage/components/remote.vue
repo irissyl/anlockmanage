@@ -2,82 +2,28 @@
   <div>
     <div class="grid-content bg-purple">
       <div class="right">
-        <div class="inputtotal topform">
-          <el-form ref="form" :model="queryForm" :inline="true" class="forms">
-            <el-form-item>
-              <label class="lb">编号:</label>
-              <el-input v-model="queryForm.roomName" class="ei" placeholder="学号" style="width: 160px;margin: 0 10px 0 0;" />
-            </el-form-item>
-            <el-form-item>
-              <label class="lb">区域:</label>
-              <el-select v-model="quyuvalue1" placeholder="请选择片区" style="width: 160px;margin: 0 10px 0 0;">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                </el-option>
-              </el-select>
-              <el-select v-model="quyuvalue2" placeholder="请选择楼栋" style="width: 160px;margin: 0 10px 0 0;">
-                <el-option v-for="item in options3" :key="item.value" :label="item.label" :value="item.value">
-                </el-option>
-              </el-select>
-              <el-select v-model="quyuvalue3" placeholder="请选择楼层" style="width: 160px;margin: 0 10px 0 0;">
-                <el-option v-for="item in options4" :key="item.value" :label="item.label" :value="item.value">
-                </el-option>
-              </el-select>
-              <el-select v-model="quyuvalue4" placeholder="请选择房间" style="width: 160px;margin: 0 10px 0 0;">
-                <el-option v-for="item in options5" :key="item.value" :label="item.label" :value="item.value">
-                </el-option>
-              </el-select>
-              <el-select v-model="quyuvalue5" placeholder="请选择权限" style="width: 160px;margin: 0 10px 0 0;">
-                <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item>
-              <el-button icon="el-icon-search" type="info" native-type="submit">
-                查询
-              </el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-        <div class="inputtotal centerform">
-          <el-form ref="form" :model="queryForm" :inline="true" class="forms">
-            <el-form-item>
-              <label class="lb">权限控制:</label>
-              <el-select v-model="quyuvalue6" placeholder="请选择权限" style="width: 160px;margin: 0 10px 0 0;">
-                <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item>
-              <el-checkbox v-model="checked" class="lb checked" @change="checkchange">区域设置</el-checkbox>
-              <el-button type="danger" v-show="setshow" native-type="submit" size="mini" plain>
-                设置
-              </el-button>
-            </el-form-item>
-          </el-form>
-        </div>
         <el-table ref="tableSort" :data="tablelist" :element-loading-text="elementLoadingText" :header-cell-style="{'text-align': 'left'
               }" :cell-style="{ 'text-align': 'left' }" style="width: 100%" @selection-change="setSelectRows" @sort-change="tableSortChange">
           <el-table-column type="selection" width="55"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="roomNO" label="住户ID"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="roomName" label="住户姓名"></el-table-column>
-          <el-table-column show-overflow-tooltip prop="sex" label="性别"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="dan" label="所属单位"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="远程开门权限">
-            <template #default="{ row }">
-              <i class="el-icon-success" v-if="row"></i>
-              <i class="el-icon-error" v-if="!row"></i>
-            </template>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="roomName" label="姓名"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="职务"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="证件号"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="手机"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="性别"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="房间数">
+            <template>可开门数</template>
           </el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="自助录入指纹权限">
+          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="微信"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="左指纹"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="右指纹"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="卡号"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="密码"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="备注"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="操作">
             <template #default="{ row }">
-              <i class="el-icon-success" v-if="row"></i>
-              <i class="el-icon-error" v-if="!row"></i>
-            </template>
-          </el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="临时密码权限">
-            <template #default="{ row }">
-              <i class="el-icon-success" v-if="row"></i>
-              <i class="el-icon-error" v-if="!row"></i>
+              <el-button type="primary" icon="el-icon-edit" @click="handleEdit(row)" plain></el-button>
+                <el-button type="primary" icon="el-icon-delete" @click="handleDelete(row)" plain></el-button>
+                <el-button type="primary" @click="openRecord(row)" plain>开锁记录</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -159,6 +105,16 @@ export default {
   },
 
   methods: {
+    openRecord(row){
+      this.$refs['record'].showEdit()
+    },
+    handleEdit (row) {
+      console.log(row, 'row')
+      this.$refs['edit'].showEdit(row)
+    },
+    handleDelete (row) {
+      console.log(row, 'rowd')
+    },
     setSelectRows () { },
     tableSortChange () { },
     checkchange(e){

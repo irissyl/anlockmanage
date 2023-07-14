@@ -71,7 +71,9 @@ export default {
 
   methods: {
     handleChange () { },
-    handleClose () { },
+    handleClose () { 
+      this.dialogVisible = false
+    },
     showEdit (row, tableDataid) {
       this.dialogVisible = true
       this.title = '新增组织结构'

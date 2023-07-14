@@ -1,8 +1,8 @@
 <template>
   <div class="roomcontainer">
     <el-row :gutter="20">
-      <!-- <el-col :xs="24" :sm="24" :md="24" :lg="6" :xl="4">
-        <el-card class="all1" shadow="never">
+      <el-col :xs="24" :sm="24" :md="24" :lg="5" :xl="5">
+        <el-card shadow="never">
           <el-tree class="tree" :data="treedata" :props="defaultProps" node-key="id" :default-expanded-keys="[1, 2, 3]" :default-checked-keys="[1]" @node-click="handleNodeClick">
             <span slot-scope="{ node, data }">
               <i :class="data.icon" :style="`color: ${data.color}`"></i>
@@ -10,9 +10,9 @@
             </span>
           </el-tree>
         </el-card>
-      </el-col> -->
-      <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-        <el-card class="all1" shadow="never" style="height: 800px">
+      </el-col>
+      <el-col :xs="24" :sm="24" :md="24" :lg="19" :xl="19">
+        <el-card shadow="never" style="height: 800px">
           <div class="grid-content bg-purple">
             <div class="right">
               <div class="inputtotal">
@@ -30,45 +30,28 @@
                       查询
                     </el-button>
                   </el-form-item>
-                  <!-- <el-form-item>
-                    <el-button icon="el-icon-plus" type="primary" @click="handleAdd">
-                      添加房间
-                    </el-button>
-                  </el-form-item>
-                  <el-form-item>
-                    <el-button icon="el-icon-plus" type="primary" @click="batchAdd">
-                      批量创建房间
-                    </el-button>
-                  </el-form-item> -->
-                  <el-form-item>
-                    <el-button icon="el-icon-plus" type="primary" @click="checkin">
-                      办理入住
-                    </el-button>
-                  </el-form-item>
                 </el-form>
               </div>
               <el-table ref="tableSort" :data="list" :element-loading-text="elementLoadingText" :header-cell-style="{'text-align': 'center',
                 }" :cell-style="{ 'text-align': 'center' }" style="width: 100%" @selection-change="setSelectRows" @sort-change="tableSortChange">
                 <el-table-column min-width="110px" show-overflow-tooltip prop="roomNO" label="房间编号"></el-table-column>
                 <el-table-column min-width="110px" show-overflow-tooltip prop="roomName" label="房间名称"></el-table-column>
-                <el-table-column show-overflow-tooltip prop="lockKey" label="钥匙数">
-                  <template #default="{ row }">
-                    <el-button type="warning" plain @click="setKey(row)" v-if="row.lockKey">
-                      {{ row.lockKey }}
-                    </el-button>
+                <el-table-column min-width="120px" show-overflow-tooltip prop="" label="在住人数">
+                  <template >
+                    <el-tag type="danger">5/6</el-tag>
                   </template>
                 </el-table-column>
-                <el-table-column min-width="120px" show-overflow-tooltip prop="iotTag" label="门锁ID"></el-table-column>
-                <el-table-column min-width="110px" show-overflow-tooltip prop="" label="门锁状态"></el-table-column>
-                <el-table-column min-width="110px" show-overflow-tooltip prop="" label="门状态"></el-table-column>
-                <el-table-column min-width="110px" show-overflow-tooltip prop="" label="电量"></el-table-column>
+                <el-table-column min-width="110px" show-overflow-tooltip prop="" label="备注"></el-table-column>
                 <el-table-column min-width="110px" show-overflow-tooltip label="操作" width="290px" fixed="right">
                   <template #default="{ row }">
-                    <el-button type="text" icon="el-icon-edit" @click="handleEdit(row)"></el-button>
-                    <el-button type="text" icon="el-icon-delete" @click="del(row)"></el-button>
-                    <el-button type="text" style="margin-right: 10px" size="mini" @click="handlehold(row)">
-                      住户管理
+                    <!-- <el-button type="text" icon="el-icon-edit" @click="handleEdit(row)"></el-button> -->
+                    <!-- <el-button type="text" icon="el-icon-delete" @click="del(row)"></el-button> -->
+                    <el-button type="primary" @click="checkin" plain>
+                      办理入住
                     </el-button>
+                    <!-- <el-button type="text" style="margin-right: 10px" size="mini" @click="handlehold(row)">
+                      住户管理
+                    </el-button> -->
                   </template>
                 </el-table-column>
               </el-table>
@@ -216,7 +199,7 @@ export default {
       this.buildId = data.builds
       this.fetchData()
     },
-    checkin() {
+    checkin () {
       this.$refs['checkin'].showEdit()
     },
     async ckconfirm () {
@@ -358,7 +341,6 @@ export default {
 .roomcontainer {
   padding: 0 !important;
   margin: 0 !important;
-  background: #f5f7f8 !important;
 
   .btntotal {
     float: right;
@@ -502,7 +484,6 @@ export default {
     }
     /* //没有子节点 */
     .el-tree-node__expand-icon.is-leaf::before {
-      background: #fff;
       content: '';
       display: block;
       width: 0px;
@@ -526,7 +507,6 @@ export default {
         padding: $base-padding;
         margin-bottom: 15px;
         color: #909399;
-        background-color: $base-color-white;
         border: 1px solid #ebeef5;
       }
     }
@@ -562,7 +542,6 @@ export default {
     width: 100%;
     color: #666;
     border-collapse: collapse;
-    background-color: #fff;
 
     td {
       position: relative;
@@ -575,7 +554,6 @@ export default {
       &:nth-child(odd) {
         width: 20%;
         text-align: right;
-        background-color: #f7f7f7;
       }
     }
   }

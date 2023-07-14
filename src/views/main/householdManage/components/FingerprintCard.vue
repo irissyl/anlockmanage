@@ -1,37 +1,14 @@
 <template>
-  <el-dialog v-dialogDrag :title="title" :visible.sync="dialogFormVisible" width="600px"  @close="close">
+  <el-dialog destroy-on-close :title="title" :visible.sync="dialogFormVisible" width="600px" destroy-on-close :close-on-click-modal="false" @close="close">
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
       <el-form-item label="姓名" prop="customerName">
         <el-input v-model.trim="form.customerName" autocomplete="off" placeholder="请输入姓名"></el-input>
       </el-form-item>
-      <el-form-item label="性别" prop="sex">
-        <el-radio-group v-model.trim="form.sex">
-          <el-radio :label="1">男</el-radio>
-          <el-radio :label="2">女</el-radio>
-          <el-radio :label="3">中性</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="手机号码" prop="mobile">
-        <el-input v-model.trim="form.mobile" autocomplete="off" placeholder="请输入手机号码"></el-input>
-      </el-form-item>
       <el-form-item label="证件号码" prop="idCard">
         <el-input v-model.trim="form.idCard" autocomplete="off" placeholder="请输入证件号码"></el-input>
       </el-form-item>
-      <el-form-item label="组织机构">
-        <el-select v-model.trim="form.sceneType" placeholder="请选择组织机构" style="width: 450px">
-          <el-option label="经理" value="经理"></el-option>
-          <el-option label="部长" value="部长"></el-option>
-          <el-option label="组长" value="组长"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="房间">
-        <el-button type="success" plain  style="width: 450px" @click="chooseRoom">点击选择...</el-button>
-      </el-form-item>
-      <el-form-item label="是否在宿">
-        <el-radio-group v-model.trim="form.isStay">
-          <el-radio :label="1">是</el-radio>
-          <el-radio :label="2">否</el-radio>
-        </el-radio-group>
+      <el-form-item label="手机号码" prop="mobile">
+        <el-input v-model.trim="form.mobile" autocomplete="off" placeholder="请输入手机号码"></el-input>
       </el-form-item>
       <el-form-item label="开门密码" prop="rentDoorPass">
         <el-input v-model.trim="form.rentDoorPass" autocomplete="off" placeholder="请输入6位数字密码" class="ie"></el-input>
@@ -54,24 +31,35 @@
           清除已采集的指纹
         </el-button>
       </el-form-item>
-      <el-form-item label="入职时间">
-        <el-date-picker v-model="form.entryTime" type="datetime" placeholder="选择日期时间">
-        </el-date-picker>
+      <el-form-item label="所属部门" prop="content">
+        <el-select v-model="form.content" multiple placeholder="请选择部门" style="width: 450px">
+          <el-option v-for="item in Builddata" :key="item.sectionId" :label="item.sectionName" :value="item.sectionId"></el-option>
+        </el-select>
       </el-form-item>
-      <el-form-item label="入宿时间">
-        <el-date-picker v-model="form.startTime" type="datetime" placeholder="选择日期时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="退宿时间">
-        <el-date-picker v-model="form.endTime" type="datetime" placeholder="选择日期时间">
-        </el-date-picker>
+      <el-form-item label="备注" prop="remark">
+        <el-input v-model.trim="form.remark" type="textarea" :rows="2" autocomplete="off"></el-input>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="close">取 消</el-button>
       <el-button type="primary" @click="save">确 定</el-button>
     </div>
-    <permission-popup ref="findroom"></permission-popup>
+    <el-dialog title="录入指纹" size="small" :visible.sync="printdialogVisible" width="25%" :before-close="handleClose" append-to-body :close-on-click-modal="false">
+      <div class="contents">
+        <div class="right">
+          <img v-if="imgShow1" src="../../../../assets/print/1.png" />
+          <img v-if="imgShow2" src="../../../../assets/print/2.png" />
+          <img v-if="imgShow3" src="../../../../assets/print/3.png" />
+          <img v-if="imgShow4" src="../../../../assets/print/4.png" />
+          <img v-if="imgShow5" src="../../../../assets/print/5.png" />
+        </div>
+        <el-timeline class="left">
+          <el-timeline-item v-for="(activity, index) in activities" :key="index" size="large" :color="activity.color">
+            {{ activity.message }}
+          </el-timeline-item>
+        </el-timeline>
+      </div>
+    </el-dialog>
   </el-dialog>
 </template>
 
@@ -82,66 +70,55 @@ import {
   addKeyFinger,
   listSection,
 } from '@/api/table'
-import {
-  addSingleRoom,
-  listRoom,
-  addBatchRoom,
-  delRoom,
-  updateRoom,
-} from '@/api/api'
-import PermissionPopup from './PermissionPopup.vue'
 
 export default {
-  components: { PermissionPopup },
   name: 'TableEdit',
   data () {
     return {
       form: {
-        isStay: 2,
-        idCard: '',
-        mobile:'',
-        customerNo:'',
-        customerName: '',
-        roomType: '',
-        roomInfo: '',
-        iotTag: '',
-        sceneType: '',
-        buildId: '',
-        sex: 3,
-        endTime: '',
-        startTime: '',
-        entryTime: '',
         customerName: '',
         rentCardnoHex: '',
+        content: [],
+        idCard: '',
+        mobile: '',
         rentDoorPass: '',
+        remark: '',
       },
-      
+      imgShow1: true,
+      imgShow2: false,
+      imgShow3: false,
+      imgShow4: false,
+      imgShow5: false,
+      printdialogVisible: false,
+      buildObjs: [],
       Builddata: [],
-      num: 1,
       rules: {
         customerName: [
           { required: true, trigger: 'blur', message: '请输入姓名' },
-        ],
-        idCard: [
-          { required: true, trigger: 'blur', message: '请输入身份证号' },
-        ],
-        sex: [
-          { required: true, trigger: 'blur', message: '请输入性别' },
         ],
       },
       title: '',
       dialogFormVisible: false,
       Edit: false,
-      activities: [],
       fingerprintList: [], // 存储指纹信息的数组
       maxFingerprintNum: 5, // 最大指纹数量
       currentFingerprintNum: 0, // 当前指纹数量
+      activities: [],
     }
   },
-  mounted () {
-    // this.getlistSection()
+  created () {
+    this.getlistSection()
   },
   methods: {
+    async getlistSection () {
+      let data = await listSection({})
+      this.Builddata = data.data
+      console.log(data, 'data')
+    },
+    handleClose (done) {
+      done()
+      this.activities = []
+    },
     handleFree (row) {
       // 生成一个6位数的随机密码
       var password = Math.floor(Math.random() * 900000 + 100000)
@@ -318,38 +295,25 @@ export default {
       this.fingerprintList = []
       this.activities = []
     },
-    async getlistSection () {
-      let data = await listSection({})
-      this.Builddata = data.data
-      console.log(data, 'data')
-    },
-    handlenumChange () { },
-    handleClose (done) {
-      this.$confirm('确认关闭？')
-        .then((_) => {
-          done()
-          this.activities = []
-        })
-        .catch((_) => { })
-    },
-    chooseRoom() {
-      this.$refs['findroom'].showEdit()
-    },
     showEdit (row) {
-      console.log(typeof row === 'object', 'row')
-      if ((typeof row === 'object') == false) {
-        this.title = '添加住户'
-        this.Edit = false
-        this.form.buildId = row
-      } else {
-        this.title = '编辑住户'
-        this.Edit = true
-        this.form = Object.assign({}, row)
-        // this.form.content = row.rentContent.split(',').map((item) => {
-        //   return Number(item)
-        // })
-        // console.log(this.form, row, 'row2')
-      }
+        this.title = '人员配置'
+    //   if (!row) {
+    //     this.title = '添加办公室名单'
+    //     this.Edit = false
+    //   } else {
+    //     this.title = '编辑办公室名单'
+    //     this.Edit = true
+    //     this.form = Object.assign({}, row)
+    //     this.form.content = row.rentContent.split(',').map((item) => {
+    //       this.Builddata.forEach((item2) => {
+    //         if (item2.sectionName == item) {
+    //           item = item2.sectionId
+    //         }
+    //       })
+    //       return Number(item)
+    //     })
+    //     console.log(this.form, row, 'row2')
+    //   }
       this.dialogFormVisible = true
     },
     close () {
@@ -359,30 +323,62 @@ export default {
       this.$emit('fetch-data')
     },
     save () {
-      this.$refs['form'].validate(async (valid) => {
-        if (valid) {
-          if (this.Edit == false) {
-            console.log(this.form, 'form')
-            let data = await addSingleRoom(this.form)
-            if (data.resultCode == 0) {
-              this.$message('添加成功')
-            }
-          } else {
-            let data = await updateRoom(this.form)
-            if (data.resultCode == 0) {
-              this.$message('修改成功')
-            }
-          }
+    //   this.$refs['form'].validate(async (valid) => {
+    //     if (valid) {
+    //       if (this.Edit == false) {
+    //         let contents = this.form.content.join(',')
+    //         let a = this.fingerprintList
+    //         let fingerobj = {}
+    //         for (let i = 0; i < a.length; i++) {
+    //           fingerobj[`finger${i + 1}`] = a[i]
+    //         }
+    //         console.log(contents, fingerobj, 'contents')
 
-          this.$refs['form'].resetFields()
-          this.form = this.$options.data().form
-          this.dialogFormVisible = false
-          this.$emit('fetchData')
-          // this.$parent.fetchData();
-        } else {
-          return false
-        }
-      })
+    //         let formdata = {
+    //           customername: this.form.customerName,
+    //           cardno: this.form.cardno,
+    //           content: contents,
+    //           idcard: this.form.idcard,
+    //           mobile: this.form.mobile,
+    //           pwd: this.form.pwd,
+    //           remark: this.form.remark,
+    //           finger1: fingerobj.finger1,
+    //           finger2: fingerobj.finger2,
+    //           finger3: fingerobj.finger3,
+    //           finger4: fingerobj.finger4,
+    //           finger5: fingerobj.finger5,
+    //         }
+    //         console.log(formdata, this.Edit, 'valid')
+
+    //         let data = await addOfficeRent(formdata)
+    //         console.log(data, 'success')
+    //         if (data.resultCode == 0) {
+    //           this.$message('添加成功')
+    //         }
+    //       } else {
+    //         // let formdata = {
+    //         //   customername: this.form.customerName,
+    //         //   cardno:this.form.cardno,
+    //         //   content:this.form.content,
+    //         //   idcard:this.form.idcard,
+    //         //   mobile:this.form.mobile,
+    //         //   pwd:this.form.pwd,
+    //         //   remark:this.form.remark,
+    //         // }
+    //         // if (data.resultCode == 0) {
+    //         //   this.$message('修改成功')
+    //         // }
+    //       }
+
+    //       this.$refs['form'].resetFields()
+    //       this.form = this.$options.data().form
+    //       this.dialogFormVisible = false
+    //       this.$emit('fetchData')
+    //       // this.$parent.fetchData();
+    //     } else {
+    //       return false
+    //     }
+    //   })
     },
   },
 }

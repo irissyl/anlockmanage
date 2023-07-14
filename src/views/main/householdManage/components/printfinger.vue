@@ -2,52 +2,28 @@
   <div>
     <div class="grid-content bg-purple">
       <div class="right">
-        <div class="inputtotal topform">
-          <el-form ref="form" :model="queryForm" :inline="true" class="forms">
-            <el-form-item>
-              <label class="lb">编号:</label>
-              <el-input v-model="queryForm.roomName" class="ei" placeholder="学号" style="width: 160px;margin: 0 10px 0 0;" />
-            </el-form-item>
-            <el-form-item>
-              <label class="lb">姓名:</label>
-              <el-input v-model="queryForm.quyuvalue1" class="ei" placeholder="学号" style="width: 160px;margin: 0 10px 0 0;" />
-            </el-form-item>
-            <el-form-item>
-              <el-button icon="el-icon-search" type="info" native-type="submit">
-                查询
-              </el-button>
-            </el-form-item>
-            <el-form-item>
-              <el-button icon="el-icon-search" type="primary" @click="handleAdd">
-                添加指纹
-              </el-button>
-            </el-form-item>
-          </el-form>
-        </div>
         <el-table ref="tableSort" :data="tablelist" :element-loading-text="elementLoadingText" :header-cell-style="{'text-align': 'left'
               }" :cell-style="{ 'text-align': 'left' }" style="width: 100%" @selection-change="setSelectRows" @sort-change="tableSortChange">
           <el-table-column type="selection" width="55"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="roomNO" label="指纹ID"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="roomNO" label="编号"></el-table-column>
           <el-table-column min-width="110px" show-overflow-tooltip prop="roomName" label="姓名"></el-table-column>
-          <el-table-column show-overflow-tooltip prop="sex" label="指纹类型"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="dan" label="更新时间"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="状态">
+          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="职务"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="证件号"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="手机"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="性别"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="房间编号">
+            <template>可开门数</template>
+          </el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="微信"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="左指纹"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="右指纹"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="卡号"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="时效"></el-table-column>
+          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="备注"></el-table-column>
+          <el-table-column min-width="210px" show-overflow-tooltip prop="" label="操作">
             <template #default="{ row }">
-              <i class="el-icon-success" v-if="row">&nbsp;有效</i>
-              <i class="el-icon-error" v-if="!row">&nbsp;无效</i>
+                <el-button type="primary" @click="openRecord(row)" plain>开锁记录</el-button>
             </template>
           </el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip label="操作" width="280px" fixed="right">
-            <template #default="{ row }">
-            <el-button type="primary" style="margin-right: 10px" size="mini" plain @click="handleEdit(row)">
-                编辑
-            </el-button>
-            <el-button type="danger" plain style="margin-right: 10px" size="mini" @click="del(row)">
-                删除
-            </el-button>
-            </template>
-        </el-table-column>
         </el-table>
       </div>
     </div>
@@ -95,6 +71,9 @@ export default {
   },
 
   methods: {
+    openRecord(row){
+      this.$refs['record'].showEdit()
+    },
     setSelectRows () { },
     tableSortChange () { },
     handleAdd () {
