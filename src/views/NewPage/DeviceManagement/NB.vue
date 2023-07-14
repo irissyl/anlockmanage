@@ -2,212 +2,194 @@
   <div class="personalCenter-container">
     <el-tabs :tab-position="tabPosition" class="tabsty" @tab-click="handleClick" @tab-remove="handleremoveClick">
       <el-tab-pane class="">
-        <span slot="label" class="pans3 labspan">
-          <img src="../../../assets/floor.png" v-if="gateway0 == false" class="gateway" alt="" srcset="">
-          <img src="../../../assets/floor1.png" v-if="gateway0 == true" class="gateway" alt="" srcset="">
-          <h5 style="margin-right:0px;">智能采集平台</h5>
+        <span slot="label" class="pans3">
+          <img src="../../../assets/lock.png" v-if="gateway0 == false" class="gateway" alt="" srcset="">
+          <img src="../../../assets/lock1.png" v-if="gateway0 == true" class="gateway" alt="" srcset="">
+          <h5 style="margin-right:10px;">NB门锁</h5>
         </span>
         <div class="formbtn1">
-          <!-- <el-card class="box-card" header="添加智能采集平台"> -->
-            <h4 class="tt">添加智能采集平台</h4>
-            <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="120px">
-              <el-form-item label="前置机名称：">
-                <el-input v-model="formInline.user" placeholder="请输入前置机名称" style="width: 260px;"></el-input>
-              </el-form-item>
-              <el-form-item label="前置机IP：">
-                <el-input v-model="formInline.ip" placeholder="请输入前置机名称" style="width: 260px;"></el-input>
-              </el-form-item>
-              <el-form-item label="端口：">
-                <el-input v-model="formInline.duank" placeholder="请输入前置机名称" style="width: 260px;"></el-input>
-              </el-form-item>
-              <el-form-item label="备注：">
-                <el-input v-model="formInline.remark" placeholder="请输入前置机名称" style="width: 260px;"></el-input>
-              </el-form-item>
-              <el-form-item label="前置机位置：">
-                <el-button type="primary" @click="onSubmit"  style="width: 260px;" plain>点击选择</el-button>
-              </el-form-item>
-              <el-form-item style="width:160px; margin:10px 0 0 50px;">
-                <el-button type="primary" @click="onSubmit">取消</el-button>
-                <el-button type="primary" @click="onSubmit">确认</el-button>
-              </el-form-item>
-            </el-form>
-          <!-- </el-card> -->
+          <h4 class="tt">NB门锁</h4>
+          <div style="float: right;margin-bottom:20px">
+            <el-button type="primary">添加</el-button>
+            <el-button type="primary">批量导出</el-button>
+          </div>
+          <el-table ref="tableSort" :data="tableData" :header-cell-style="{ 'text-align': 'center'}" :cell-style="{ 'text-align': 'center' }" style="width: 100%"  @selection-change="setSelectRows"
+          @sort-change="tableSortChange">
+            <el-table-column type="selection" width="55"></el-table-column>
+            <el-table-column show-overflow-tooltip prop="iotTag" label="门锁编号"></el-table-column>
+            <el-table-column show-overflow-tooltip prop="" label="房间编号"></el-table-column>
+            <el-table-column show-overflow-tooltip prop="" label="电池电压"></el-table-column>
+            <el-table-column show-overflow-tooltip prop="" label="固件版本"></el-table-column>
+            <el-table-column show-overflow-tooltip prop="" label="IMEI"></el-table-column>
+            <el-table-column show-overflow-tooltip prop="" label="NB卡号"></el-table-column>
+            <el-table-column show-overflow-tooltip prop="name" label="运营商"></el-table-column>
+            <el-table-column show-overflow-tooltip prop="" label="年费到期日"></el-table-column>
+            <el-table-column show-overflow-tooltip prop="" label="账号"></el-table-column>
+            <el-table-column show-overflow-tooltip label="操作" width="180px">
+              <template #default="{ row }">
+                <el-button type="primary" plain icon="el-icon-edit" @click="handlelockEdit(row)"></el-button>
+              <el-button type="danger" plain icon="el-icon-delete" @click="handleDelete(row)"></el-button>
+              <el-button icon="el-icon-download"></el-button>
+              </template>
+            </el-table-column>
+          </el-table>
         </div>
       </el-tab-pane>
+
       <el-tab-pane class="">
         <span slot="label" class="pans3">
-          <img src="../../../assets/gateway.png" v-if="changeshow == false" class="gateway" alt="" srcset="">
-          <img src="../../../assets/gateway12.png" v-if="changeshow == true" class="gateway" alt="" srcset="">
-          <h5>智能网关</h5>
+          <img src="../../../assets/lock.png" v-if="gateway1 == false" class="gateway" alt="" srcset="">
+          <img src="../../../assets/lock1.png" v-if="gateway1 == true" class="gateway" alt="" srcset="">
+          <h5>WIFI门锁</h5>
         </span>
-        <div class="formbtn">
-          <el-form :inline="true" :model="formInline" class="demo-form-inline">
-            <el-form-item>
-              <el-select v-model="quyuvalue1" placeholder="请选择片区" style="width: 160px;margin: 0 10px 0 0;">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item>
-              <el-select v-model="quyuvalue2" placeholder="请选择楼栋" style="width: 160px;margin: 0 10px 0 0;">
-                <el-option v-for="item in options3" :key="item.value" :label="item.label" :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item>
-              <el-select v-model="quyuvalue3" placeholder="请选择楼层" style="width: 160px;margin: 0 10px 0 0;">
-                <el-option v-for="item in options4" :key="item.value" :label="item.label" :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="onSubmit">查询</el-button>
-            </el-form-item>
-            <el-form-item class="rightbtn">
-              <el-button type="primary" @click="registrat">下发智能网关指令</el-button>
-            </el-form-item>
-            <el-form-item class="rightbtn">
-              <el-button type="primary" @click="createdCard">添加智能网关</el-button>
-            </el-form-item>
-          </el-form>
+        <div style="float: right;margin-bottom:20px">
+          <el-button type="primary">添加</el-button>
+          <el-button type="primary">批量导出</el-button>
         </div>
-        <el-table :data="tableData" style="width: 100%;margin-top: 10px;margin-left: 20px;">
-          <el-table-column prop="" label="门卡ID" width="210"></el-table-column>
-          <el-table-column prop="" label="持卡人ID" width="210"></el-table-column>
-          <el-table-column prop="name" label="持卡人姓名" width="210"></el-table-column>
-          <el-table-column prop="" label="门卡类型" width="210"></el-table-column>
-          <el-table-column prop="" label="门卡状态" width="210"></el-table-column>
-          <el-table-column prop="" label="注册时间" width="210"></el-table-column>
-          <el-table-column fixed="right" label="操作" width="210">
+        <el-table ref="tableSort" :data="tableData" :element-loading-text="elementLoadingText" :header-cell-style="{ 'text-align': 'center'}" :cell-style="{ 'text-align': 'center' }" style="width: 100%" @selection-change="setSelectRows"
+          @sort-change="tableSortChange">
+          <el-table-column type="selection" width="55"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="iotTag" label="门锁编号"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="房间编号"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="电池电压"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="固件版本"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="MAC"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="name" label="Wifi账号1"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="Wifi密码1"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="IP地址">
+            <template>本地部署</template>
+          </el-table-column>
+          <el-table-column show-overflow-tooltip label="操作" width="180px">
             <template #default="{ row }">
-              <el-button type="text" icon="el-icon-edit" @click="handleEdit(row)"></el-button>
-              <el-button type="text" icon="el-icon-delete" @click="handleDelete(row)"></el-button>
+              <el-button type="primary" plain icon="el-icon-edit" @click="handlelockEdit(row)"></el-button>
+              <el-button type="danger" plain icon="el-icon-delete" @click="handleDelete(row)"></el-button>
+              <el-button icon="el-icon-download"></el-button>
             </template>
           </el-table-column>
         </el-table>
       </el-tab-pane>
       <el-tab-pane class="">
         <span slot="label" class="pans3">
-          <img src="../../../assets/gateway2.png" v-if="gateway2 == false" class="gateway" alt="" srcset="">
-          <img src="../../../assets/gateway21.png" v-if="gateway2 == true" class="gateway" alt="" srcset="">
-          <h5>智能门禁</h5>
+          <img src="../../../assets/lock.png" v-if="gateway2 == false" class="gateway" alt="" srcset="">
+          <img src="../../../assets/lock1.png" v-if="gateway2 == true" class="gateway" alt="" srcset="">
+          <h5>Lora门锁</h5>
         </span>
+        <div>
+          <el-button class="btnpr" type="primary" icon="el-icon-plus" @click="addlock()">添加</el-button>
+          <el-button class="btnpr" type="primary" icon="el-icon-plus" @click="addlockbatch()">批量导入</el-button>
+        </div>
+        <el-table :data="tableData" style="width: 100%;margin-top: 10px;margin-left: 20px;"  @selection-change="setSelectRows"
+          @sort-change="tableSortChange">
+          <el-table-column type="selection" width="55"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="网关编号"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="固件版本"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="信道"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="通讯方式">
+            <template>4G/RJ45</template>
+          </el-table-column>
+          <el-table-column show-overflow-tooltip prop="name" label="Wifi账号1"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="Wifi密码1"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="4G卡号"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="运营商"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="年费到期日"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="IP地址"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="操作" width="230">
+            <template #default="{ row }">
+              <el-button type="primary" plain icon="el-icon-edit" @click="handlelockEdit(row)"></el-button>
+              <el-button type="danger" plain icon="el-icon-delete" @click="handleDelete(row)"></el-button>
+              <el-button icon="el-icon-download"></el-button>
+            </template>
+          </el-table-column>
+        </el-table>
       </el-tab-pane>
       <el-tab-pane class="">
         <span slot="label" class="pans3">
-          <img src="../../../assets/lock.png" v-if="gateway3 == false" class="gateway" alt="" srcset="">
-          <img src="../../../assets/lock1.png" v-if="gateway3 == true" class="gateway" alt="" srcset="">
-          <h5>智能门锁</h5>
+          <img src="../../../assets/gateway.png" v-if="gateway3 == false" class="gateway" alt="" srcset="">
+          <img src="../../../assets/gateway12.png" v-if="gateway3 == true" class="gateway" alt="" srcset="">
+          <h5>水表采集器</h5>
         </span>
-        <div class="formbtn">
-          <el-form :inline="true" :model="formInline" class="demo-form-inline">
-            <el-form-item>
-              <el-select v-model="quyuvalue1" placeholder="请选择片区" style="width: 160px;margin: 0 10px 0 0;">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item>
-              <el-select v-model="quyuvalue2" placeholder="请选择楼栋" style="width: 160px;margin: 0 10px 0 0;">
-                <el-option v-for="item in options3" :key="item.value" :label="item.label" :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item>
-              <el-select v-model="quyuvalue3" placeholder="请选择楼层" style="width: 160px;margin: 0 10px 0 0;">
-                <el-option v-for="item in options4" :key="item.value" :label="item.label" :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item>
-              <el-select v-model="quyuvalue4" placeholder="请选择房间" style="width: 160px;margin: 0 10px 0 0;">
-                <el-option v-for="item in options5" :key="item.value" :label="item.label" :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="onSubmit">查询</el-button>
-            </el-form-item>
-          </el-form>
+         <div>
+          <el-button class="btnpr" type="primary" icon="el-icon-plus" @click="addlock()">添加</el-button>
+          <el-button class="btnpr" type="primary" icon="el-icon-plus" @click="addlockbatch()">批量导入</el-button>
         </div>
-        <div>
-           <el-button class="btnpr" type="primary" icon="el-icon-plus" @click="addlock()">添加门锁</el-button>
-           <el-button class="btnpr" type="primary" icon="el-icon-plus" @click="addlockbatch()">门锁批量导入</el-button>
-        </div>
-        <el-table :data="tableDatas" style="width: 100%;margin-top: 10px;margin-left: 20px;">
-          <el-table-column prop="address" label="门锁位置"></el-table-column>
-          <el-table-column prop="" label="所属中继"></el-table-column>
-          <el-table-column prop="" label="IMEI"></el-table-column>
-          <el-table-column prop="" label="实时电量"></el-table-column>
-          <el-table-column prop="" label="程序版本"></el-table-column>
-          <el-table-column prop="" label="所类型"></el-table-column>
-          <el-table-column prop="" label="状态"></el-table-column>
-          <el-table-column prop="" label="开门方式"></el-table-column>
-          <el-table-column prop="" label="更新时间"></el-table-column>
-          <el-table-column fixed="right" label="操作" width="220">
+        <el-table :data="tableData" style="width: 100                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         %;margin-top: 10px;margin-left: 20px;" @selection-change="setSelectRows"
+          @sort-change="tableSortChange">
+          <el-table-column type="selection" width="55"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="iotTag" label="水表采集器编号"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="电池电压"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="固件版本"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="水表采集器信道"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="水表编号"></el-table-column>
+          <el-table-column  label="操作" >
             <template #default="{ row }">
-              <el-button type="primary" plain  icon="el-icon-edit" @click="handlelockEdit(row)"></el-button>
+              <el-button type="primary" plain icon="el-icon-edit" @click="handlelockEdit(row)"></el-button>
               <el-button type="danger" plain icon="el-icon-delete" @click="handleDelete(row)"></el-button>
-              <el-button  icon="el-icon-download"></el-button>
+              <el-button icon="el-icon-download"></el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-tab-pane>
+      <el-tab-pane class="">
+        <span slot="label" class="pans3">
+          <img src="../../../assets/gateway2.png" v-if="gateway4 == false" class="gateway" alt="" srcset="">
+          <img src="../../../assets/gateway21.png" v-if="gateway4 == true" class="gateway" alt="" srcset="">
+          <h5>网关匹配</h5>
+        </span>
+        <div style="float: right;margin-bottom:20px">
+          <el-button type="primary">添加</el-button>
+          <el-button type="primary">批量导出</el-button>
+        </div>
+        <el-table ref="tableSort" :data="tableData" :element-loading-text="elementLoadingText" :header-cell-style="{ 'text-align': 'center'}" :cell-style="{ 'text-align': 'center' }" style="width: 100%" @selection-change="setSelectRows"
+          @sort-change="tableSortChange">
+          <el-table-column type="selection" width="55"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="name" label="网关编号"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="网关信道"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="门锁编号"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="门锁信道"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="水表采集器编号"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="水表采集器信道"></el-table-column>
+          <el-table-column show-overflow-tooltip prop="" label="电表编号"></el-table-column>
+          <el-table-column show-overflow-tooltip label="操作" width="180px">
+            <template #default="{ row }">
+              <el-button type="primary" plain icon="el-icon-edit" @click="handlelockEdit(row)"></el-button>
+              <el-button type="danger" plain icon="el-icon-delete" @click="handleDelete(row)"></el-button>
+              <el-button icon="el-icon-download"></el-button>
             </template>
           </el-table-column>
         </el-table>
       </el-tab-pane>
     </el-tabs>
-    <table-edit ref="edit"></table-edit>
-    <add-card ref="addgatewayset"></add-card>
-    <batch-import ref="batchedit"></batch-import>
+    <table-edit ref="edit" @fetchData="fetchData"></table-edit>
+    <add-card ref="addgatewayset" @fetchData="fetchData"></add-card>
+    <batch-import ref="batchedit" @fetchData="fetchData"></batch-import>
+    <PermissionPopup ref="gatewayset" @fetchData="fetchData"></PermissionPopup>
   </div>
 </template>
 
 <script>
 import TableEdit from './components/TableEdit.vue'
 import addCard from './components/gatewayset.vue'
+import PermissionPopup from './components/PermissionPopup.vue'
 import BatchImport from './components/batchImport.vue'
 export default {
-  components: { addCard, TableEdit, BatchImport },
+  components: { addCard, TableEdit, BatchImport, PermissionPopup },
   name: '',
   data () {
     return {
+      selectRows: '',
+      elementLoadingText: '正在加载...',
       quyuvalue1: '',
       quyuvalue2: '',
       quyuvalue3: '',
-      quyuvalue4:'',
+      quyuvalue4: '',
       tabPosition: 'left',
       tableData: [{ name: '王小虎', }],
-      tableDatas: [{ address: '测试D59-2层-206', }],
-      formInline: {
-        user: '',
-        ip:'',
-        duank:'',
-        remark: ''
-      },
       tabs: 'left',
-      changeshow: false,
       gateway0: true,
+      gateway1: true,
       gateway2: false,
       gateway3: false,
-      options: [{
-        value: '选项1',
-        label: 'anlock片区'
-      }],
-      options3: [{
-        value: '选项2',
-        label: 'B1栋'
-      }],
-      options4: [{
-        value: '选项1',
-        label: '1层'
-      }],
-      options4: [{
-        value: '选项1',
-        label: '1层'
-      }],
-      options5:[{
-        value: '选项1',
-        label: '101房'
-      }],
-
+      gateway4: false
     }
   },
   created () { },
@@ -215,11 +197,30 @@ export default {
     handleEdit (row) {
       this.$refs['edit'].showEdit(row)
     },
+    fetchData () {
+
+    },
+    setSelectRows (val) {
+      this.selectRows = val
+    },
+    tableSortChange () {
+      const imageList = []
+      this.$refs.tableSort.tableData.forEach((item, index) => {
+        imageList.push(item.img)
+      })
+      this.imageList = imageList
+    },
     handleClick (tab, event) {
-      if (tab.active == true && tab.paneName == "1") {
-        this.changeshow = true
+      console.log(tab,'tab')
+      if (tab.active == true && tab.paneName == "0") {
+        this.gateway0 = true
       } else {
-        this.changeshow = false
+        this.gateway0 = false
+      }
+      if (tab.active == true && tab.paneName == "1") {
+        this.gateway1 = true
+      } else {
+        this.gateway1 = false
       }
       if (tab.active == true && tab.paneName == "2") {
         this.gateway2 = true
@@ -231,30 +232,24 @@ export default {
       } else {
         this.gateway3 = false
       }
-      if (tab.active == true && tab.paneName == "0") {
-        this.gateway0 = true
+      if (tab.active == true && tab.paneName == "4") {
+        this.gateway4 = true
       } else {
-        this.gateway0 = false
+        this.gateway4 = false
       }
     },
     handleremoveClick (tab, event) {
-      },
+    },
     handleDelete (row) {
     },
-    handlelockEdit(row){
+    handlelockEdit (row) {
       this.$refs['edit'].showEdit(row)
     },
-    addlock(){
+    addlock () {
       this.$refs['edit'].showEdit()
     },
-    addlockbatch(){
+    addlockbatch () {
       this.$refs['batchedit'].showEdit()
-    },
-    createdCard (row) {
-      this.$refs['addgatewayset'].showEdit()
-    },
-    registrat (row) {
-      this.$refs['addcard'].showEdit()
     },
     onSubmit () {
       console.log('submit!');
@@ -294,16 +289,16 @@ export default {
     margin-top: -18px;
   }
 }
-.formbtn1{
-  width: 29%;
+.formbtn1 {
+  width: 90%;
   height: 550px;
   margin-left: 100px;
 
-  .tt{
+  .tt {
     font-size: 29px;
     height: 30px;
   }
-  .demo-form-inline{
+  .demo-form-inline {
     margin-top: 30px;
   }
 }
@@ -325,7 +320,7 @@ export default {
 .rightbtn {
   float: right;
 }
-.btnpr{
+.btnpr {
   float: right;
   margin-bottom: 20px;
   margin-right: 10px;
