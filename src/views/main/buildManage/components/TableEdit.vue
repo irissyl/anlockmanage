@@ -3,7 +3,7 @@
     v-dialogDrag
     :title="title"
     :visible.sync="dialogFormVisible"
-    width="500px"
+    width="600px"
     @close="close"
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="120px">
@@ -17,21 +17,28 @@
           placeholder="请输入房间编号"
         ></el-input>
       </el-form-item>
-      <el-form-item label="别名" prop="sectionName">
-        <el-input
-          v-model.trim="form.sectionName"
-          autocomplete="off"
-          placeholder="请输入房间别名"
-        ></el-input>
-      </el-form-item>
+      
       <el-form-item label="门锁:" prop="room">
         <el-input v-model.trim="form.room" autocomplete="off" placeholder="请输入门锁编号"></el-input>
       </el-form-item>
       <el-form-item label="水表:" prop="water">
-        <el-input v-model.trim="form.water" autocomplete="off" placeholder="请输入"></el-input>
+        <el-input v-model.trim="form.water" autocomplete="off" placeholder="请输入水表编号"></el-input>
       </el-form-item>
       <el-form-item label="电表:" prop="electricity">
-        <el-input v-model.trim="form.electricity" autocomplete="off" placeholder="请输入"></el-input>
+        <el-input v-model.trim="form.electricity" autocomplete="off" placeholder="请输入电表编号"></el-input>
+      </el-form-item>
+      <el-form-item label="家具电器:" prop="electricity">
+        <el-input v-model.trim="form.electricity" autocomplete="off" placeholder="请输入该房间的家具电器"></el-input>
+      </el-form-item>
+      <el-form-item label="管理人（手机）:" prop="water">
+        <el-input v-model.trim="form.water" autocomplete="off" placeholder="请输入水表编号"></el-input>
+      </el-form-item>
+      <el-form-item label="备注:" prop="sectionName">
+        <el-input
+          v-model.trim="form.sectionName"
+          autocomplete="off"
+          placeholder="请输入房间备注"
+        ></el-input>
       </el-form-item>
       <!-- <el-form-item label="入住性别:" prop="sex">
         <el-radio-group v-model.trim="form.sex">
@@ -77,9 +84,9 @@
     methods: {
       showEdit(row) {
         if (!row) {
-          this.title = '添加建筑'
+          this.title = '添加房间'
         } else {
-          this.title = '编辑建筑'
+          this.title = '编辑房间'
           this.form = Object.assign({}, row)
         }
         this.dialogFormVisible = true

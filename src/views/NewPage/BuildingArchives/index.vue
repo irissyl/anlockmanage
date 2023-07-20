@@ -10,7 +10,7 @@
       <el-button icon="el-icon-plus" type="primary" @click="handlefangjian">
         添加楼层
       </el-button>
-      <el-button icon="el-icon-plus" type="primary">导入表格</el-button>
+      <el-button icon="el-icon-files" type="primary" @click="uploads">导入表格</el-button>
     </div>
     <el-table
       ref="tableSort"

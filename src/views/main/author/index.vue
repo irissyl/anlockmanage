@@ -1,30 +1,7 @@
 <template>
   <div class="author-container">
     <el-tabs :tab-position="tabPosition" class="tabsty" @tab-click="handleClick" @tab-remove="handleremoveClick">
-      <el-tab-pane class="">
-        <span slot="label" class="pans6 labspan">
-          <img src="../../../assets/user11.png" v-if="gateway0 == false" class="gateway" alt="" srcset="">
-          <img src="../../../assets/user1.png" v-if="gateway0 == true" class="gateway" alt="" srcset="">
-          <H5>用户管理</H5>
-        </span>
-        <div>
-          <el-button class="btnpr" type="primary" icon="el-icon-info" @click="addlockbatch()">功能帮助</el-button>
-          <el-button class="btnpr" type="primary" icon="el-icon-plus" @click="addlock()">创建用户</el-button>
-        </div>
-        <el-table :data="tableData" style="width: 100%;margin-top: 10px;margin-left: 20px;">
-          <el-table-column prop="" label="用户ID"></el-table-column>
-          <el-table-column prop="" label="用户账户"></el-table-column>
-          <el-table-column prop="name" label="用户姓名"></el-table-column>
-          <el-table-column prop="" label="所属部门"></el-table-column>
-          <el-table-column prop="" label="联系电话"></el-table-column>
-          <el-table-column fixed="right" label="操作">
-            <template #default="{ row }">
-              <el-button type="text" icon="el-icon-edit" @click="handleEdit(row)"></el-button>
-              <el-button type="text" icon="el-icon-delete" @click="handleDelete(row)"></el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-tab-pane>
+      <!-- 菜单管理 -->
       <el-tab-pane class="caidan">
         <span slot="label" class="pans6">
           <img src="../../../assets/caidan.png" v-if="changeshow == false" class="gateway" alt="" srcset="">
@@ -45,14 +22,15 @@
           </el-table-column>
           <el-table-column prop="menuSort" label="排序">
           </el-table-column>
-          <el-table-column fixed="right" label="操作">
+          <el-table-column prop="" label="操作">
             <template #default="{ row }">
-              <el-button type="text" icon="el-icon-edit" @click="handlenavEdit(row)"></el-button>
+              <el-button type="primary" plain icon="el-icon-edit" @click="handlenavEdit(row)"></el-button>
             </template>
           </el-table-column>
         </el-table>
       </el-tab-pane>
-      <el-tab-pane class="">
+      <!-- 角色管理 -->
+      <!-- <el-tab-pane class="">
         <span slot="label" class="pans6">
           <img src="../../../assets/juese.png" v-if="gateway2 == false" class="gateway" alt="" srcset="">
           <img src="../../../assets/juese1.png" v-if="gateway2 == true" class="gateway" alt="" srcset="">
@@ -64,24 +42,46 @@
         </div>
         <el-table :data="tableData" style="width: 100%;margin-top: 10px;margin-left: 20px;">
           <el-table-column prop="" label="角色名称"></el-table-column>
-          <el-table-column fixed="right" label="操作">
+          <el-table-column prop="" label="操作">
             <template #default="{ row }">
-              <el-button type="text" icon="el-icon-edit" @click="handleroleEdit(row)"></el-button>
-              <el-button type="text" icon="el-icon-delete" @click="handleDelete(row)"></el-button>
+              <el-button type="primary" plain icon="el-icon-edit" @click="handleroleEdit(row)"></el-button>
+              <el-button type="primary" plain icon="el-icon-delete" @click="handleDelete(row)"></el-button>
+            </template>
+          </el-table-column>
+          
+        </el-table>
+      </el-tab-pane> -->
+      <!-- 用户管理 -->
+      <el-tab-pane class="">
+        <span slot="label" class="pans6 labspan">
+          <img src="../../../assets/user11.png" v-if="gateway0 == false" class="gateway" alt="" srcset="">
+          <img src="../../../assets/user1.png" v-if="gateway0 == true" class="gateway" alt="" srcset="">
+          <H5>操作员管理</H5>
+        </span>
+        <div>
+          <!-- <el-button class="btnpr" type="primary" icon="el-icon-info" @click="addlockbatch()">功能帮助</el-button> -->
+          <el-button class="btnpr" type="primary" icon="el-icon-plus" @click="addlock()">添加操作员</el-button>
+        </div>
+        <el-table :data="tableData" style="width: 100%;margin-top: 10px;margin-left: 20px;">
+          <el-table-column prop="name" label="姓名"></el-table-column>
+          <el-table-column prop="" label="部门"></el-table-column>
+          <el-table-column prop="" label="职务"></el-table-column>
+          <el-table-column prop="" label="证件号"></el-table-column>
+          <el-table-column prop="" label="手机"></el-table-column>
+          <el-table-column prop="" label="性别"></el-table-column>
+          <el-table-column prop="" label="管理范围设置"></el-table-column>
+          <el-table-column prop="" label="菜单选择"></el-table-column>
+          <el-table-column prop="" label="操作">
+            <template #default="{ row }">
+              <el-button type="primary" plain icon="el-icon-edit" @click="handleEdit(row)"></el-button>
+              <el-button type="primary" plain icon="el-icon-delete" @click="handleDelete(row)"></el-button>
             </template>
           </el-table-column>
         </el-table>
       </el-tab-pane>
-      <el-tab-pane class="">
-        <span slot="label" class="pans6">
-          <img src="../../../assets/caozuo.png" v-if="gateway3 == false" class="gateway" alt="" srcset="">
-          <img src="../../../assets/caozuo1.png" v-if="gateway3 == true" class="gateway" alt="" srcset="">
-          <h5>操作管理</h5>
-        </span>
-      </el-tab-pane>
     </el-tabs>
-    <nav-edit ref="navedit"></nav-edit>
-    <table-edit ref="edit"></table-edit>
+    <nav-edit ref="navedit" :navtableData="navtableData"></nav-edit>
+    <table-edit ref="edit" :navtableData="navtableData"></table-edit>
     <role-edit ref="roleedit" :navtableData="navtableData"></role-edit>
   </div>
 </template>
@@ -131,22 +131,22 @@ export default {
      console.log(nav.data,'nav')
     },
     handleClick (tab, event) {
-      if (tab.active == true && tab.paneName == "1") {
+      if (tab.active == true && tab.paneName == "0") {
         this.changeshow = true
       } else {
         this.changeshow = false
       }
-      if (tab.active == true && tab.paneName == "2") {
+      if (tab.active == true && tab.paneName == "1") {
         this.gateway2 = true
       } else {
         this.gateway2 = false
       }
-      if (tab.active == true && tab.paneName == "3") {
-        this.gateway3 = true
-      } else {
-        this.gateway3 = false
-      }
-      if (tab.active == true && tab.paneName == "0") {
+      // if (tab.active == true && tab.paneName == "3") {
+      //   this.gateway3 = true
+      // } else {
+      //   this.gateway3 = false
+      // }
+      if (tab.active == true && tab.paneName == "1") {
         this.gateway0 = true
       } else {
         this.gateway0 = false

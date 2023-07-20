@@ -138,11 +138,11 @@ module.exports = {
             chunks: 'initial',
             priority: 20,
           },
-          elementUI: {
-            name: 'element-ui',
-            test: /[\\/]node_modules[\\/]element-ui(.*)[\\/]/,
-            priority: 30,
-          },
+          // elementUI: {
+          //   name: 'element-ui',
+          //   test: /[\\/]node_modules[\\/]element-ui(.*)[\\/]/,
+          //   priority: 30,
+          // },
           extra: {
             name: 'vab-layouts',
             test: resolve('src/layouts'),

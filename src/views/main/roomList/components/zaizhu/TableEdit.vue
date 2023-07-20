@@ -1,38 +1,39 @@
 <template>
-  <el-dialog v-dialogDrag :title="title" :visible.sync="dialogFormVisible" width="600px"  @close="close">
-    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+  <el-dialog v-dialogDrag :title="title" :visible.sync="dialogFormVisible" width="50%" @close="close">
+    <!-- 已入住房间 -->
+    <el-divider content-position="left">已入住房间</el-divider>
+    <el-table ref="tableSort" height="300" border v-loading="listLoading" style="width: 95%;margin:0 auto;" :data="lists" @selection-change="setSelectRows" @sort-change="tableSortChange">
+      <el-table-column show-overflow-tooltip prop="areaName" label="房间名称"></el-table-column>
+      <el-table-column show-overflow-tooltip prop="" label="房间编号"></el-table-column>
+      <el-table-column show-overflow-tooltip prop="" label="门锁编号"></el-table-column>
+      <el-table-column show-overflow-tooltip prop="" label="水表编号"></el-table-column>
+      <el-table-column show-overflow-tooltip prop="" label="电表编号"></el-table-column>
+      <el-table-column show-overflow-tooltip prop="" label="授权人数">
+        <template #default="{ row }">
+          <el-tag type="danger">5/100</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column show-overflow-tooltip width="220px" prop="" label="操作">
+        <template #default="{ row }">
+          <el-button type="primary"  @click="handleEdit(row)" plain>续租</el-button>
+          <!-- <el-button type="primary"  @click="handleDelete(row)" plain>退宿</el-button> -->
+        </template>
+      </el-table-column>
+    </el-table>
+    <div style="margin:40px 0 0 0; ">
+      <el-divider content-position="left" >填写续租信息</el-divider>
+    </div>
+    <el-form ref="form" v-if="formshow" :model="form" :rules="rules" label-width="100px" style="margin:20px 0 0 0; " >
       <el-form-item label="房间编号">
         <el-input v-model.trim="form.roomNO" autocomplete="off" placeholder="请输入房间编号"></el-input>
       </el-form-item>
       <el-form-item label="房间名称">
         <el-input v-model.trim="form.roomName" autocomplete="off" placeholder="请输入房间名称"></el-input>
       </el-form-item>
-      <el-form-item label="房型">
-        <el-input v-model.trim="form.roomType" autocomplete="off" placeholder="请输入房型"></el-input>
+      <el-form-item label="时效">
+        <el-date-picker v-model="form.times" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+        </el-date-picker>
       </el-form-item>
-      <el-form-item label="楼层">
-        <el-input-number v-model="form.floorKey" style="width: 450px" controls-position="right" :min="1" :max="100" @change="handlenumChange"></el-input-number>
-      </el-form-item>
-      <el-form-item label="门锁标识">
-        <el-input v-model.trim="form.iotTag" autocomplete="off" placeholder="请输入门锁编号"></el-input>
-      </el-form-item>
-      <el-form-item label="房间信息">
-        <el-input v-model.trim="form.roomInfo" autocomplete="off" placeholder="请输入门锁编号"></el-input>
-      </el-form-item>
-      <!-- <el-form-item label="电表标识">
-        <el-input
-          v-model.trim="form.rentCardnoHex"
-          autocomplete="off"
-          placeholder="请输入电表编号"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="水表标识">
-        <el-input
-          v-model.trim="form.rentCardnoHex"
-          autocomplete="off"
-          placeholder="请输入水表编号"
-        ></el-input>
-      </el-form-item> -->
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="close">取 消</el-button>
@@ -69,10 +70,13 @@ export default {
         iotTag: '',
         sceneType: '',
         buildId: '',
+        times: ''
       },
-
+      lists: [{ areaName: '呼呼' }],
+      listLoading: false,
       Builddata: [],
       num: 1,
+      formshow:false,
       rules: {
         roomname: [
           { required: true, trigger: 'blur', message: '请输入房间名称' },
@@ -96,6 +100,22 @@ export default {
       this.Builddata = data.data
       console.log(data, 'data')
     },
+    tableSortChange () {
+      const imageList = []
+      this.$refs.tableSort.tableData.forEach((item, index) => {
+        imageList.push(item.img)
+      })
+      this.imageList = imageList
+    },
+    setSelectRows (val) {
+      this.selectRows = val
+    },
+    handleEdit (row) {
+      this.formshow = true
+    },
+    handleDelete (row) {
+      console.log(row, 'rowd')
+    },
     handlenumChange () { },
     handleClose (done) {
       this.$confirm('确认关闭？')
@@ -109,11 +129,11 @@ export default {
     showEdit (row) {
       console.log(typeof row === 'object', 'row')
       if ((typeof row === 'object') == false) {
-        this.title = '添加房间'
+        this.title = '批量续租'
         this.Edit = false
         this.form.buildId = row
       } else {
-        this.title = '修改房间信息'
+        this.title = '续租'
         this.Edit = true
         this.form = Object.assign({}, row)
         // this.form.content = row.rentContent.split(',').map((item) => {
@@ -124,10 +144,11 @@ export default {
       this.dialogFormVisible = true
     },
     close () {
-      this.$refs['form'].resetFields()
-      this.form = this.$options.data().form
+      // this.$refs['tableSort'].resetFields()
+      // this.form = this.$options.data().form
       this.dialogFormVisible = false
-      this.$emit('fetch-data')
+      this.formshow = false
+      // this.$emit('fetch-data')
     },
     save () {
       this.$refs['form'].validate(async (valid) => {

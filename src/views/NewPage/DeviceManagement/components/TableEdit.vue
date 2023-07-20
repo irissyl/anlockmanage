@@ -4,7 +4,7 @@
       <el-form-item  label="门锁编号" prop="areaName">
         <el-input v-model="form.areaName" placeholder="请选择门锁编号"   style="width: 270px;"></el-input>
       </el-form-item>
-      <el-form-item  label="门锁位置" prop="builds">
+      <el-form-item  label="房间编号" prop="builds">
         <el-select v-model.trim="form.builds" autocomplete="off" placeholder="请选择门锁位置"   style="width: 270px;">
           <el-option label="4G" value="4G"></el-option>
         </el-select>

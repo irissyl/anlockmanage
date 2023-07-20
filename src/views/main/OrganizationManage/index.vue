@@ -169,7 +169,7 @@ export default {
     margin-top: 15px;
     font-size: 17px;
     text-align: right;
-    width: 180px;
+    width: 80%;
     height: 40px;
   }
   .el-tree-node__content:hover {
@@ -259,7 +259,7 @@ export default {
   }
   /* //高亮字体颜色 */
   .el-tree-node.is-current > .el-tree-node__content {
-    background-color: #ff06061d;
+    background-color: #82c6fbbe;
     color: #000000 !important;
     font-size: 15px;
   }

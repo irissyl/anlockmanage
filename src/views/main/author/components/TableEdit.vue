@@ -1,25 +1,40 @@
 <template>
-  <el-dialog v-dialogDrag :title="title" :visible.sync="dialogFormVisible" width="500px" @close="close">
+  <el-dialog v-dialogDrag :title="title" :visible.sync="dialogFormVisible" width="35%" @close="close">
     <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-      <el-form-item  label="账户" prop="areaName">
-        <el-input v-model="form.Name" placeholder="请输入账户"   ></el-input>
-      </el-form-item>
-      <el-form-item  label="真实姓名" prop="builds">
-        <el-select v-model.trim="form.truthName" autocomplete="off" placeholder="请输入真实姓名"   >
-          <el-option label="4G" value="4G"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item  label="用户角色" prop="title">
-        <el-select v-model.trim="form.role" autocomplete="off" placeholder="请选择用户角色"   >
-          <el-option label="系统管理员" value="1"></el-option>
+       <el-form-item label="姓名">
+            <el-input v-model="form.name" style="width:400px" placeholder="请输入姓名"></el-input>
+          </el-form-item>
+          <el-form-item label="部门">
+            <el-input v-model="form.department" style="width:400px" placeholder="请输入部门"></el-input>
+          </el-form-item>
+          <el-form-item label="职务">
+            <el-input v-model="form.duties" style="width:400px" placeholder="请输入职务"></el-input>
+          </el-form-item>
+          <el-form-item label="证件号码">
+            <el-input v-model="form.idcard" style="width:400px" placeholder="请输入证件号码"></el-input>
+          </el-form-item>
+          <el-form-item label="手机号码">
+            <el-input v-model="form.mobile" style="width:400px" placeholder="请输入手机号码"></el-input>
+          </el-form-item>
+          <el-form-item label="性别">
+            <el-radio-group v-model.trim="form.sex">
+              <el-radio :label="1">男</el-radio>
+              <el-radio :label="2">女</el-radio>
+              <el-radio :label="3">中性</el-radio>
+            </el-radio-group>
+          </el-form-item>
+      <el-form-item  label="房间选择" prop="title">
+        <el-select v-model.trim="form.role" style="width:400px" autocomplete="off" placeholder="请选择操作员需管理的房间"   >
+          <!-- <el-option label="系统管理员" value="1"></el-option>
           <el-option label="普通管理员" value="2"></el-option>
-          <el-option label="员工" value="3"></el-option>
+          <el-option label="员工" value="3"></el-option> -->
         </el-select>
       </el-form-item>
-      <el-form-item  label="所属部门" prop="wgName">
-        <el-input v-model="form.department"   ></el-input>
+      <el-form-item  label="菜单选择" prop="wgName">
+        <el-tree :data="buildObjs" show-checkbox node-key="menuId" :default-expanded-keys="[1, 2]" :props="defaultProps">
+        </el-tree>
       </el-form-item>
-      <el-form-item  label="密码" prop="wgName">
+      <!-- <el-form-item  label="密码" prop="wgName">
         <el-input v-model="form.pwd"   ></el-input>
       </el-form-item>
       <el-form-item  label="重复密码" prop="wgName">
@@ -27,7 +42,7 @@
       </el-form-item>
       <el-form-item  label="联系电话" prop="wgName">
         <el-input v-model="form.mobile"   ></el-input>
-      </el-form-item>
+      </el-form-item> -->
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="close">取 消</el-button>
@@ -41,20 +56,31 @@ import { updateArea, getBuildList, doAddCampus } from '@/api/table'
 
 export default {
   name: 'TableEdit',
+  props: {
+    navtableData: {
+      type: Array,
+      default: '',
+    },
+  },
   data () {
     return {
       form: {
-        Name: '',
-        truthName: '',
-        towpwd: '',
-        role: '',
+        name: '',
+        duties: '',
         department: '',
-        pwd:'',
-        mobile:''
+        role: '',
+        nav: '',
+        sex:3,
+        mobile:'',
+        idcard:''
       },
       value1: '',
       radio: 1,
       buildObjs: [],
+      defaultProps: {
+        label: 'menuName',
+        children: 'childs',
+      },
       Builddata: '',
       rules: {
         areaName: [
@@ -82,11 +108,12 @@ export default {
       console.log(Builddata.data, 'Builddata.data')
     },
     showEdit (row) {
+      this.buildObjs = this.navtableData
       if (!row) {
-        this.title = '添加用户'
+        this.title = '添加操作员'
         this.Edit = false
       } else {
-        this.title = '编辑用户'
+        this.title = '编辑操作员'
         this.Edit = true
 
         console.log(this.form, row, 'row2')

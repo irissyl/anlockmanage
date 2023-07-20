@@ -73,21 +73,20 @@ export const constantRoutes = [
           premissions: ['buildManage/index'],
           // badge: 'New',
         },
-        component: {
-          template: '<router-view/>',
-        },
+        component: () => import('@/views/main/buildManage/index.vue'),
+
         children: [
 
-          {
-            path: 'build',
-            name: 'build',
-            component: () => import('@/views/main/buildManage/index.vue'),
-            meta: {
-              title: '房屋管理',
-              premissions: ['build/index'],
-              // badge: 'New',
-            },
-          },
+          // {
+          //   path: 'build',
+          //   name: 'build',
+          //   component: () => import('@/views/main/buildManage/index.vue'),
+          //   meta: {
+          //     title: '房屋管理',
+          //     premissions: ['build/index'],
+          //     // badge: 'New',
+          //   },
+          // },
         ]
       },
       {
@@ -106,21 +105,21 @@ export const constantRoutes = [
             name: 'Lowpressure',
             component: () => import('@/views/main/householdManage/index.vue'),
             meta: {
-              title: '人员管理',
+              title: '常驻人员',
               premissions: ['householdManage'],
               // badge: 'New',
             },
           },
-          {
-            path: 'remote',
-            name: 'remote',
-            component: () => import('@/views/main/householdManage/components/remote.vue'),
-            meta: {
-              title: '常规人员',
-              premissions: ['householdManage/remote'],
-              // badge: 'New',
-            },
-          },
+          // {
+          //   path: 'remote',
+          //   name: 'remote',
+          //   component: () => import('@/views/main/householdManage/components/remote.vue'),
+          //   meta: {
+          //     title: '常规人员',
+          //     premissions: ['householdManage/remote'],
+          //     // badge: 'New',
+          //   },
+          // },
           {
             path: 'printfinger',
             name: 'printfinger',
@@ -131,16 +130,16 @@ export const constantRoutes = [
               // badge: 'New',
             },
           },
-          {
-            path: 'bacth',
-            name: 'bacth',
-            component: () => import('@/views/main/householdManage/components/bacth.vue'),
-            meta: {
-              title: '批量分配',
-              premissions: ['householdManage/bacth'],
-              // badge: 'New',
-            },
-          },
+          // {
+          //   path: 'bacth',
+          //   name: 'bacth',
+          //   component: () => import('@/views/main/householdManage/components/bacth.vue'),
+          //   meta: {
+          //     title: '批量分配',
+          //     premissions: ['householdManage/bacth'],
+          //     // badge: 'New',
+          //   },
+          // },
         ]
       },
       {
@@ -173,69 +172,69 @@ export const constantRoutes = [
           premissions: ['author/index'],
         },
       },
-      {
-        path: 'DeviceManagement',
-        name: 'DeviceManagement',
-        meta: {
-          title: '设备管理',
-          icon: '',
-          premissions: ['DeviceManagement'],
-        },
-        component: {
-          template: '<router-view/>',
-        },
-        children: [
-          {
-            path: '/NB',
-            name: 'NB',
-            component: () => import('@/views/NewPage/DeviceManagement/NBdevice.vue'),
-            meta: {
-              title: 'NB设备',
-              premissions: ['DeviceManagement/NB'],
-            },
-          },
-          {
-            path: '/WIFI',
-            name: 'WIFI',
-            component: () =>
-              import('@/views/NewPage/DeviceManagement/WIFI.vue'),
-            meta: {
-              title: 'WIFI门锁',
-              premissions: ['DeviceManagement/WIFI'],
-            },
-          },
-          {
-            path: '/Lora',
-            name: 'Lora',
-            component: () =>
-              import('@/views/NewPage/DeviceManagement/Lora.vue'),
-            meta: {
-              title: 'Lora门锁',
-              premissions: ['DeviceManagement/Lora'],
-            },
-          },
-          {
-            path: '/GatewayDevices',
-            name: 'GatewayDevices',
-            component: () =>
-              import('@/views/NewPage/DeviceManagement/Water'),
-            meta: {
-              title: '水表采集器',
-              premissions: ['DeviceManagement/GatewayDevice'],
-            },
-          },
-          {
-            path: '/GatewayMatching',
-            name: 'GatewayMatching',
-            component: () =>
-              import('@/views/NewPage/DeviceManagement/GatewayDevice.vue'),
-            meta: {
-              title: '网关匹配',
-              premissions: ['DeviceManagement/GatewayMatching'],
-            },
-          },
-        ],
-      },
+      // {
+      //   path: 'DeviceManagement',
+      //   name: 'DeviceManagement',
+      //   meta: {
+      //     title: '设备管理',
+      //     icon: '',
+      //     premissions: ['DeviceManagement'],
+      //   },
+      //   component: {
+      //     template: '<router-view/>',
+      //   },
+      //   children: [
+      //     {
+      //       path: '/NB',
+      //       name: 'NB',
+      //       component: () => import('@/views/NewPage/DeviceManagement/NBdevice.vue'),
+      //       meta: {
+      //         title: 'NB设备',
+      //         premissions: ['DeviceManagement/NB'],
+      //       },
+      //     },
+      //     {
+      //       path: '/WIFI',
+      //       name: 'WIFI',
+      //       component: () =>
+      //         import('@/views/NewPage/DeviceManagement/WIFI.vue'),
+      //       meta: {
+      //         title: 'WIFI门锁',
+      //         premissions: ['DeviceManagement/WIFI'],
+      //       },
+      //     },
+      //     {
+      //       path: '/Lora',
+      //       name: 'Lora',
+      //       component: () =>
+      //         import('@/views/NewPage/DeviceManagement/Lora.vue'),
+      //       meta: {
+      //         title: 'Lora门锁',
+      //         premissions: ['DeviceManagement/Lora'],
+      //       },
+      //     },
+      //     {
+      //       path: '/GatewayDevices',
+      //       name: 'GatewayDevices',
+      //       component: () =>
+      //         import('@/views/NewPage/DeviceManagement/Water'),
+      //       meta: {
+      //         title: '水表采集器',
+      //         premissions: ['DeviceManagement/GatewayDevice'],
+      //       },
+      //     },
+      //     {
+      //       path: '/GatewayMatching',
+      //       name: 'GatewayMatching',
+      //       component: () =>
+      //         import('@/views/NewPage/DeviceManagement/GatewayDevice.vue'),
+      //       meta: {
+      //         title: '网关匹配',
+      //         premissions: ['DeviceManagement/GatewayMatching'],
+      //       },
+      //     },
+      //   ],
+      // },
       {
         path: 'DeviceManage',
         name: 'DeviceManage',

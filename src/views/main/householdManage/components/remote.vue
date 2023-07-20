@@ -5,23 +5,23 @@
         <el-table ref="tableSort" :data="tablelist" :element-loading-text="elementLoadingText" :header-cell-style="{'text-align': 'left'
               }" :cell-style="{ 'text-align': 'left' }" style="width: 100%" @selection-change="setSelectRows" @sort-change="tableSortChange">
           <el-table-column type="selection" width="55"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="roomName" label="姓名"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="职务"></el-table-column>
+          <el-table-column  show-overflow-tooltip prop="roomName" label="姓名"></el-table-column>
+          <el-table-column  show-overflow-tooltip prop="" label="职务"></el-table-column>
           <el-table-column show-overflow-tooltip prop="" label="证件号"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="手机"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="性别"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="房间数">
+          <el-table-column  show-overflow-tooltip prop="" label="手机"></el-table-column>
+          <el-table-column  show-overflow-tooltip prop="" label="性别"></el-table-column>
+          <el-table-column  show-overflow-tooltip prop="" label="房间数">
             <template>可开门数</template>
           </el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="微信"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="左指纹"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="右指纹"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="卡号"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="密码"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="备注"></el-table-column>
-          <el-table-column min-width="110px" show-overflow-tooltip prop="" label="操作">
+          <el-table-column  show-overflow-tooltip prop="" label="微信"></el-table-column>
+          <el-table-column  show-overflow-tooltip prop="" label="左指纹"></el-table-column>
+          <el-table-column  show-overflow-tooltip prop="" label="右指纹"></el-table-column>
+          <el-table-column  show-overflow-tooltip prop="" label="卡号"></el-table-column>
+          <el-table-column  show-overflow-tooltip prop="" label="密码"></el-table-column>
+          <el-table-column  show-overflow-tooltip prop="" label="备注"></el-table-column>
+          <el-table-column width="220" show-overflow-tooltip prop="" label="操作">
             <template #default="{ row }">
-              <el-button type="primary" icon="el-icon-edit" @click="handleEdit(row)" plain></el-button>
+                <el-button type="primary" icon="el-icon-edit" @click="handleEdit(row)" plain></el-button>
                 <el-button type="primary" icon="el-icon-delete" @click="handleDelete(row)" plain></el-button>
                 <el-button type="primary" @click="openRecord(row)" plain>开锁记录</el-button>
             </template>

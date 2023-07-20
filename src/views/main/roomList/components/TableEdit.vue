@@ -26,20 +26,6 @@
       <el-form-item label="房间信息">
         <el-input v-model.trim="form.roomInfo" autocomplete="off" placeholder="请输入门锁编号"></el-input>
       </el-form-item>
-      <!-- <el-form-item label="电表标识">
-        <el-input
-          v-model.trim="form.rentCardnoHex"
-          autocomplete="off"
-          placeholder="请输入电表编号"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="水表标识">
-        <el-input
-          v-model.trim="form.rentCardnoHex"
-          autocomplete="off"
-          placeholder="请输入水表编号"
-        ></el-input>
-      </el-form-item> -->
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="close">取 消</el-button>

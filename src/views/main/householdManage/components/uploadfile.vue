@@ -12,6 +12,10 @@
         <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
         <div slot="tip" class="el-upload__tip">只能上传xlsx格式的表格文件</div>
       </el-upload>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible2 = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible2 = false">确认上传</el-button>
+      </span>
   </el-dialog>
 </template>
 

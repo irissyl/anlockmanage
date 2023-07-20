@@ -41,7 +41,7 @@
           <el-table-column min-width="110px" show-overflow-tooltip label="操作" width="280px" fixed="right">
             <template #default="{ row }">
               <el-button type="primary" style="margin-right: 10px" size="mini" plain @click="handleEdit(row)">
-                  批量入住
+                  入住
               </el-button>
             </template>
         </el-table-column>

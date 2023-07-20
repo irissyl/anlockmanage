@@ -406,9 +406,11 @@ export default {
       text-align: left;
       font-size: 17px;
       height: 40px;
+      width: 80%;
     }
     .el-tree-node__content:hover {
       border: 1px #f26a4f dashed;
+      background-color: #fff;
     }
     .el-tree-node {
       position: relative;
@@ -493,7 +495,7 @@ export default {
     }
     /* //高亮字体颜色 */
     .el-tree-node.is-current > .el-tree-node__content {
-      background-color: #ff06061d;
+      background-color: #82c6fbbe;
       color: #000000 !important;
       font-size: 15px;
     }

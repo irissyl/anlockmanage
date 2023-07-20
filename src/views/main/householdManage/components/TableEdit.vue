@@ -1,8 +1,17 @@
 <template>
-  <el-dialog v-dialogDrag :title="title" :visible.sync="dialogFormVisible" width="600px"  @close="close">
+  <el-dialog v-dialogDrag :title="title" :visible.sync="dialogFormVisible" width="600px" @close="close">
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
       <el-form-item label="姓名" prop="customerName">
         <el-input v-model.trim="form.customerName" autocomplete="off" placeholder="请输入姓名"></el-input>
+      </el-form-item>
+      <el-form-item label="职务">
+        <el-input v-model="form.duties" style="width:400px"></el-input>
+      </el-form-item>
+      <el-form-item label="手机号码" prop="mobile">
+        <el-input v-model.trim="form.mobile" autocomplete="off" placeholder="请输入手机号码"></el-input>
+      </el-form-item>
+      <el-form-item label="证件号码" prop="idCard">
+        <el-input v-model.trim="form.idCard" autocomplete="off" placeholder="请输入证件号码"></el-input>
       </el-form-item>
       <el-form-item label="性别" prop="sex">
         <el-radio-group v-model.trim="form.sex">
@@ -11,21 +20,15 @@
           <el-radio :label="3">中性</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="手机号码" prop="mobile">
-        <el-input v-model.trim="form.mobile" autocomplete="off" placeholder="请输入手机号码"></el-input>
-      </el-form-item>
-      <el-form-item label="证件号码" prop="idCard">
-        <el-input v-model.trim="form.idCard" autocomplete="off" placeholder="请输入证件号码"></el-input>
-      </el-form-item>
       <el-form-item label="组织机构">
         <el-select v-model.trim="form.sceneType" placeholder="请选择组织机构" style="width: 450px">
-          <el-option label="经理" value="经理"></el-option>
+          <!-- <el-option label="经理" value="经理"></el-option>
           <el-option label="部长" value="部长"></el-option>
-          <el-option label="组长" value="组长"></el-option>
+          <el-option label="组长" value="组长"></el-option> -->
         </el-select>
       </el-form-item>
       <el-form-item label="房间">
-        <el-button type="success" plain  style="width: 450px" @click="chooseRoom">点击选择...</el-button>
+        <el-button type="success" plain style="width: 450px" @click="chooseRoom">点击选择...</el-button>
       </el-form-item>
       <el-form-item label="是否在宿">
         <el-radio-group v-model.trim="form.isStay">
@@ -97,10 +100,11 @@ export default {
   data () {
     return {
       form: {
+        duties:'',
         isStay: 2,
         idCard: '',
-        mobile:'',
-        customerNo:'',
+        mobile: '',
+        customerNo: '',
         customerName: '',
         roomType: '',
         roomInfo: '',
@@ -115,7 +119,7 @@ export default {
         rentCardnoHex: '',
         rentDoorPass: '',
       },
-      
+
       Builddata: [],
       num: 1,
       rules: {
@@ -332,7 +336,7 @@ export default {
         })
         .catch((_) => { })
     },
-    chooseRoom() {
+    chooseRoom () {
       this.$refs['findroom'].showEdit()
     },
     showEdit (row) {

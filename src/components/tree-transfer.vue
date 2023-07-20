@@ -761,7 +761,7 @@
     line-height: 40px;
     color: #333;
     font-size: 16px;
-    background-color: #f5f7fa;
+    background-color: #ffffff;
     margin-top: 0;
   }
 

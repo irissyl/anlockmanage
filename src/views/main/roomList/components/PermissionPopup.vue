@@ -12,7 +12,7 @@
         <tree-transfer
           ref="treeTransfer"
           class="transtransfer"
-          :titles="['待入住房间:', '已入住房间:']"
+          :titles="['可入住房间:', '已入住房间:']"
           :button-texts="['删除', '入宿']"
           :data-source.sync="dataSource"
           :default-checked-keys="defaultValue"

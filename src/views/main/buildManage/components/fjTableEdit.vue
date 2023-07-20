@@ -15,9 +15,7 @@
           <el-form-item label="房间名称:" prop="title">
             <el-input v-model.trim="form.roomName" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="房间别名:" prop="title">
-            <el-input v-model.trim="form.room" autocomplete="off"></el-input>
-          </el-form-item>
+          
           <el-form-item label="可容纳人数:" prop="title">
             <el-input-number v-model="form.num" controls-position="right" :min="1" :max="1000"></el-input-number>
           </el-form-item>
@@ -37,6 +35,9 @@
           </el-form-item>
           <el-form-item label="排序:" prop="title">
             <el-input-number v-model="form.sort" controls-position="right" :min="1" :max="99" class="inpsty1" placeholder="请输入整数"></el-input-number>
+          </el-form-item>
+          <el-form-item label="备注:" prop="title">
+            <el-input v-model.trim="form.room" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item prop="title">
             <el-button type="primary" @click="save">确 定</el-button>

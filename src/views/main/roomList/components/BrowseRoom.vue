@@ -13,34 +13,54 @@
       </el-col>
       <el-col :xs="24" :sm="24" :md="24" :lg="19" :xl="19">
         <el-card class="all1" shadow="never" style="height: 300px">
+          <div class="inputtotal">
+            <el-form ref="form" :model="queryForm" :inline="true">
+              <el-form-item>
+                <label class="lb">电话:</label>
+                <el-input v-model="queryForm.roomNO" class="ei" placeholder="手机号码" />
+              </el-form-item>
+              <el-form-item>
+                <label class="lb">人员名称:</label>
+                <el-input v-model="queryForm.roomName" class="ei" placeholder="姓名" />
+              </el-form-item>
+              <el-form-item>
+                <el-button icon="el-icon-search" type="info" native-type="submit" @click="handleQuery">
+                  查询
+                </el-button>
+              </el-form-item>
+            </el-form>
+          </div>
           <el-table ref="tableSort" :data="tableData" :header-cell-style="{'text-align': 'left'
-              }" :cell-style="{ 'text-align': 'left' }" style="width: 100%" >
-          <el-table-column  show-overflow-tooltip prop="name" label="姓名"></el-table-column>
-          <el-table-column  show-overflow-tooltip prop="" label="职务"></el-table-column>
-          <el-table-column show-overflow-tooltip prop="" label="证件号"></el-table-column>
-          <el-table-column  show-overflow-tooltip prop="" label="手机"></el-table-column>
-          <el-table-column  show-overflow-tooltip prop="" label="性别"></el-table-column>
-          <el-table-column  show-overflow-tooltip prop="" label="房间数">
-            <template>可开门数</template>
-          </el-table-column>
-          <el-table-column  show-overflow-tooltip prop="" label="微信"></el-table-column>
-          <el-table-column  show-overflow-tooltip prop="" label="左指纹"></el-table-column>
-          <el-table-column  show-overflow-tooltip prop="" label="右指纹"></el-table-column>
-          <el-table-column  show-overflow-tooltip prop="" label="卡号"></el-table-column>
-          <el-table-column  show-overflow-tooltip prop="" label="密码">
-            <template>有/无</template>
-          </el-table-column>
-          <el-table-column  show-overflow-tooltip prop="" label="租期"></el-table-column>
-          <el-table-column min-width="210px" show-overflow-tooltip prop="" label="操作">
-            <template #default="{ row }">
-                <el-button type="primary" icon="el-icon-edit" @click="handleEdit(row)" plain>续租</el-button>
-                <el-button type="primary" icon="el-icon-delete" @click="handleDelete(row)" plain>调宿</el-button>
-                <el-button type="primary" @click="openRecord(row)" plain>退宿</el-button>
-            </template>
-          </el-table-column>
+              }" :cell-style="{ 'text-align': 'left' }" style="width: 100%">
+            <el-table-column show-overflow-tooltip prop="name" label="姓名"></el-table-column>
+            <el-table-column show-overflow-tooltip prop="" label="职务"></el-table-column>
+            <el-table-column show-overflow-tooltip prop="" label="证件号"></el-table-column>
+            <el-table-column show-overflow-tooltip prop="" label="手机"></el-table-column>
+            <el-table-column show-overflow-tooltip prop="" label="性别"></el-table-column>
+            <el-table-column show-overflow-tooltip prop="" label="房间数">
+              <template>可开门数</template>
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="" label="微信"></el-table-column>
+            <el-table-column show-overflow-tooltip prop="" label="左指纹"></el-table-column>
+            <el-table-column show-overflow-tooltip prop="" label="右指纹"></el-table-column>
+            <el-table-column show-overflow-tooltip prop="" label="卡号"></el-table-column>
+            <el-table-column show-overflow-tooltip prop="" label="密码">
+              <template>有/无</template>
+            </el-table-column>
+            <el-table-column show-overflow-tooltip prop="" label="租期"></el-table-column>
+            <el-table-column min-width="210px" show-overflow-tooltip prop="" label="操作">
+              <template #default="{ row }">
+                <el-button type="primary" @click="handleEdit(row)" plain>续租</el-button>
+                <el-button type="primary" @click="handlehold(row)" plain>调宿</el-button>
+                <el-popconfirm title="此用户确定要退宿吗？" style="margin:0 0 0 20px;">
+                  <el-button slot="reference" type="primary" @click="handleDelete(row)" plain>退宿</el-button>
+                </el-popconfirm>
+                <!-- <el-button type="primary" @click="handleDelete(row)" plain>退宿</el-button> -->
+              </template>
+            </el-table-column>
           </el-table>
         </el-card>
-        <el-card class="cardsty" v-for="(items,index) in cardData" :key="index">
+        <!-- <el-card class="cardsty" v-for="(items,index) in cardData" :key="index">
           <div class="hanbao">
             <span>{{items.room}}房间</span>
             <div class="center">
@@ -56,12 +76,13 @@
               <img src="../../../../assets/dianliang.png" alt="" class="dianliang" srcset="">
             </div>
           </div>
-        </el-card>
+        </el-card> -->
       </el-col>
     </el-row>
     <table-edit ref="edit" @fetchData="fetchData"></table-edit>
     <householdManange ref="hold"></householdManange>
     <findpeople ref="addPerson" @fetchData="fetchData"></findpeople>
+    <permission-popup ref="permission"></permission-popup>
   </div>
 </template>
 
@@ -69,8 +90,9 @@
 import householdManange from './zaizhu/householdManange.vue';
 import TableEdit from './zaizhu/TableEdit.vue';
 import findpeople from './findpeople.vue';
+import PermissionPopup from './PermissionPopup.vue';
 export default {
-  components: { TableEdit, householdManange, findpeople },
+  components: { TableEdit, householdManange, findpeople, PermissionPopup },
   name: 'AnlockmanageBrowseRoom',
 
   data () {
@@ -118,6 +140,13 @@ export default {
       personData: [
         { sex: '男' }, { sex: '女' }, { sex: '男' }, { sex: '男' }, { sex: '女' },
       ],
+      queryForm: {
+        pageNo: 1,
+        pageSize: 10,
+        roomName: '',
+        roomNO: '',
+        buildId: '',
+      },
       tableData: [{ name: '雷诗云' }, { name: '李工' }, { name: '杨环' },],
       defaultProps: {
         children: 'children',
@@ -144,11 +173,16 @@ export default {
       this.$refs['edit'].showEdit(row)
     },
     handlehold (row) {
-      this.$refs['hold'].showEdit(row)
+      let title = '调宿'
+      this.$refs['permission'].showEdit(row, title)
+    },
+    handleQuery () {
+      this.queryForm.pageNo = 1
+      this.fetchData()
     },
     handleDelete (row) {
       console.log(row, 'rowd')
-      this.ckVisible = true
+      // this.ckVisible = true
     },
   },
 };
@@ -169,9 +203,11 @@ export default {
         text-align: left;
         font-size: 17px;
         height: 40px;
+        width: 80%;
       }
       .el-tree-node__content:hover {
-        border: 1px #00b2e8 dashed;
+        border: 1px #f26a4f dashed;
+        background-color: #fff;
       }
       .el-tree-node {
         position: relative;
@@ -256,7 +292,7 @@ export default {
       }
       /* //高亮字体颜色 */
       .el-tree-node.is-current > .el-tree-node__content {
-        background-color: #ff06061d;
+        background-color: #82c6fbbe;
         color: #000000 !important;
         font-size: 15px;
       }
@@ -345,4 +381,19 @@ export default {
     float: right;
   }
 }
+ .inputtotal {
+    width: 85%;
+    float: left;
+    // border: 1px solid saddlebrown;
+
+    .ei {
+      float: right;
+      width: 200px;
+    }
+    .lb {
+      // border: 1px solid saddlebrown;
+      float: left;
+      margin-right: 10px;
+    }
+  }
 </style>

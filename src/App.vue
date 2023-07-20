@@ -11,7 +11,7 @@
   }
 </script>
 <style>
-  body {
+  /* body {
     padding-right: 0 !important;
-  }
+  } */
 </style>
